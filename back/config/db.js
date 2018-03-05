@@ -7,7 +7,7 @@ const db = new Sequelize('postgres://localhost:5432/ecommerce');
 // sincronizo la base de datos:
 db.sync({force: false})
 .then (() => {
-    app.listen(3005, console.log('listening on port 3005'));
+    console.log('db sync')
 } )
 
 module.exports = db;
