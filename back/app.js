@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var app = express();
 var routes = require('./routes');
-var User = require('./models/Users');
+var User = require('./models/users');
 // var passport = require('passport');
 // var LocalStrategy = require('passport-local').Strategy;
 // var cors = require('cors'); 
@@ -57,5 +57,6 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+app.listen(3005,console.log('listening on port 3005'))
 
 module.exports = app;
