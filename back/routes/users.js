@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../server/models/Users');
+const User = require('../models/Users');
 // const passport = require('passport');
 
 router.get('/', function (req, res, next) {
@@ -45,7 +45,9 @@ router.param('userId', function (req, res, next, id) {
 // })
 router.post('/register',function(req,res,next){
     User.create({
-        username:req.body.username,
+        firstName:req.body.firstname,
+        lastName:req.body.lastname,
+        email:req.body.email,
         password:req.body.password
     })
     .then((user) => 
@@ -61,7 +63,7 @@ router.post('/register',function(req,res,next){
 })
 router.post('/login',function(req,res,next){
     User.findOne({where:{
-        username:req.body.username,
+        email:req.body.email,
         password:req.body.password
     }
     })
