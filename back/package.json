@@ -1,0 +1,31 @@
+{
+  "name": "ecommerce",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "postinstall": "pg-init ecommerce"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dieferrari/eCommerce.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dieferrari/eCommerce/issues"
+  },
+  "homepage": "https://github.com/dieferrari/eCommerce#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.2",
+    "fs-misc": "^2.0.0",
+    "morgan": "^1.9.0",
+    "path": "^0.12.7",
+    "pg": "^7.4.1",
+    "sequelize": "^4.35.2"
+  }
+}
