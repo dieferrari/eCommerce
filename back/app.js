@@ -8,14 +8,14 @@ var routes = require('./routes');
 var User = require('./models/users');
 // var passport = require('passport');
 // var LocalStrategy = require('passport-local').Strategy;
-// var cors = require('cors'); 
+var cors = require('cors'); 
 
-// var corsOptions = {
-//   origin: 'http://localhost:3001',
-//   optionsSuccessStatus: 200
-// }
+var corsOptions = {
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200
+}
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 // passport.use(new LocalStrategy(User.authenticate()));
 
 // use static serialize and deserialize of model for passport session support
