@@ -12,11 +12,11 @@ export default () => (
           path="/register"
           component={RegisterContainer}
         />
-        {/* <Route
+        {/* /* <Route
           exact
           path="/login"
           component={LoginContainer}
-        />
+        /> */}
 
 
       </Switch>
