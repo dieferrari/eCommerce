@@ -20,7 +20,7 @@ export default class RegisterContainer extends React.Component{
     }
     render () {
         return (
-            <Form handleSubmit={this.handleSubmit}/>
+            <Register handleSubmit={this.handleSubmit}/>
         )
     }
 }

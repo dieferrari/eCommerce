@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from '../components/login';
+import Login from '../components/login';
 import { loginUser } from '../redux/actions/user';
 import store from '../store';
 
@@ -20,7 +20,7 @@ export default class LoginContainer extends React.Component{
     }
     render () {
         return (
-            <Form handleSubmit={this.handleSubmit}/>
+            <Login handleSubmit={this.handleSubmit}/>
         )
     }
 }

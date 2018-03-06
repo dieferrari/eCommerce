@@ -20,14 +20,16 @@ router.param('userId', function (req, res, next, id) {
 })
 // router.post('/register', function (req, res, next) {
 //     User.create({
-//         username: req.body.username,
+//         firstname: req.body.firstname,
+//         lastname: req.body.lastname,
+//         email: req.body.email,
 //         password: req.body.password,
 //     },function (err, user) {
 //         if (err) {
 //             res.send(err)
 //         } else {
 //             var authenticate = User.authenticate();
-//             authenticate(req.body.username, req.body.password, function (err, result) {
+//             authenticate(req.body.email, req.body.password, function (err, result) {
 //                 if (err) {
 //                     res.send(err)
 //                 } else {
