@@ -1,4 +1,4 @@
-import axiox from 'axios';
+import axios from 'axios';
 import { SET_USER } from '../constants';
 
 const receiveUser = (user) => ({
@@ -6,7 +6,10 @@ const receiveUser = (user) => ({
     user: user,
   });
 
-export const createUser = user => dispatch =>
-  axios.post(`/users/register`, user)
+
+export const createUser = user => dispatch => axios
+    .post(`http://localhost:3005/users/register`, user)
     .then(res => res.data)
-    .then(createdUser => dispatch(receiveUser(createdUser)));
+    .then(createdUser => {
+      dispatch(receiveUser(createdUser))});
+
