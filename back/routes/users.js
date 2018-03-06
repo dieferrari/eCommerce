@@ -47,19 +47,13 @@ router.param('userId', function (req, res, next, id) {
 // })
 router.post('/register',function(req,res,next){
     User.create({
-        firstName:req.body.firstname,
-        lastName:req.body.lastname,
+        firstName:req.body.firstName,
+        lastName:req.body.lastName,
         email:req.body.email,
         password:req.body.password
     })
     .then((user) => 
-        res.status(201).send({
-            status:201,
-            data:{
-                user
-            },
-            message:'Success Register'
-        })
+        res.status(201).send(user)
     )
     .catch(err => res.send(err))
 })

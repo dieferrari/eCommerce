@@ -1,13 +1,22 @@
 import React from 'react';
 import Register from '../components/register';
 import { createUser } from '../redux/actions/user';
-import store from '../store';
+import store from '../redux/store';
 
 export default class RegisterContainer extends React.Component{
     constructor(){
     super();
-        this.state = {}
+        this.state = store.getState()
         this.handleSubmit=this.handleSubmit.bind(this)
+    }
+    componentDidMount(){
+        this.unsubscribe = store.subscribe(() => {
+            this.setState(store.getState()
+            );
+          });
+    }
+    componentWillUnmount(){
+        this.unsubscribe()
     }
     handleSubmit(event) {
         event.preventDefault()
@@ -20,7 +29,7 @@ export default class RegisterContainer extends React.Component{
     }
     render () {
         return (
-            <Register handleSubmit={this.handleSubmit}/>
+            <Register user={this.state.user.user} handleSubmit={this.handleSubmit}/>
         )
     }
 }
