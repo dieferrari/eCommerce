@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Category from '../components/Category';
-import {fetchCategories} from '../redux/actions'
 import { bindActionCreators } from 'redux';
-import { fetchCategories } from './store/actions';
+import { fetchCategories } from '../redux/actions/category';
 
 class CategoryContainer extends React.Component{
 

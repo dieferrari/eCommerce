@@ -1,7 +1,7 @@
 import React from 'react'
 import store from '../redux/store'
 import Products from '../components/Products'
-import {fetchProducts} from '../redux/actions'
+import {fetchProducts} from '../redux/actions/products'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
@@ -9,7 +9,10 @@ class ProductsContainer extends React.Component {
 
 
     render(){
-        return <Products products={this.props.products} />
+        return (
+        <div>  
+        <Products products={this.props.products} />
+        </div>)
     }
 
 }
