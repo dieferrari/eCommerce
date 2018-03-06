@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from '../components/register';
+import Register from '../components/register';
 import { createUser } from '../redux/actions/user';
 import store from '../store';
 
