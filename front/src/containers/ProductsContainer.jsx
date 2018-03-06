@@ -7,6 +7,9 @@ import {bindActionCreators} from 'redux'
 
 class ProductsContainer extends React.Component {
 
+    componentDidMount() {
+        this.props.recibeProducts()
+    }
 
     render(){
         return (

@@ -7,6 +7,8 @@ const receiveProducts = (products) => ({
   });
 
 export const fetchProducts = () => dispatch =>
-  axios.get('localhost:3005/products')
+  axios.get('http://localhost:3005/products')
     .then(res => res.data)
-    .then(products => dispatch(receiveProducts(products)));
+    .then(products => {
+      console.log(products)
+      dispatch(receiveProducts(products))});

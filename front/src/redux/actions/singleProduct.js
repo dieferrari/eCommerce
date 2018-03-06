@@ -7,6 +7,8 @@ const receiveSingleProduct = (product) => ({
 });
 
 export const fetchSingleProduct = id => dispatch =>
-  axios.get(`localhost:3005/products/${id}`)
+  axios.get(`http://localhost:3005/products/${id}`)
     .then(res => res.data)
-    .then(product => dispatch(receiveSingleProduct(product)));
+    .then(product => {
+      console.log('product',product)
+      dispatch(receiveSingleProduct(product))});

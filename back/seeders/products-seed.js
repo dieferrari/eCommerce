@@ -1,0 +1,27 @@
+var productos=[
+    {id:1,
+    name:'Inspiron I5578',
+    description:'Notebook 2 en 1 Dell Inspiron I5578 Intel Core i7 8GB 1TB',
+    price:23699,
+    stock:3,
+    imgURL:'http://mazatlan21.com/maz21/servicios/compu_servicio/imagenes/2.gif'},
+    {id:2,
+    name:'HP 15-bs022la',
+    description:'Notebook HP 15-bs022la Intel Core i7 12GB 1TB',
+    price:19499,
+    stock:1,
+    imgURL:'https://www.rosarioplus.com/__export/1471615754519/sites/rosarioplus/img/2016/08/19/compu_crop1471615754404.jpg_501420591.jpg'},
+    {id:3,
+    name:'Acer Aspire',
+    description:'Notebook Acer Aspire E5-575-76SD Intel Core i7',
+    price:16999,
+    stock:4,
+    imgURL:'https://www.rosarioplus.com/__export/1471615754519/sites/rosarioplus/img/2016/08/19/compu_crop1471615754404.jpg_501420591.jpg'},
+    {id:4,
+    name:'HP 14-bp005la',
+    description:'Notebook HP 14-bp005la Intel Core i7 4GB 500GB',
+    price:16999,
+    stock:5,
+    imgURL:'https://www.rosarioplus.com/__export/1471615754519/sites/rosarioplus/img/2016/08/19/compu_crop1471615754404.jpg_501420591.jpg'}
+]
+module.exports=productos;
