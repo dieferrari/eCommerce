@@ -23,7 +23,7 @@ class SingleProductContainer extends React.Component {
 
 const mapStateToProps = function(state, ownProps) {
 	return {
-		product: state.singleProduct.product,
+		product: state.singleProduct,
 		loading: state.loading,
 		id: ownProps.match.params.id,
 	}
