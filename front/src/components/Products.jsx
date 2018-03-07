@@ -8,7 +8,7 @@ export default ({products}) => (
             {products.map(product => (
                 <div key={product.id}>
                     <Link to={`/products/${product.id}`}>
-                    <img src={product.img} alt=""/>
+                    <img src={product.imgURL} alt=""/>
                     </Link>
                     <h3>{product.name}</h3>
                     <h4>{product.price}</h4>

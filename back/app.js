@@ -6,9 +6,12 @@ var bodyParser = require('body-parser');
 var app = express();
 var routes = require('./routes');
 var User = require('./models/users');
+var db = require('./config/db')
 // var passport = require('passport');
 // var LocalStrategy = require('passport-local').Strategy;
 var cors = require('cors'); 
+const create=require('./seeders')
+create()
 
 var corsOptions = {
   origin: 'http://localhost:3000',
@@ -57,6 +60,10 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-app.listen(3005,console.log('listening on port 3005'))
+
+db.sync({force: false})
+.then (() => {
+    app.listen(3005,() => console.log('listening on port 3005'))
+})
 
 module.exports = app;
