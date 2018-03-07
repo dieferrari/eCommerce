@@ -13,20 +13,21 @@ class CategoryContainer extends React.Component{
 
   render(){
     const {categories} = this.props;
+
     return(
       <div>
-        {categories.map(category => <Category  category={category}/>)}
+        <Category  categories={categories}/>
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  categories: state.category,
+  categories: state.category.category,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchCategories,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Category);
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryContainer);

@@ -32,5 +32,11 @@ module.exports=function(){
     })
     .then(producto=>{
         return producto.addCategories([5])
-    }).then(()=>console.log('TermiChapo'))
+    }).then(()=>{
+        return User.findById(2)
+    }).then(usuario=>{
+        return usuario.addProducts([1,2,3])
+    }).then(()=>{
+        console.log('Tomi TermiChapo')
+    })
 }
