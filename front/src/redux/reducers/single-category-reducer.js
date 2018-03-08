@@ -1,4 +1,4 @@
-import { RECEIVE_CATEGORIES} from '../constants';
+import { RECEIVE_SINGLE_CATEGORY} from '../constants';
 
 const initialState = {
   category: [],
@@ -6,11 +6,11 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case RECEIVE_CATEGORIES:
-      return {...state, category: action.categories};
+    
+    case RECEIVE_SINGLE_CATEGORY:
+      return action.category
 
     default:
       return state;
   }
 }
-

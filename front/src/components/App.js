@@ -5,6 +5,8 @@ import LoginContainer from '../containers/login-container';
 import ProductsContainer from '../containers/ProductsContainer';
 import SingleProductContainer from '../containers/SingleProductContainer';
 import CategoryContainer from '../containers/CategoryContainer';
+import SingleUserContainer from '../containers/SingleUserContainer';
+import SingleCategoryContainer from '../containers/SingleCategoryContainer';
 
 export default () => (
     <div>
@@ -28,7 +30,14 @@ export default () => (
           path="/category"
           component={CategoryContainer}
         />
-          
+          <Route 
+          path="/category/:id"
+          component={SingleCategoryContainer}
+        />
+          <Route 
+          path="/user/:id"
+          component={SingleUserContainer}
+        />
 
         {/* /* <Route
           exact
