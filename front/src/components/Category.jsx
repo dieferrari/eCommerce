@@ -6,9 +6,13 @@ export default ({ categories }) => (
       <h1>Categories</h1>
       {!categories ? "Loading" :
       <div>
-      {categories.map(catego=>{
-        return(<p key={catego.id}>{catego.name}</p>)
-      })}
+      {categories.map(catego=>(
+        <p key={catego.id}>
+        <Link to={`/categories/${catego.id}`}>
+        {catego.name}
+        </Link>
+        </p>
+      ))}
       </div>}
     </div>
   );

@@ -1,5 +1,4 @@
 import React from 'react';
-import store from '../redux/store';
 import { connect } from 'react-redux';
 //import { bindActionCreators } from 'redux';
 import { fetchSingleProduct } from '../redux/actions/singleProduct';

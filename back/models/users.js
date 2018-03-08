@@ -2,6 +2,7 @@
 
 const db = require('../config/db');
 const Sequelize = db.Sequelize;
+var crypto = require('crypto');
 
 const User = db.define('user', {
     
@@ -33,11 +34,29 @@ const User = db.define('user', {
         type: Sequelize.STRING,
         allowNull: false,
     },
-
+    salt: {
+        type:Sequelize.STRING,
+    }
+}, {
+    setterMethods: {
+        password: function (userpassword) {
+            var salt = this.genRandomString();
+            var passwordData = this.sha512(userpassword, salt);
+            this.setDataValue('password', passwordData)
+            this.setDataValue('salt', salt)
+        }
+    }
 })
+User.prototype.genRandomString = function () {
+    return crypto.randomBytes(20).toString('hex')
+};
+User.prototype.sha512 = function (password, salt) {
+    var hash = crypto.createHmac('sha1', salt).update(password).digest('hex')
+    return hash
+};
+
 
 User.prototype.verifyPassword = function(password) {
-    // ENCRIPTEN ESTA MIERDA
     return password == this.password;
 }
 
