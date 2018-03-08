@@ -2,7 +2,7 @@ import React from 'react';
 
 export default ({ user , handleSubmit}) => (
   <div>
-      <form onSubmit={handleSubmit} method="POST">
+      <form onSubmit={(e)=>handleSubmit(e)} method="POST">
           <input type="text" name="firstname" placeholder="Firstname"></input>
           <input type="text" name="lastname" placeholder="Lastname"></input>
           <input type="text" name="email" placeholder="Email"></input>

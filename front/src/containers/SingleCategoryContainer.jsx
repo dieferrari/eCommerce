@@ -1,5 +1,4 @@
 import React from 'react';
-import store from '../redux/store';
 import { connect } from 'react-redux';
 import { fetchSingleCategory } from '../redux/actions/singleCategory';
 import SingleCategory from '../components/SingleCategory';

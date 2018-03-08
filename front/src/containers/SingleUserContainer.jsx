@@ -1,8 +1,7 @@
 import React from 'react';
-import store from '../redux/store';
 import { connect } from 'react-redux';
 import { fetchUser } from '../redux/actions/user';
-import SingleUser from '../components/SingleProduct';
+import SingleUser from '../components/SingleUser';
 
 
 class SingleUserContainer extends React.Component {
@@ -23,7 +22,7 @@ class SingleUserContainer extends React.Component {
 
 const mapStateToProps = function(state, ownProps) {
 	return {
-		user: state.singleUser,
+		user: state.user.user,
     loading: state.loading,
 		id: ownProps.match.params.id,
 	}

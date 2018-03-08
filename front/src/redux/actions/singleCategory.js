@@ -7,7 +7,7 @@ const receiveSingleCategory = (category) => ({
 });
 
 export const fetchSingleCategory = id => dispatch =>
-  axios.get(`http://localhost:3005/products/${id}`)
+  axios.get(`http://localhost:3005/categories/${id}`)
   .then(res => res.data)
   .then(category => {
     dispatch(receiveSingleCategory(category)
