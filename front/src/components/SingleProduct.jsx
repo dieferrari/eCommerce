@@ -18,6 +18,7 @@ export default ({ product }) => (
       </div>
     ))}
     <h3>Reviews:</h3>
+    {console.log(product)}
     {product.reviews.map(rev => (
       <div key={rev.id}>
        <Link to={`/user/${rev.AuthorId}`}><p>{rev.Author.firstName}</p> </Link>
