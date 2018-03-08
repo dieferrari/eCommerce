@@ -10,8 +10,6 @@ module.exports=function(){
     Product.bulkCreate(productos).then(()=>{
         return Categories.bulkCreate(categorias)
     }).then(()=>{
-        return  User.bulkCreate(usuarios)
-    }).then(()=>{
         return Product.findById(1)
     })
     .then(producto=>{
@@ -33,10 +31,16 @@ module.exports=function(){
     .then(producto=>{
         return producto.addCategories([5])
     }).then(()=>{
-        return User.findById(2)
-    }).then(usuario=>{
-        return usuario.addProducts([1,2,3])
-    }).then(()=>{
         console.log('Tomi TermiChapo')
     })
 }
+
+// .then(()=>{
+//     return  User.bulkCreate(usuarios)
+// })
+
+// .then(()=>{
+//     return User.findById(2)
+// }).then(usuario=>{
+//     return usuario.addProducts([1,2,3])
+// })

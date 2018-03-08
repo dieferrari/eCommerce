@@ -36,4 +36,9 @@ const User = db.define('user', {
 
 })
 
+User.prototype.verifyPassword = function(password) {
+    // ENCRIPTEN ESTA MIERDA
+    return password == this.password;
+}
+
 module.exports = User;
