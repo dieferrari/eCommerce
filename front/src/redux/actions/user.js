@@ -5,15 +5,18 @@ import { RECEIVE_USER } from '../constants';
 
 const registerUser = (user,carrito) => ({
     type: SET_USER,
-    fetch:{user:user,
-      carrito:carrito}
+    fetch:{
+      user:user,
+      carrito:carrito
+    }
   });//devuelve un user pero carritos y orders con listas vacias
 
-  const  receiveUser = (user,carrito) => ({
+  const receiveUser = (user,carrito) => ({
     type: RECEIVE_USER,
-    fetch:{user:user,
+    fetch:{
+      user:user,
       carrito:carrito
-      }
+    }
   });
 
 export const createUser = user => dispatch =>{
@@ -27,10 +30,10 @@ export const createUser = user => dispatch =>{
       email:user.email},[]))})};
 
 export const fetchUser = id => dispatch => 
-  axios.get(`http://localhost:3005/user/${id}`)
+  axios.get(`http://localhost:3005/users/${id}`)
   .then(res => res.data)
   .then(user => {
     dispatch(receiveUser({id:user.id,
-      firstName:user.firstName,
+      firstName:user.firstName, 
       lastName:user.lastName,
       email:user.email},user.products))});
