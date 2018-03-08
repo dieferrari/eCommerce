@@ -1,7 +1,7 @@
 const reviews = [
     {
         id:1,
-        text: "Thanks a lot, everything has been working well so far!!",
+        text: "Thanks a lot, everything has been working well so far!",
         rate:4,
         AuthorId:1
     },
