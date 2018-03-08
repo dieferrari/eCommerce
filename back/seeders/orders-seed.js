@@ -1,0 +1,12 @@
+module.exports=[
+    {id:1,
+    status:'cerrada',
+    OwnerId:1
+    },
+    {id:2,
+    OwnerId:1
+    },
+    {id:3,
+    OwnerId:2
+    },
+]
