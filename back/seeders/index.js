@@ -1,8 +1,9 @@
-const {User, Categories, Product, Orders} =require('../models');
+const {User, Categories, Product, Orders, Reviews} =require('../models');
 const productos=require('./products-seed');
 const usuarios=require('./user-seed');
 const categorias=require('./categories-seed');
 const orders=require('./orders-seed.js');
+const reviews=require('./reviews-seed');
 
 
 
@@ -44,6 +45,13 @@ module.exports=function(){
     }).then(usuario=>{
         return usuario.addProducts([1,2,3])
     }).then(()=>{
-        console.log('Tomi TermiChapo')
+        return Reviews.bulkCreate(reviews)
+    }).then(()=> {
+        return Product.findById(2)
+    })
+    .then((producto)=>{
+        return producto.addReviews([1,3,5])
+    }).then(()=>{
+        console.log("PiNgO")
     })
 }
