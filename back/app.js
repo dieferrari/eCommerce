@@ -6,16 +6,19 @@ var bodyParser = require('body-parser');
 var app = express();
 var routes = require('./routes');
 var User = require('./models/users');
+var db = require('./config/db')
 // var passport = require('passport');
 // var LocalStrategy = require('passport-local').Strategy;
-// var cors = require('cors'); 
+var cors = require('cors'); 
+const create=require('./seeders')
+create()
 
-// var corsOptions = {
-//   origin: 'http://localhost:3001',
-//   optionsSuccessStatus: 200
-// }
+var corsOptions = {
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200
+}
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 // passport.use(new LocalStrategy(User.authenticate()));
 
 // use static serialize and deserialize of model for passport session support
@@ -55,8 +58,12 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send(err.message);
 });
-app.listen(3005,console.log('listening on port 3005'))
+
+db.sync({force: false})
+.then (() => {
+    app.listen(3005,() => console.log('listening on port 3005'))
+})
 
 module.exports = app;
