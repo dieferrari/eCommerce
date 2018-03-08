@@ -1,8 +1,10 @@
-const {User, Categories, Product, Reviews} =require('../models');
+const {User, Categories, Product, Orders, Reviews} =require('../models');
 const productos=require('./products-seed');
 const usuarios=require('./user-seed');
 const categorias=require('./categories-seed');
+const orders=require('./orders-seed.js');
 const reviews=require('./reviews-seed');
+
 
 
 module.exports=function(){
@@ -10,6 +12,13 @@ module.exports=function(){
         return Categories.bulkCreate(categorias)
     }).then(()=>{
         return  User.bulkCreate(usuarios)
+    }).then(()=>{
+        return  Orders.bulkCreate(orders)
+    }).then(()=>{
+        return Orders.findById(1)
+    })
+    .then(order=>{
+        return order.addProducts([2],{ through: { cantidad: 6 }})
     }).then(()=>{
         return Product.findById(1)
     })

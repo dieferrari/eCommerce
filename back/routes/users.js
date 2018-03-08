@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/users');
+const {User, Orders, Product, OrdersProducts} = require('../models');
 // const passport = require('passport');
 
 router.get('/', function (req, res, next) {
@@ -8,7 +8,15 @@ router.get('/', function (req, res, next) {
         .then((users) => res.status(200).send(users))
 })
 router.param('userId', function (req, res, next, id) {
-    User.findById(id)
+    User.findById(id,{
+        include: [{
+            model: Product,
+            attributes:['id','name', 'price'],
+            through: {
+                attributes:['cantidad'],
+            }
+        }]
+    })
         .then((user) => {
             if (!user) {
                 res.sendStatus(404)
@@ -111,5 +119,22 @@ router.get('/logout', function(req, res){
 router.get('/:userId', function (req, res) {
     res.send(req.user);
 });
+
+router.get('/:userId/orders', function(req, res){
+    Orders.findAll({
+        where: {
+            OwnerId: req.params.userId,
+        },
+        include: [{
+            model: Product,
+            attributes:['id','name', 'price'],
+            through: {
+                attributes:['cantidad'],
+            }
+        }]
+    }).then(orders => {
+        res.send(orders)
+    })
+})
 
 module.exports = router;
