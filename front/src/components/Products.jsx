@@ -5,6 +5,12 @@ export default ({products}) => (
     <div>
         <h2>Productos</h2>
         <div>
+        <form >
+         <input
+            placeholder="agregar //onChange={props.handleChange} cuando se tenga"/>  
+        </form>
+        </div>
+        <div>
             {products.map(product => (
                 <div key={product.id}>
                     <Link to={`/products/${product.id}`}>

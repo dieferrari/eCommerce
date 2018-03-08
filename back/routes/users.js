@@ -52,8 +52,9 @@ router.post('/register',function(req,res,next){
         email:req.body.email,
         password:req.body.password
     })
-    .then((user) => 
+    .then((user) => {
         res.status(201).send(user)
+        console.log(user.data)}
     )
     .catch(err => res.send(err))
 })
