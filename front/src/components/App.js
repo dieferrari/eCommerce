@@ -5,6 +5,7 @@ import LoginContainer from '../containers/login-container';
 import ProductsContainer from '../containers/ProductsContainer';
 import SingleProductContainer from '../containers/SingleProductContainer';
 import CategoryContainer from '../containers/CategoryContainer';
+import CarritosContainer from '../containers/CarritosContainer';
 
 export default () => (
     <div>
@@ -23,10 +24,15 @@ export default () => (
           path="/products/:id"
           component={SingleProductContainer}
         />
-          <Route
+        <Route
           exact 
           path="/category"
           component={CategoryContainer}
+        />
+        <Route
+          exact
+          path="/carrito"
+          component={CarritosContainer}
         />
           
 
