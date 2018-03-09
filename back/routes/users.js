@@ -49,10 +49,8 @@ router.post('/register', function (req, res, next) {
         res.send(err)
     })
 })
-router.post('/login', passport.authenticate('local', {
-    failureRedirect: '/users/failedLogin'
-}), function (req, res) {
-    res.status(200).send(req.user)
+router.post('/login',passport.authenticate('local'),function (req, res) {
+    res.status(200).send(req.body)
 });
 router.delete('/delete/:userId', function (req, res, next) {
     User.destroy({
@@ -61,23 +59,27 @@ router.delete('/delete/:userId', function (req, res, next) {
         .then((user) => res.send(user))
         .catch((err) => res.send(err))
 })
-router.get("/failedLogin", (req, res) => {
-    res.status(404).send({
-        status: 404,
-        data: null,
-        message: 'Failed Login'
-    })
-})
 router.get('/logout', function(req, res){
     req.logout()
+    res.sendStatus(200);
 });
+router.get('/auth/facebook', passport.authenticate('facebook'));
 
-router.get('/:userId', function (req, res) {
-    res.send(req.user);
-});
-
+router.get('/auth/facebook/callback',passport.authenticate('facebook',
+ {  successRedirect: 'http://localhost:3000',
+    failureRedirect: 'http://localhost:3000/login' }
+));
+router.get('/auth/google',
+  passport.authenticate('google', 
+  { scope: ['https://www.googleapis.com/auth/plus.login'] }
+))
+router.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: 'http://localhost:3000/login' }),
+  function(req, res) {
+    res.redirect('htpp://localhost:3000/');
+  });
 router.get('/:userId/orders', function(req, res){
-    Orders.findAll({
+    Orders.findAll({    
         where: {
             OwnerId: req.params.userId,
         },
@@ -92,5 +94,8 @@ router.get('/:userId/orders', function(req, res){
         res.send(orders)
     })
 })
+router.get('/:userId', function (req, res) {
+    res.send(req.user);
+});
 
 module.exports = router;

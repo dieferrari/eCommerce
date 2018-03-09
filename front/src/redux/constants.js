@@ -1,6 +1,9 @@
 //USER
 export const SET_USER = 'SET_USER';
 export const RECEIVE_USER = 'RECEIVE_USER';
+export const FOUND_USER = 'FOUND_USER';
+export const DESLOG_USER = 'DESLOG_USER';
+export const FACEBOOK_USER = 'FACEBOOK_USER';
 
 //Category
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
