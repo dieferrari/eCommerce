@@ -33,7 +33,7 @@ export default () => (
           component={CategoryContainer}
         />
         <Route 
-          path="/users/:id/orders"
+          path="/user/:id/orders"
           component={UserOrderContainer}
           />
         <Route
