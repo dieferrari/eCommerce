@@ -20,14 +20,14 @@ router.get('/:id',function(req,res,next){
             }
         },{
             model: Reviews,
-            attributes:['id','AuthorId','rate','text'],
-            through: {
-                attributes:[],
-            },include:[{
+            as:'reviews',
+            attributes:['id','rate','text'],
+            include:[{
                 model:User,
-                as:'Author'
+                as:'Author',
+                attributes:['id','firstName','lastName']
             }]
-        }]
+    }]//include 
     })
         .then((product) => res.status(200).send(product))
         .catch((err) => res.send(err))

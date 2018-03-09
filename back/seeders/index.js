@@ -46,11 +46,6 @@ module.exports=function(){
         return usuario.addProducts([101,102,103])
     }).then(()=>{
         return Reviews.bulkCreate(reviews)
-    }).then(()=> {
-        return Product.findById(102)
-    })
-    .then((producto)=>{
-        return producto.addReviews([101,103,105])
     }).then(()=>{
         console.log("PiNgO")
     })
