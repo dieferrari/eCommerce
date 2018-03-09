@@ -19,8 +19,20 @@ module.exports=function(){
     })
     .then(order=>{
         return order.addProducts([102],{ through: { cantidad: 6 }})
+    })
+    .then(()=>{
+        return Orders.findById(101)
+    })
+    .then(order=>{
+        return order.addProducts([101],{ through: { cantidad: 3 }})
+    })
+    .then(()=>{
+        return Orders.findById(101)
+    })
+    .then(order=>{
+        return order.addProducts([103],{ through: { cantidad: 1 }})
     }).then(()=>{
-        return Product.findById(101)
+        return Product.findById(102)
     })
     .then(producto=>{
         return producto.addCategories([105])
