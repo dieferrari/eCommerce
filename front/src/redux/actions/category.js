@@ -6,9 +6,18 @@ const receiveCategories = (categories) => ({
   categories,
 });
 
+
 export const fetchCategories = () => dispatch =>
   axios.get('http://localhost:3005/categories')
-    .then(res => res.data)
-    .then(categories => {
-      console.log('Categorias', categories)
-      dispatch(receiveCategories(categories))});
+  .then(res => res.data)
+  .then(categories => {
+    dispatch(receiveCategories(categories)
+    )
+});
+
+
+
+
+
+
+  

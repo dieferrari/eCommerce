@@ -8,7 +8,8 @@ const Reviews = db.define('reviews', {
         allowNull:false
     },
     rate:{
-        type:Sequelize.INTEGER
+        type:Sequelize.INTEGER,
+        defaultValue: 1
     }
 })
 module.exports=Reviews;

@@ -14,6 +14,6 @@ export default (state = initialState, action) => {
             return {...state, user: action.fetch.user,
                 carrito: action.fetch.carrito}
         default:
-            return {...state};
+            return state;
     }
 }
