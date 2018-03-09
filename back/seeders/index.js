@@ -15,42 +15,42 @@ module.exports=function(){
     }).then(()=>{
         return  Orders.bulkCreate(orders)
     }).then(()=>{
-        return Orders.findById(1)
+        return Orders.findById(101)
     })
     .then(order=>{
-        return order.addProducts([2],{ through: { cantidad: 6 }})
+        return order.addProducts([102],{ through: { cantidad: 6 }})
     }).then(()=>{
-        return Product.findById(1)
+        return Product.findById(101)
     })
     .then(producto=>{
-        return producto.addCategories([5])
+        return producto.addCategories([105])
     }).then(()=>{
-        return Product.findById(2)
+        return Product.findById(102)
     })
     .then(producto=>{
-        return producto.addCategories([5])
+        return producto.addCategories([105])
     }).then(()=>{
-        return Product.findById(3)
+        return Product.findById(103)
     })
     .then(producto=>{
-        return producto.addCategories([5])
+        return producto.addCategories([105])
     })
     .then(()=>{
-        return Product.findById(4)
+        return Product.findById(104)
     })
     .then(producto=>{
-        return producto.addCategories([5])
+        return producto.addCategories([105])
     }).then(()=>{
-        return User.findById(2)
+        return User.findById(102)
     }).then(usuario=>{
-        return usuario.addProducts([1,2,3])
+        return usuario.addProducts([101,102,103])
     }).then(()=>{
         return Reviews.bulkCreate(reviews)
     }).then(()=> {
-        return Product.findById(2)
+        return Product.findById(102)
     })
     .then((producto)=>{
-        return producto.addReviews([1,3,5])
+        return producto.addReviews([101,103,105])
     }).then(()=>{
         console.log("PiNgO")
     })
