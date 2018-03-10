@@ -4,6 +4,7 @@ const reviews = [
         text: "Thanks a lot, everything has been working well so far!!",
         rate:4,
         AuthorId:101,
+        ProductId:101
         
     },
     {
@@ -11,12 +12,14 @@ const reviews = [
         text: "Nice product quality is good and also delivered in time.",
         rate:3,
         AuthorId:103,
+        ProductId:102
     },
     {
         id:103,
         text: "Awesome app. Absolutely easy to set and manage. This app is a shit!!.",
         rate:2,
         AuthorId:102,
+        ProductId:102
         
     },
     {
@@ -24,12 +27,14 @@ const reviews = [
         text: "Excellent! It's very easy to use.",
         rate:3,
         AuthorId:101,
+        ProductId:102
     },
     {
         id:105,
         text: "Great app! Works well for people to review my jewelry.",
         rate:5,
         AuthorId:104,
+        ProductId:102
     }
 ]
 

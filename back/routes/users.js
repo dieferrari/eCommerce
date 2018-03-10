@@ -27,7 +27,7 @@ router.param('userId', function (req, res, next, id) {
     })
         .then((user) => {
             if (!user) {
-                res.sendStatus(404)
+                console.log('404 ')
             }
             req.user = user;
             return next();
@@ -85,7 +85,7 @@ router.get('/:userId/orders', function(req, res){
         },
         include: [{
             model: Product,
-            attributes:['id','name', 'price'],
+            attributes:['id','name', 'price', 'imgURL'],
             through: {
                 attributes:['cantidad'],
             }
