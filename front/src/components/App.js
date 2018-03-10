@@ -51,11 +51,11 @@ export default () => (
           component={SingleUserContainer}
         />
 
-        {/* /* <Route
+        <Route
           exact
           path="/login"
           component={LoginContainer}
-        /> */}
+        />
       </Switch>
     </div>
 );

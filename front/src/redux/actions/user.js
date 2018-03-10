@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { SET_USER } from '../constants';
 import { RECEIVE_USER } from '../constants';
+import { FOUND_USER } from '../constants';
+import { DESLOG_USER } from '../constants';
 
 
 const registerUser = (user,carrito) => ({
@@ -18,6 +20,16 @@ const registerUser = (user,carrito) => ({
       carrito:carrito
     }
   });
+  const loginUser = (user,carrito) => ({
+    type: FOUND_USER,
+    fetch:{
+      user:user,
+      carrito:carrito
+    }
+  })
+  const deslogearUser = (user) => ({
+    type: DESLOG_USER
+  })
 
 export const createUser = user => dispatch =>{
   axios.post(`http://localhost:3005/users/register`, user)
@@ -37,3 +49,20 @@ export const fetchUser = id => dispatch =>
       firstName:user.firstName, 
       lastName:user.lastName,
       email:user.email},user.products))});
+
+export const comprobateUser = user => dispatch => {
+  axios.post(`http://localhost:3005/users/login`,user)
+  .then(res => res.data)
+  .then(user => {
+    dispatch(loginUser({id:user.id,
+      firstName:user.firstName, 
+      lastName:user.lastName,
+      email:user.email},user.products))
+  })
+}
+export const deslogUser = () => dispatch => axios
+  .get(`http://localhost:3005/users/logout`)
+  .then(res => res.data)
+  .then(user =>{
+    dispatch(deslogearUser())
+  })
