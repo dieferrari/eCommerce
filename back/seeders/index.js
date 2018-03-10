@@ -10,11 +10,14 @@ const reviews=require('./reviews-seed');
 module.exports=function(){
     Product.bulkCreate(productos).then(()=>{
         return Categories.bulkCreate(categorias)
-    }).then(()=>{
+    })
+    .then(()=>{
         return  User.bulkCreate(usuarios)
-    }).then(()=>{
+    })
+    .then(()=>{
         return  Orders.bulkCreate(orders)
-    }).then(()=>{
+    })
+    .then(()=>{
         return Orders.findById(101)
     })
     .then(order=>{
@@ -36,12 +39,14 @@ module.exports=function(){
     })
     .then(producto=>{
         return producto.addCategories([105])
-    }).then(()=>{
+    })
+    .then(()=>{
         return Product.findById(102)
     })
     .then(producto=>{
         return producto.addCategories([105])
-    }).then(()=>{
+    })
+    .then(()=>{
         return Product.findById(103)
     })
     .then(producto=>{
@@ -52,13 +57,23 @@ module.exports=function(){
     })
     .then(producto=>{
         return producto.addCategories([105])
-    }).then(()=>{
+    })
+    .then(()=>{
         return User.findById(102)
-    }).then(usuario=>{
+    })
+    .then(usuario=>{
         return usuario.addProducts([101,102,103])
-    }).then(()=>{
+    })
+    .then(()=>{
         return Reviews.bulkCreate(reviews)
-    }).then(()=>{
+    })
+    .then(()=> {
+        return Product.findById(102)
+    })
+    .then((producto)=>{
+        return producto.addReviews([101,103,105])
+    })
+    .then(()=>{
         console.log("PiNgO")
     })
 }

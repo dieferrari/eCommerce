@@ -1,6 +1,6 @@
 import React from 'react';
 import Register from '../components/register';
-import { createUser } from '../redux/actions/user';
+import { createUser,facebookUser } from '../redux/actions/user';
 import store from '../redux/store';
 
 export default class RegisterContainer extends React.Component{
@@ -29,7 +29,10 @@ export default class RegisterContainer extends React.Component{
     }
     render () {
         return (
-            <Register user={this.state.user.user} handleSubmit={this.handleSubmit}/>
+            <Register 
+            user={this.state.user.user} 
+            handleSubmit={this.handleSubmit}
+            />
         )
     }
 }

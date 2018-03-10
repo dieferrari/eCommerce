@@ -9,7 +9,8 @@ export default ({ user , handleSubmit}) => (
           <input type="password" name="password" placeholder="password"></input>
           <button type="submit">Register</button>
       </form>
+      <a href="http://localhost:3005/users/auth/facebook">Login with Facebook</a>
+      <a href="http://localhost:3005/users/auth/google">Sign In with Google</a>
       <a href="http://localhost:3000/login">Login</a>
-      {console.log('user',user)}
   </div>
 );
