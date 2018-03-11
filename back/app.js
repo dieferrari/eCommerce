@@ -7,10 +7,13 @@ var app = express();
 var routes = require('./routes');
 var User = require('./models/users');
 var db = require('./config/db')
-// var passport = require('passport');
-// var LocalStrategy = require('passport-local').Strategy;
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 var cors = require('cors'); 
-const create=require('./seeders')
+var session = require('express-session');
+const create = require('./seeders');
+var FacebookStrategy = require('passport-facebook').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 create()
 
 var corsOptions = {
@@ -19,24 +22,90 @@ var corsOptions = {
 }
 
 app.use(cors(corsOptions));
-// passport.use(new LocalStrategy(User.authenticate()));
+
+app.use(session({ 
+  secret: 'niño de cobre',
+  resave: false,
+  saveUninitialized: true
+}))
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // use static serialize and deserialize of model for passport session support
 // passport.serializeUser(User.serializeUser());
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
 // passport.deserializeUser(User.deserializeUser());
+passport.deserializeUser(function(id, done) {
+  User.findById(id)
+  .then(user => done(null, user))
+  .catch(err => done(err));
+});
 
-// app.use(passport.initialize());
-// app.use(passport.session());
+passport.use(new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password'
+},
+  function (email ,password, done) {
+    User.findOne({
+      where:{
+         email: email 
+        }})
+    .then((user) => {
+      if (!user) {
+        return done(null, false, { message: 'Incorrect email.' });
+      }
+      if (!user.verifyPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+));
+passport.use(new FacebookStrategy({
+  clientID: 156258978423467,
+  clientSecret: '2eb4087000b45879ec370a9b9ee68332',
+  callbackURL: "http://localhost:3005/users/auth/facebook/callback"
+},
+function(accessToken, refreshToken, profile, done) {
+  console.log("AIUDAAAAAAAAAAAAAAAAAAAAAA",profile)
+  User.findOrCreate({where:{facebookId:profile.id},defaults:{fullName:profile.displayName}})
+  .then((user) => {
+    done(null, user[0]);
+  })
+  .catch(err => done(err));
+}
+));
+passport.use(new GoogleStrategy({
+  clientID: "921152971758-5pnnrjq7h9n50147j2qpfhvv77d9ou9j.apps.googleusercontent.com",
+  clientSecret: "3VAf_vHNwwYYo8Y-4tQt5-Lo",
+  callbackURL: "http://localhost:3005/users/auth/google/callback"
+},
+function(token, tokenSecret, profile, done) {
+  console.log("AQUIIIIIIIIIIIIIIIIII WEON",profile)
+    User.findOrCreate({where:{ googleId: profile.id }})
+    .then((user) => {
+      done(null, user[0]);
+    })
+    .catch(err => done(err));
+  }
+  ));
+
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'html');
+// app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger(':method :url :status'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: false
+  extended: true
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));

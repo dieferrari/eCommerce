@@ -1,7 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 const {User, Orders, Product, OrdersProducts} = require('../models');
-// const passport = require('passport');
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+      next()
+    } else {
+      res.sendStatus(403);
+    }
+}
 
 router.get('/', function (req, res, next) {
     User.findAll()
@@ -19,85 +27,31 @@ router.param('userId', function (req, res, next, id) {
     })
         .then((user) => {
             if (!user) {
-                res.sendStatus(404)
+                console.log('404 ')
             }
             req.user = user;
             return next();
         })
         .catch(next);
 })
-// router.post('/register', function (req, res, next) {
-//     User.create({
-//         firstname: req.body.firstname,
-//         lastname: req.body.lastname,
-//         email: req.body.email,
-//         password: req.body.password,
-//     },function (err, user) {
-//         if (err) {
-//             res.send(err)
-//         } else {
-//             var authenticate = User.authenticate();
-//             authenticate(req.body.email, req.body.password, function (err, result) {
-//                 if (err) {
-//                     res.send(err)
-//                 } else {
-//                     res.status(201).send({
-//                         status: 201,
-//                         data: {
-//                             user: result
-//                         },
-//                         message: 'Success Register'
-//                     })
-//                 }
-//             })
-//         }
-//     })
-// })
-router.post('/register',function(req,res,next){
+router.post('/register', function (req, res, next) {
     User.create({
-        firstName:req.body.firstName,
-        lastName:req.body.lastName,
-        email:req.body.email,
-        password:req.body.password
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password:req.body.password,
     })
     .then((user) => {
-        res.status(201).send(user)
-        console.log(user.data)}
-    )
-    .catch(err => res.send(err))
-})
-router.post('/login',function(req,res,next){
-    User.findOne({where:{
-        email:req.body.email,
-        password:req.body.password
-    }
+            res.send(user);
     })
-    .then((user) => {
-        if(!user){
-            res.redirect('/users/failedLogin')
-        }else{
-            res.status(200).send({
-                status:200,
-                data:{
-                    user
-                },
-                message:'Success Login'
-            })
-        }
+    .catch((err) => {
+        console.log('ERROR', err)
+        res.send(err)
     })
-    .catch(err => res.send(err))
 })
-// router.post('/login', passport.authenticate('local', {
-//     failureRedirect: '/users/failedLogin'
-// }), function (req, res) {
-//     res.status(200).send({
-//         status: 200,
-//         data: {
-//             user: req.user
-//         },
-//         message: 'Success Login'
-//     })
-// });
+router.post('/login',passport.authenticate('local'),function (req, res) {
+    res.status(200).send(req.body)
+});
 router.delete('/delete/:userId', function (req, res, next) {
     User.destroy({
             where:{id: req.params.userId}
@@ -105,30 +59,33 @@ router.delete('/delete/:userId', function (req, res, next) {
         .then((user) => res.send(user))
         .catch((err) => res.send(err))
 })
-
-router.get("/failedLogin", (req, res) => {
-    res.status(404).send({
-        status: 404,
-        data: null,
-        message: 'Failed Login'
-    })
-})
 router.get('/logout', function(req, res){
-    req.logout();
+    req.logout()
+    res.sendStatus(200);
 });
+router.get('/auth/facebook', passport.authenticate('facebook'));
 
-router.get('/:userId', function (req, res) {
-    res.send(req.user);
-});
-
+router.get('/auth/facebook/callback',passport.authenticate('facebook',
+ {  successRedirect: 'http://localhost:3000',
+    failureRedirect: 'http://localhost:3000/login' }
+));
+router.get('/auth/google',
+  passport.authenticate('google', 
+  { scope: ['https://www.googleapis.com/auth/plus.login'] }
+))
+router.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: 'http://localhost:3000/login' }),
+  function(req, res) {
+    res.redirect('htpp://localhost:3000/');
+  });
 router.get('/:userId/orders', function(req, res){
-    Orders.findAll({
+    Orders.findAll({    
         where: {
             OwnerId: req.params.userId,
         },
         include: [{
             model: Product,
-            attributes:['id','name', 'price'],
+            attributes:['id','name', 'price', 'imgURL'],
             through: {
                 attributes:['cantidad'],
             }
@@ -137,5 +94,8 @@ router.get('/:userId/orders', function(req, res){
         res.send(orders)
     })
 })
+router.get('/:userId', function (req, res) {
+    res.send(req.user);
+});
 
 module.exports = router;

@@ -3,7 +3,22 @@ const router = express.Router();
 const { Categories, Product, Reviews, User } = require('../models/');
 
 router.get('/', function (req, res, next) {
-    Product.findAll({ include: [ Categories, Reviews] })
+    Product.findAll({ include: [{
+        model: Categories,
+        attributes:['id','name'],
+        through: {
+            attributes:[],
+        }
+    },{
+        model: Reviews,
+        as:'reviews',
+        attributes:['id','rate','text'],
+        include:[{
+            model:User,
+            as:'Author',
+            attributes:['id','firstName','lastName']
+        }]
+}]})
         .then((products) => res.status(200).send(products))
 })
 router.post('/',function(req,res,next){
@@ -20,14 +35,14 @@ router.get('/:id',function(req,res,next){
             }
         },{
             model: Reviews,
-            attributes:['id','AuthorId','rate','text'],
-            through: {
-                attributes:[],
-            },include:[{
+            as:'reviews',
+            attributes:['id','rate','text'],
+            include:[{
                 model:User,
-                as:'Author'
+                as:'Author',
+                attributes:['id','firstName','lastName']
             }]
-        }]
+    }]//include 
     })
         .then((product) => res.status(200).send(product))
         .catch((err) => res.send(err))

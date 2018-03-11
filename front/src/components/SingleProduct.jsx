@@ -18,9 +18,10 @@ export default ({ product }) => (
       </div>
     ))}
     <h3>Reviews:</h3>
+    {console.log(product)}
     {product.reviews.map(rev => (
       <div key={rev.id}>
-       <Link to={`/user/${rev.AuthorId}`}><p>{rev.Author.firstName}</p> </Link>
+       <Link to={`/user/${rev.Author.id}`}><p>{rev.Author.fullName}</p> </Link>
         <p>{rev.text}</p>
         <p>Rate: {rev.rate}</p>
       </div>

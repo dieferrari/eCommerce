@@ -5,6 +5,8 @@ import LoginContainer from '../containers/login-container';
 import ProductsContainer from '../containers/ProductsContainer';
 import SingleProductContainer from '../containers/SingleProductContainer';
 import CategoryContainer from '../containers/CategoryContainer';
+import UserOrderContainer from '../containers/UserOrderContainer';
+import CarritosContainer from '../containers/CarritosContainer';
 import SingleUserContainer from '../containers/SingleUserContainer';
 import SingleCategoryContainer from '../containers/SingleCategoryContainer';
 import Header from '../components/Header'
@@ -27,11 +29,21 @@ export default () => (
           path="/products/:id"
           component={SingleProductContainer}
         />
-          <Route
+        <Route
           exact 
           path="/category"
           component={CategoryContainer}
         />
+        <Route 
+          path="/user/:id/orders"
+          component={UserOrderContainer}
+          />
+        <Route
+          exact
+          path="/carrito"
+          component={CarritosContainer}
+        />
+          
           <Route 
           path="/category/:id"
           component={SingleCategoryContainer}
@@ -41,11 +53,11 @@ export default () => (
           component={SingleUserContainer}
         />
 
-        {/* /* <Route
+        <Route
           exact
           path="/login"
           component={LoginContainer}
-        /> */}
+        />
       </Switch>
     </div>
 );
