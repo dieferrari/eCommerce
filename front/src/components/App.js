@@ -7,9 +7,11 @@ import SingleProductContainer from '../containers/SingleProductContainer';
 import CategoryContainer from '../containers/CategoryContainer';
 import SingleUserContainer from '../containers/SingleUserContainer';
 import SingleCategoryContainer from '../containers/SingleCategoryContainer';
+import Header from '../components/Header'
 
 export default () => (
     <div>
+      <Header/>
       <Switch>
         <Route
           exact
