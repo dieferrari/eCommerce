@@ -56,11 +56,11 @@ export default () => (
           component={AdminApp}
         />
 
-        {/* /* <Route
+        <Route
           exact
           path="/login"
           component={LoginContainer}
-        /> */}
+        />
       </Switch>
     </div>
 );

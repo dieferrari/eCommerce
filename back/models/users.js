@@ -8,12 +8,10 @@ const User = db.define('user', {
     
     firstName: {
         type: Sequelize.STRING,
-        allowNull: false,
     },
 
     lastName: {
         type: Sequelize.STRING,
-        allowNull: false,
     },
 
     fullName: {
@@ -22,7 +20,6 @@ const User = db.define('user', {
             return this.getDataValue("firstName") + " " + this.getDataValue("lastName")
         }      
     },
-
     email: {
         type: Sequelize.STRING,
         validate: {
@@ -32,10 +29,15 @@ const User = db.define('user', {
 
     password: {
         type: Sequelize.STRING,
-        allowNull: false,
     },
     salt: {
         type:Sequelize.STRING,
+    },
+    facebookId:{
+        type:Sequelize.STRING
+    },
+    googleId:{
+        type:Sequelize.STRING
     }
 }, {
     setterMethods: {
@@ -54,9 +56,8 @@ User.prototype.sha512 = function (password, salt) {
     var hash = crypto.createHmac('sha1', salt).update(password).digest('hex')
     return hash
 };
-
-
 User.prototype.verifyPassword = function(password) {
+    password=this.sha512(password,this.salt)
     return password == this.password;
 }
 

@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default ({ user }) =>{ 
-  console.log(user) 
+export default ({ user, handleSubmit }) =>{
   if (!user.id) return <h3>Loading</h3>
-
   return (
     <div>
+      <button onClick={handleSubmit}>Deslogearse</button>
       <h1>{user.firstName}</h1>
       <div>
       <h2>{user.email}</h2>
