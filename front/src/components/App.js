@@ -9,6 +9,7 @@ import UserOrderContainer from '../containers/UserOrderContainer';
 import CarritosContainer from '../containers/CarritosContainer';
 import SingleUserContainer from '../containers/SingleUserContainer';
 import SingleCategoryContainer from '../containers/SingleCategoryContainer';
+import AdminApp from './AdminApp';
 import Header from '../components/Header'
 
 export default () => (
@@ -45,12 +46,16 @@ export default () => (
         />
           
           <Route 
-          path="/category/:id"
+          path="/categories/:id"
           component={SingleCategoryContainer}
         />
           <Route 
           path="/user/:id"
           component={SingleUserContainer}
+        />
+          <Route 
+          path="/admin"
+          component={AdminApp}
         />
 
         <Route
