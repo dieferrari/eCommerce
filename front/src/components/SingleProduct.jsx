@@ -1,5 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom'
+import ReviewForm from './ReviewForm'
 
 // Create our number formatter.
 var formatter = new Intl.NumberFormat('en-US', {
@@ -10,8 +11,14 @@ var formatter = new Intl.NumberFormat('en-US', {
   // and is usually already 2
 });
 
-export default ({ product }) => (
-  <div className="container">
+export default ({ product, user, addProductReview }) => {
+
+  const submit = (values) =>{
+    addProductReview(product.id, values, user);
+  }
+
+  return(
+    <div className='container'>
     {!product.id ? "Loading" :
     (<div className="row">
       <div className="card-img-top col item-photo">
@@ -30,13 +37,13 @@ export default ({ product }) => (
         <div className="section" style={{paddingBottom:"20px"}}>
           <h6 className="title-attr"><small>quantity</small></h6>                    
           <div>
-              <button type="button" class="btn btn-outline-secondary">-</button>
+              <button type="button" className="btn btn-outline-secondary">-</button>
               <input defaultValue="1" />
-              <button type="button" class="btn btn-outline-secondary">+</button>
+              <button type="button" className="btn btn-outline-secondary">+</button>
           </div>
         </div>  
         <a href="#" className="btn btn-success">Add to cart</a>
-
+        <ReviewForm onSubmit={submit}/>
         {product.categories.map(cat => (
           <div key={cat.id}>
             <h6>Categories: {cat.name}</h6>
@@ -58,5 +65,5 @@ export default ({ product }) => (
     </div>
     )}
   </div>
-
-);
+  )
+};

@@ -1,19 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
-//import { bindActionCreators } from 'redux';
-import { fetchSingleProduct } from '../redux/actions/singleProduct';
+import { bindActionCreators } from 'redux';
+import { fetchSingleProduct, addProductReview } from '../redux/actions/singleProduct';
 import SingleProduct from '../components/SingleProduct';
 
 class SingleProductContainer extends React.Component {
+	constructor(){
+		super()
+		this.state = {
+			user: {
+				id:101,
+				firstName: 'Usuario',
+				lastName: 'Estatico',
+				email: 'estatico@cc.cc',
+			  }
+		}
+	}
 
 	componentDidMount() {
-    this.props.fetchSingleProduct(this.props.id)
+		this.props.fetchSingleProduct(this.props.id)
 	}
 
 	render () {
+
 		return (
 			<SingleProduct
 				product={this.props.product}
+				user={this.state.user.id}
+				addProductReview={this.props.addProductReview}
 			/>
 		)
 	}
@@ -28,12 +42,10 @@ const mapStateToProps = function(state, ownProps) {
 	}
 }
 
-const mapDispatchToProps = function(dispatch) {
-	return {
-		fetchSingleProduct: (id) => dispatch(fetchSingleProduct(id)),
-	}
-}
-
+const mapDispatchToProps = dispatch => bindActionCreators({
+	fetchSingleProduct,
+	addProductReview
+}, dispatch)
 // const mapDispatchToProps = function(dispatch) {
 // 	return bindActionCreators({fetchSingleProduct}, dispatch)
 // }

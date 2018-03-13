@@ -21,5 +21,10 @@ export const LOADING = 'LOADING';
 export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 
 export const RECEIVE_USER_ORDERS = 'RECEIVE_USER_ORDERS';
+
+//REVIEW
+
+export const FETCH_POST = 'FETCH_POST';
+
 //ORDERS
 export const RECEIVE_ORDERS = 'RECEIVE_ORDERS'
