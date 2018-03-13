@@ -7,25 +7,25 @@ const receiveProducts = (products) => ({
   });
 
 export const fetchProducts = () => dispatch =>
-  axios.get('http://localhost:3005/products')
+  axios.get('/api/products')
     .then(res => res.data)
     .then(products => {
       dispatch(receiveProducts(products))});
 
 export const postProducts = (body) => dispatch =>
-  axios.post('http://localhost:3005/products',body)
+  axios.post('/api/products',body)
     .then(res => res.data)
     .then(products => {
       dispatch(receiveProducts(products))});
 
 export const editProducts = (id,body) => dispatch =>
-  axios.put(`http://localhost:3005/products/${id}`,body)
+  axios.put(`/api/products/${id}`,body)
     .then(res => res.data)
     .then(products => {
       dispatch(receiveProducts(products))});
 
 export const deleteProducts = (id) => dispatch =>
-  axios.delete(`http://localhost:3005/products/${id}`)
+  axios.delete(`/api/products/${id}`)
     .then(res => res.data)
     .then(products => {
       dispatch(receiveProducts(products))});

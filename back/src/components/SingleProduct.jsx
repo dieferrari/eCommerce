@@ -30,9 +30,9 @@ export default ({ product }) => (
         <div className="section" style={{paddingBottom:"20px"}}>
           <h6 className="title-attr"><small>quantity</small></h6>                    
           <div>
-              <button type="button" class="btn btn-outline-secondary">-</button>
+              <button type="button" className="btn btn-outline-secondary">-</button>
               <input defaultValue="1" />
-              <button type="button" class="btn btn-outline-secondary">+</button>
+              <button type="button" className="btn btn-outline-secondary">+</button>
           </div>
         </div>  
         <a href="#" className="btn btn-success">Add to cart</a>

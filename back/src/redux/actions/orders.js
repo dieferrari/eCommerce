@@ -7,7 +7,7 @@ const receiveOrders = (orders) => ({
   });
 
   export const fetchOrders = () => dispatch =>
-  axios.get('http://localhost:3005/orders')
+  axios.get('/api/orders')
     .then(res => res.data)
     .then(orders=> {
       dispatch(receiveOrders(orders))});
@@ -18,7 +18,7 @@ const receiveOrders = (orders) => ({
     products:[{id:101,cantidad:2},{id:104,cantidad:4},{id:103,cantidad:3}]
 }*/
 export const postOrders = (body) => dispatch =>
-  axios.post('http://localhost:3005/orders',body)
+  axios.post('/api/orders',body)
     .then(res => res.data)
     .then(orders => {
       dispatch(receiveOrders(orders))});
@@ -27,7 +27,7 @@ export const postOrders = (body) => dispatch =>
     status:algo
 }*/
 export const editOrders = (id,body) => dispatch =>
-  axios.put(`http://localhost:3005/orders/${id}`,body)
+  axios.put(`/api/orders/${id}`,body)
     .then(res => res.data)
     .then(orders => {
       dispatch(receiveOrders(orders))});

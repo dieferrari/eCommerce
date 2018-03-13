@@ -32,7 +32,7 @@ const registerUser = (user,carrito) => ({
   })
 
 export const createUser = user => dispatch =>{
-  axios.post(`http://localhost:3005/users/register`, user)
+  axios.post(`/api/users/register`, user)
   .then(res => {
    return res.data})
   .then(user => {
@@ -42,7 +42,7 @@ export const createUser = user => dispatch =>{
       email:user.email},[]))})};
 
 export const fetchUser = id => dispatch => 
-  axios.get(`http://localhost:3005/users/${id}`)
+  axios.get(`/api/users/${id}`)
   .then(res => res.data)
   .then(user => {
     dispatch(receiveUser({id:user.id,
@@ -51,7 +51,7 @@ export const fetchUser = id => dispatch =>
       email:user.email},user.products))});
 
 export const comprobateUser = user => dispatch => {
-  axios.post(`http://localhost:3005/users/login`,user)
+  axios.post(`/api/users/login`,user)
   .then(res => res.data)
   .then(user => {
     dispatch(loginUser({id:user.id,
@@ -61,7 +61,7 @@ export const comprobateUser = user => dispatch => {
   })
 }
 export const deslogUser = () => dispatch => axios
-  .get(`http://localhost:3005/users/logout`)
+  .get(`/api/users/logout`)
   .then(res => res.data)
   .then(user =>{
     dispatch(deslogearUser())

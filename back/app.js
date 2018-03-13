@@ -11,23 +11,25 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var cors = require('cors'); 
+// var cors = require('cors'); 
 var session = require('express-session');
 const create=require('./seeders')
-create()
 
-var corsOptions = {
-  origin: 'http://localhost:3000',
-  optionsSuccessStatus: 200
-}
 
-app.use(cors(corsOptions));
+// var corsOptions = {
+//   origin: 'http://localhost:3000',
+//   optionsSuccessStatus: 200
+// }
+
+// app.use(cors(corsOptions));
 
 app.use(session({ secret: 'niño de cobre' }))
 
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+app.use(express.static('./public'));
 // use static serialize and deserialize of model for passport session support
 // passport.serializeUser(User.serializeUser());
 passport.serializeUser(function(user, done) {
@@ -93,8 +95,8 @@ function(token, tokenSecret, profile, done) {
   ));
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -106,7 +108,10 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
+app.use('/api', routes);
+app.get('/*', function (req, res) {
+  res.sendFile(__dirname + '/public/index.html');
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -126,9 +131,10 @@ app.use(function (err, req, res, next) {
   res.send(err.message);
 });
 
-db.sync({force: false})
+db.sync({force: true})
 .then (() => {
-    app.listen(3005,() => console.log('listening on port 3005'))
+  create()
+  app.listen(3005,() => console.log('listening on port 3000'))
 })
 
 module.exports = app;
