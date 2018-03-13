@@ -23,18 +23,27 @@ router.get('/', function (req, res, next) {
 //como se crean ordenes?
 /* req.body={
     userId:104,
+    userDirection:''
+    userMail:''
     products:[{id:101,cantidad:2},{id:104,cantidad:4},{id:103,cantidad:3}]
 }*/
 
 router.post('/', function (req, res, next) {
-    const{userId,products}=req.body
-    Orders.create({OwnerId:userId})
+    const {userId,
+        userMail,
+        userDirection,
+        products}=req.body
+    Orders.create({OwnerId:userId,
+        OwnerDirection:userDirection,
+        OwnerMail:userMail})
     .then((orden)=>{
        const productos=products.map(producto=>{
         return orden.addProduct(producto.id,{
              through: { cantidad: producto.cantidad }})})
         return Promise.all(productos)
     })
+    .then(()=>User.findById(userId))
+    .then(usuario=>usuario.setProducts([]))
     .then(()=>Orders.findAll({    
         include: [{
             model: Product,
