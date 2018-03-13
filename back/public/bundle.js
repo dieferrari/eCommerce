@@ -29553,7 +29553,7 @@ exports.default = function (_ref) {
             { className: 'd-flex justify-content-center' },
             _react2.default.createElement(
                 'a',
-                { href: 'http://localhost:3005/users/auth/google' },
+                { href: '/api/users/auth/google' },
                 _react2.default.createElement('img', { src: './google.png', width: '300px', height: '50px' })
             )
         ),
@@ -29562,7 +29562,7 @@ exports.default = function (_ref) {
             { className: 'd-flex justify-content-center' },
             _react2.default.createElement(
                 'a',
-                { href: 'http://localhost:3005/users/auth/facebook' },
+                { href: '/api/users/auth/facebook' },
                 _react2.default.createElement('img', { src: './fb.png', width: '300px', height: '50px' })
             )
         ),

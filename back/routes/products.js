@@ -15,7 +15,7 @@ function isLoggedIn(req, res, next) {
     }
 }
 
-router.get('/', function (req, res, next) {
+router.get('/',function (req, res, next) {
     Product.findAll({ include: [{
         model: Categories,
         attributes:['id','name'],

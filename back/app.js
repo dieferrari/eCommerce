@@ -136,7 +136,7 @@ app.use(function (err, req, res, next) {
   res.send(err.message);
 });
 
-db.sync({force: true})
+db.sync({force: false})
 .then (() => {
   create()
   app.listen(3005,() => console.log('listening on port 3000'))

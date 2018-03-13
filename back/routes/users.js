@@ -42,6 +42,7 @@ router.post('/register', function (req, res, next) {
         password:req.body.password,
     })
     .then((user) => {
+        console.log(user)
             res.send(user);
     })
     .catch((err) => {
