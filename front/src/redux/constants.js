@@ -4,6 +4,7 @@ export const RECEIVE_USER = 'RECEIVE_USER';
 export const FOUND_USER = 'FOUND_USER';
 export const DESLOG_USER = 'DESLOG_USER';
 export const FACEBOOK_USER = 'FACEBOOK_USER';
+export const RECEIVE_ALL_USER = 'RECEIVE_ALL_USER'
 
 //Category
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
@@ -11,6 +12,7 @@ export const RECEIVE_SINGLE_CATEGORY = 'RECEIVE_SINGLE_CATEGORY';
 
 //SingleProduct
 export const RECEIVE_SINGLE_PRODUCT = 'RECEIVE_SINGLE_PRODUCT';
+export const CREATE_EDIT_PRODUCT = 'CREATE_EDIT_PRODUCT';
 
 //Loading
 export const LOADING = 'LOADING';
@@ -19,3 +21,5 @@ export const LOADING = 'LOADING';
 export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 
 export const RECEIVE_USER_ORDERS = 'RECEIVE_USER_ORDERS';
+//ORDERS
+export const RECEIVE_ORDERS = 'RECEIVE_ORDERS'

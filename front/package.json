@@ -38,6 +38,7 @@
     "react-dev-utils": "^5.0.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
+    "react-route-hook": "^1.1.1",
     "react-router-dom": "^4.2.2",
     "reactstrap": "^5.0.0-beta.2",
     "redux": "^3.7.2",
