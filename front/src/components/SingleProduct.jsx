@@ -31,7 +31,7 @@ export default ({ product }) => (
           <h6 className="title-attr"><small>quantity</small></h6>                    
           <div>
               <button type="button" class="btn btn-outline-secondary">-</button>
-              <input value="1" />
+              <input defaultValue="1" />
               <button type="button" class="btn btn-outline-secondary">+</button>
           </div>
         </div>  
