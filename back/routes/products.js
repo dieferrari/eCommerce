@@ -90,7 +90,6 @@ router.put('/:id',function(req,res,next){
     .then(products=> res.status(201).send(products))
     .catch((err) => res.send(err))
 })
-<<<<<<< HEAD
 
 
 router.post('/:id/review', function (req, res, next) {
@@ -102,7 +101,6 @@ router.post('/:id/review', function (req, res, next) {
 })
 
 
-=======
 router.delete('/:id',function(req,res,next){
     Product.destroy({where:{id:req.params.id}})
     .then(()=>Product.findAll({ include: [{
@@ -125,7 +123,6 @@ router.delete('/:id',function(req,res,next){
     .catch((err) => res.send(err))
 })
 
->>>>>>> f2d4b63f65fcdd774b6e9ee1689ef948c6b103ae
 router.get('/:id',function(req,res,next){
     Product.findById(req.params.id,{
         include: [{

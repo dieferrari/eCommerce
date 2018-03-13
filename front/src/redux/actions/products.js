@@ -7,16 +7,6 @@ const receiveProducts = (products) => ({
   });
 
 export const fetchProducts = () => dispatch =>
-<<<<<<< HEAD
-axios({
-  method:'get',
-  url:'http://localhost:3005/products',
-  withCredentials: true
-}).then(res => res.data)
-  .then(products => {
-  console.log(products)
-  dispatch(receiveProducts(products))});
-=======
   axios.get('http://localhost:3005/products')
     .then(res => res.data)
     .then(products => {
@@ -39,4 +29,3 @@ export const deleteProducts = (id) => dispatch =>
     .then(res => res.data)
     .then(products => {
       dispatch(receiveProducts(products))});
->>>>>>> f2d4b63f65fcdd774b6e9ee1689ef948c6b103ae

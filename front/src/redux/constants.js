@@ -21,14 +21,11 @@ export const LOADING = 'LOADING';
 export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 
 export const RECEIVE_USER_ORDERS = 'RECEIVE_USER_ORDERS';
-<<<<<<< HEAD
 
 //REVIEW
 
 export const FETCH_POST = 'FETCH_POST';
 
 export const FETCH_EDIT = 'FETCH_EDIT'
-=======
 //ORDERS
 export const RECEIVE_ORDERS = 'RECEIVE_ORDERS'
->>>>>>> f2d4b63f65fcdd774b6e9ee1689ef948c6b103ae

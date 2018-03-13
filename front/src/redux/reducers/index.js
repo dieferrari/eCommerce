@@ -6,12 +6,9 @@ import productsReducer from './products-reducer';
 import categoryReducer from './category-reducer';
 import userOrdersReducer from './user-order-reducer'
 import singleCategoryReducer from './single-category-reducer';
-<<<<<<< HEAD
 import {reducer as reducerForm} from 'redux-form'
-=======
 import ordersReducer from './orders-reducer';
 import allUsersReducer from './allUsers-reducer'
->>>>>>> f2d4b63f65fcdd774b6e9ee1689ef948c6b103ae
 
 export default combineReducers ({
   loading: loadingReducer,
@@ -19,12 +16,9 @@ export default combineReducers ({
   products: productsReducer,
   category: categoryReducer,
   singleCategory: singleCategoryReducer,
-<<<<<<< HEAD
   form: reducerForm,
-=======
   userOrders: userOrdersReducer,
   allUsers:allUsersReducer,
   user: userReducer,
   orders:ordersReducer
->>>>>>> f2d4b63f65fcdd774b6e9ee1689ef948c6b103ae
 });

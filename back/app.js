@@ -23,15 +23,7 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-<<<<<<< HEAD
-app.use(session({ 
-  secret: 'niño de cobre',
-  resave: false,
-  saveUninitialized: false
-}))
-=======
 app.use(session({ secret: 'niño de cobre' }))
->>>>>>> f2d4b63f65fcdd774b6e9ee1689ef948c6b103ae
 
 app.use(passport.initialize());
 app.use(passport.session());
