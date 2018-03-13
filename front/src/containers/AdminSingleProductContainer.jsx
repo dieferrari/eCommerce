@@ -19,7 +19,11 @@ class AdminSingleProductContainer extends React.Component{
         const categories=[]
         for(var i=0;i<evt.target.length;i++){
             if(evt.target[i].type=='text'){
-                product[evt.target[i].name]=evt.target[i].value
+                if(evt.target[i].name=='available'){
+                    product[evt.target[i].name]=evt.target[i].value=='true'?true:false
+                }else{
+                    product[evt.target[i].name]=evt.target[i].value
+                }   
             }
             if(evt.target[i].type=='checkbox' && evt.target[i].checked==true){
                 categories.push(evt.target[i].value)
