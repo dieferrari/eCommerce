@@ -7,8 +7,11 @@ const receiveProducts = (products) => ({
   });
 
 export const fetchProducts = () => dispatch =>
-  axios.get('http://localhost:3005/products')
-    .then(res => res.data)
-    .then(products => {
-      console.log(products)
-      dispatch(receiveProducts(products))});
+axios({
+  method:'get',
+  url:'http://localhost:3005/products',
+  withCredentials: true
+}).then(res => res.data)
+  .then(products => {
+  console.log(products)
+  dispatch(receiveProducts(products))});

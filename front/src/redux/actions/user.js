@@ -3,7 +3,8 @@ import { SET_USER } from '../constants';
 import { RECEIVE_USER } from '../constants';
 import { FOUND_USER } from '../constants';
 import { DESLOG_USER } from '../constants';
-
+import { FETCH_POST } from '../constants';
+import { FETCH_EDIT } from '../constants';
 
 const registerUser = (user,carrito) => ({
     type: SET_USER,
@@ -30,6 +31,18 @@ const registerUser = (user,carrito) => ({
   const deslogearUser = (user) => ({
     type: DESLOG_USER
   })
+  const receiveReview = (review) => ({
+    type: FETCH_POST,
+    fetch:{
+      review: review
+    }
+  })
+  const editReview = review => ({
+    type: FETCH_EDIT,
+    fetch: {
+      review: review
+    }
+  })
 
 export const createUser = user => dispatch =>{
   axios.post(`http://localhost:3005/users/register`, user)
@@ -48,7 +61,9 @@ export const fetchUser = id => dispatch =>
     dispatch(receiveUser({id:user.id,
       firstName:user.firstName, 
       lastName:user.lastName,
-      email:user.email},user.products))});
+      email:user.email},user.products))
+      return user
+    });
 
 export const comprobateUser = user => dispatch => {
   axios.post(`http://localhost:3005/users/login`,user)
@@ -66,3 +81,32 @@ export const deslogUser = () => dispatch => axios
   .then(user =>{
     dispatch(deslogearUser())
   })
+
+export const fetchPost = (productId, values, user) => dispatch => {
+  axios
+  .post(`http://localhost:3005/products/${productId}/review`, {...values, AuthorId: user.id })
+  // body agregar values
+  .then(res => res.data)
+  .then(values => {
+    dispatch(receiveReview({
+      AuthorId: user.id,
+      ProductId: productId,
+      text: values.text,   
+      rate: values.rate,   
+    }))
+  })
+}
+
+export const fetchEdit = (productId, values, user) => dispatch => {
+  axios
+  .put(`http://localhost:3005/products/${productId}/review`, {...values, AuthorId: user.id })
+  .then(res => res.data)
+  .then(values => {
+    dispatch(editReview({
+      AuthorId: user.id,
+      ProductId: productId,
+      text: values.text,
+      rate: values.rate,
+    }))
+  })
+}
