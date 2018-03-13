@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-//import { bindActionCreators } from 'redux';
-import { fetchSingleProduct } from '../redux/actions/singleProduct';
+// import { bindActionCreators } from 'redux';
+import { fetchSingleProduct, addProductReview  } from '../redux/actions/singleProduct';
 import {addCarrito} from '../redux/actions/carrito';
 import SingleProduct from '../components/SingleProduct';
 
@@ -9,7 +9,13 @@ class SingleProductContainer extends React.Component {
 	constructor(props){
 	super(props);
 		this.state = {
-			cantidad:1
+			cantidad:1,
+			user: {
+				id:101,
+				firstName: 'Usuario',
+				lastName: 'Estatico',
+				email: 'estatico@cc.cc',
+			  }
 		}
 	this.handleChange = this.handleChange.bind(this);
 	this.handleSubmit = this.handleSubmit.bind(this);
@@ -17,7 +23,7 @@ class SingleProductContainer extends React.Component {
 
 
 	componentDidMount() {
-    this.props.fetchSingleProduct(this.props.id)
+		this.props.fetchSingleProduct(this.props.id)
 	}
 
 	handleChange(value){
@@ -26,18 +32,20 @@ class SingleProductContainer extends React.Component {
 
 	handleSubmit(evt){
 		evt.preventDefault()
-		console.log("aosjdlaksjdlkajslkdjalksjdlaksjldkj",evt.target,this.props.product)
 		this.props.product.cantidad = this.state.cantidad
 		this.props.addCarrito(this.props.product)
 	}
 
 	render () {
+
 		return (
 			<SingleProduct
 				product={this.props.product}
 				handleChange={this.handleChange}
 				cantidad={this.state.cantidad}
 				handleSubmit={this.handleSubmit}
+				user={this.state.user.id}
+				addProductReview={this.props.addProductReview}
 			/>
 		)
 	}
@@ -55,7 +63,8 @@ const mapStateToProps = function(state, ownProps) {
 const mapDispatchToProps = function(dispatch) {
 	return {
 		fetchSingleProduct: (id) => dispatch(fetchSingleProduct(id)),
-		addCarrito: (product) => dispatch(addCarrito(product))
+		addCarrito: (product) => dispatch(addCarrito(product)),
+		addProductReview: (productId,user,values) => dispatch(addProductReview(productId,user,values))
 	}
 }
 

@@ -12,3 +12,13 @@ export const fetchSingleProduct = id => dispatch =>
     .then(product => {
       console.log('product',product)
       dispatch(receiveSingleProduct(product))});
+
+export const addProductReview = (ProductId, values, user) => dispatch => {
+  axios
+  .post(`http://localhost:3005/reviews`, {...values, AuthorId: user, ProductId })
+  // body {text,rate,AuthorId,ProductId}
+  .then(res => res.data)
+  .then(product => {
+    dispatch(receiveSingleProduct(product))
+  })
+}

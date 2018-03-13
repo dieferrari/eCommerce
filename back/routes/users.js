@@ -51,6 +51,7 @@ router.post('/register', function (req, res, next) {
 })
 router.post('/login',passport.authenticate('local'),function (req, res) {
     res.status(200).send(req.body)
+    console.log('LOGGED IN AS ',req.user.email)
 });
 router.delete('/delete/:userId', function (req, res, next) {
     User.destroy({
@@ -66,17 +67,17 @@ router.get('/logout', function(req, res){
 router.get('/auth/facebook', passport.authenticate('facebook'));
 
 router.get('/auth/facebook/callback',passport.authenticate('facebook',
- {  successRedirect: 'http://localhost:3000',
-    failureRedirect: 'http://localhost:3000/login' }
+ {  successRedirect: 'http://localhost:3005',
+    failureRedirect: 'http://localhost:3005/login' }
 ));
 router.get('/auth/google',
   passport.authenticate('google', 
   { scope: ['https://www.googleapis.com/auth/plus.login'] }
 ))
 router.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: 'http://localhost:3000/login' }),
+  passport.authenticate('google', { failureRedirect: 'http://localhost:3005/login' }),
   function(req, res) {
-    res.redirect('htpp://localhost:3000/');
+    res.redirect('htpp://localhost:3005/');
   });
 router.get('/:userId/orders', function(req, res){
     Orders.findAll({    

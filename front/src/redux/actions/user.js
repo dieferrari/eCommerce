@@ -4,7 +4,6 @@ import { RECEIVE_USER } from '../constants';
 import { FOUND_USER } from '../constants';
 import { DESLOG_USER } from '../constants';
 
-
 const registerUser = (user,carrito) => ({
     type: SET_USER,
     fetch:{
@@ -48,7 +47,9 @@ export const fetchUser = id => dispatch =>
     dispatch(receiveUser({id:user.id,
       firstName:user.firstName, 
       lastName:user.lastName,
-      email:user.email},user.products))});
+      email:user.email},user.products))
+      return user
+    });
 
 export const comprobateUser = user => dispatch => {
   axios.post(`http://localhost:3005/users/login`,user)

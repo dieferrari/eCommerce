@@ -28,12 +28,14 @@
     "fs-misc": "^2.0.0",
     "moment": "^2.21.0",
     "morgan": "^1.9.0",
+    "nodemailer": "^4.6.2",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-google-oauth": "^1.0.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "pg": "^7.4.1",
-    "sequelize": "^4.35.2"
+    "sequelize": "^4.35.2",
+    "xoauth2": "^1.2.0"
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom'
+import ReviewForm from './ReviewForm'
 
 // Create our number formatter.
 var formatter = new Intl.NumberFormat('en-US', {
@@ -10,8 +11,14 @@ var formatter = new Intl.NumberFormat('en-US', {
   // and is usually already 2 Copy Paste For The Win
 });
 
-export default ({ product, handleChange,cantidad,handleSubmit}) => (
-  <div className="container">
+export default ({ product, user, addProductReview ,handleChange,cantidad,handleSubmit}) => {
+
+  const submit = (values) =>{
+    addProductReview(product.id, values, user);
+  }
+
+  return(
+    <div className='container'>
     {!product.id ? "Loading" :
     (<div className="row">
       <div className="card-img-top col item-photo">
@@ -37,6 +44,7 @@ export default ({ product, handleChange,cantidad,handleSubmit}) => (
           </form>
         </div>  
 
+        <ReviewForm onSubmit={submit}/>
         {product.categories.map(cat => (
           <div key={cat.id}>
             <h6>Categories: {cat.name}</h6>
@@ -57,5 +65,5 @@ export default ({ product, handleChange,cantidad,handleSubmit}) => (
     </div>
     )}
   </div>
-
-);
+  )
+};
