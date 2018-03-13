@@ -29,13 +29,15 @@ Categories.belongsToMany(Product,{through: 'CatProds'});
 User.belongsToMany(Product,{through: Carrito});
 Product.belongsToMany(User,{through: Carrito});
 
+User.hasMany( Reviews,{foreignKey:'AuthorId',as:'reviews'})
+Product.hasMany( Reviews,{foreignKey:'ProductId',as:'reviews'})
 Reviews.belongsTo(User,{as:'Author'})
-Product.belongsToMany(Reviews,{through: 'RevProds'});
-Reviews.belongsToMany(Product,{through: 'RevProds'});
+Reviews.belongsTo(Product,{as:'Product'})
 
 Orders.belongsToMany(Product,{through: OrderProduct});
 Product.belongsToMany(Orders,{through: OrderProduct});
-User.hasMany(Orders,{foreignKey: 'OwnerId'});
+Orders.belongsTo(User,{as:'Owner'})
+User.hasMany(Orders,{foreignKey: 'OwnerId',as:'orders'});
 
 
 module.exports={

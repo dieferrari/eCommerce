@@ -5,11 +5,16 @@ import LoginContainer from '../containers/login-container';
 import ProductsContainer from '../containers/ProductsContainer';
 import SingleProductContainer from '../containers/SingleProductContainer';
 import CategoryContainer from '../containers/CategoryContainer';
+import UserOrderContainer from '../containers/UserOrderContainer';
+import CarritosContainer from '../containers/CarritosContainer';
 import SingleUserContainer from '../containers/SingleUserContainer';
 import SingleCategoryContainer from '../containers/SingleCategoryContainer';
+import AdminApp from './AdminApp';
+import Header from '../components/Header'
 
 export default () => (
     <div>
+      <Header/>
       <Switch>
         <Route
           exact
@@ -25,25 +30,39 @@ export default () => (
           path="/products/:id"
           component={SingleProductContainer}
         />
-          <Route
+        <Route
           exact 
           path="/category"
           component={CategoryContainer}
         />
+        <Route 
+          path="/user/:id/orders"
+          component={UserOrderContainer}
+          />
+        <Route
+          exact
+          path="/carrito"
+          component={CarritosContainer}
+        />
+          
           <Route 
-          path="/category/:id"
+          path="/categories/:id"
           component={SingleCategoryContainer}
         />
           <Route 
           path="/user/:id"
           component={SingleUserContainer}
         />
+          <Route 
+          path="/admin"
+          component={AdminApp}
+        />
 
-        {/* /* <Route
+        <Route
           exact
           path="/login"
           component={LoginContainer}
-        /> */}
+        />
       </Switch>
     </div>
 );

@@ -1,14 +1,18 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 
 export default (props) => (
-  <div>
-      <form onSubmit={props.handleSubmit} method="POST">
-          <input type="text" name="firstname" placeholder="Username"></input>
-          <input type="text" name="lastname" placeholder="Lastname"></input>
-          <input type="text" name="email" placeholder="Email"></input>
-          <input type="password" name="password" placeholder="password"></input>
-          <button type="submit">Login</button>
-      </form>
-      <a href="http://localhost:3001/register">Register</a>
-  </div>
+    <div class="d-flex justify-content-center">
+        <form onSubmit={props.handleSubmit} method="POST">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input name="email" type="email" class="form-control" placeholder="Enter email"/>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Password"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button> <Link to={`/register`}><button class="btn btn-primary">Register</button></Link> 
+        </form>
+    </div>
 );
