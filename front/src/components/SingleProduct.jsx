@@ -7,10 +7,10 @@ var formatter = new Intl.NumberFormat('en-US', {
   currency: 'USD',
   minimumFractionDigits: 0,
   // the default value for minimumFractionDigits depends on the currency
-  // and is usually already 2
+  // and is usually already 2 Copy Paste For The Win
 });
 
-export default ({ product }) => (
+export default ({ product, handleChange,cantidad,handleSubmit}) => (
   <div className="container">
     {!product.id ? "Loading" :
     (<div className="row">
@@ -29,13 +29,13 @@ export default ({ product }) => (
         <p className="card-text">{product.description}</p>
         <div className="section" style={{paddingBottom:"20px"}}>
           <h6 className="title-attr"><small>quantity</small></h6>                    
-          <div>
-              <button type="button" class="btn btn-outline-secondary">-</button>
-              <input defaultValue="1" />
-              <button type="button" class="btn btn-outline-secondary">+</button>
-          </div>
+          <form onSubmit={(evt => handleSubmit(evt))}>
+            <button onClick={()=>handleChange(cantidad-1)} type="button" name="resta" className="btn btn-outline-secondary">-</button>
+            <input onChange={(evt) => handleChange(evt.target.value)} value={cantidad} />
+            <button onClick={()=>handleChange(cantidad+1)} type="button" name="suma" className="btn btn-outline-secondary">+</button>
+            <button className="btn btn-success">Add to cart</button>
+          </form>
         </div>  
-        <a href="#" className="btn btn-success">Add to cart</a>
 
         {product.categories.map(cat => (
           <div key={cat.id}>
@@ -46,7 +46,6 @@ export default ({ product }) => (
         <br/>
         <br/>
         <h6>Reviews:</h6>
-        {console.log(product)}
         {product.reviews.map(rev => (
           <div key={rev.id}>
             <Link to={`/user/${rev.Author.id}`}><p>{rev.Author.fullName}</p> </Link>

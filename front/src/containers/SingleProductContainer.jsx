@@ -2,18 +2,42 @@ import React from 'react';
 import { connect } from 'react-redux';
 //import { bindActionCreators } from 'redux';
 import { fetchSingleProduct } from '../redux/actions/singleProduct';
+import {addCarrito} from '../redux/actions/carrito';
 import SingleProduct from '../components/SingleProduct';
 
 class SingleProductContainer extends React.Component {
+	constructor(props){
+	super(props);
+		this.state = {
+			cantidad:1
+		}
+	this.handleChange = this.handleChange.bind(this);
+	this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
 
 	componentDidMount() {
     this.props.fetchSingleProduct(this.props.id)
+	}
+
+	handleChange(value){
+				this.setState({cantidad : value})
+	}
+
+	handleSubmit(evt){
+		evt.preventDefault()
+		console.log("aosjdlaksjdlkajslkdjalksjdlaksjldkj",evt.target,this.props.product)
+		this.props.product.cantidad = this.state.cantidad
+		this.props.addCarrito(this.props.product)
 	}
 
 	render () {
 		return (
 			<SingleProduct
 				product={this.props.product}
+				handleChange={this.handleChange}
+				cantidad={this.state.cantidad}
+				handleSubmit={this.handleSubmit}
 			/>
 		)
 	}
@@ -31,6 +55,7 @@ const mapStateToProps = function(state, ownProps) {
 const mapDispatchToProps = function(dispatch) {
 	return {
 		fetchSingleProduct: (id) => dispatch(fetchSingleProduct(id)),
+		addCarrito: (product) => dispatch(addCarrito(product))
 	}
 }
 
