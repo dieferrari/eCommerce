@@ -26,6 +26,5 @@ export const RECEIVE_USER_ORDERS = 'RECEIVE_USER_ORDERS';
 
 export const FETCH_POST = 'FETCH_POST';
 
-export const FETCH_EDIT = 'FETCH_EDIT'
 //ORDERS
 export const RECEIVE_ORDERS = 'RECEIVE_ORDERS'

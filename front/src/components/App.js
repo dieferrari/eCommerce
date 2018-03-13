@@ -9,7 +9,6 @@ import UserOrderContainer from '../containers/UserOrderContainer';
 import CarritosContainer from '../containers/CarritosContainer';
 import SingleUserContainer from '../containers/SingleUserContainer';
 import SingleCategoryContainer from '../containers/SingleCategoryContainer';
-import EditReviewContainer from '../containers/EditReviewContainer'
 import AdminApp from './AdminApp';
 import Header from '../components/Header'
 
@@ -64,10 +63,6 @@ export default () => (
           path="/login"
           component={LoginContainer}
         />
-
-        <Route 
-        path="/product/:id/review/editReview"
-        component={EditReviewContainer}/>
       </Switch>
     </div>
 );

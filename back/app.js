@@ -9,6 +9,8 @@ var User = require('./models/users');
 var db = require('./config/db')
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var cors = require('cors'); 
 var session = require('express-session');
 const create=require('./seeders')
@@ -63,6 +65,34 @@ passport.use(new LocalStrategy({
     })
   }
 ));
+passport.use(new FacebookStrategy({
+  clientID: 156258978423467,
+  clientSecret: '2eb4087000b45879ec370a9b9ee68332',
+  callbackURL: "http://localhost:3005/users/auth/facebook/callback"
+},
+function(accessToken, refreshToken, profile, done) {
+  console.log("AIUDAAAAAAAAAAAAAAAAAAAAAA",profile)
+  User.findOrCreate({where:{facebookId:profile.id},defaults:{fullName:profile.displayName}})
+  .then((user) => {
+    done(null, user[0]);
+  })
+  .catch(err => done(err));
+}
+));
+passport.use(new GoogleStrategy({
+  clientID: "921152971758-5pnnrjq7h9n50147j2qpfhvv77d9ou9j.apps.googleusercontent.com",
+  clientSecret: "3VAf_vHNwwYYo8Y-4tQt5-Lo",
+  callbackURL: "http://localhost:3005/users/auth/google/callback"
+},
+function(token, tokenSecret, profile, done) {
+  console.log("AQUIIIIIIIIIIIIIIIIII WEON",profile)
+    User.findOrCreate({where:{ googleId: profile.id }})
+    .then((user) => {
+      done(null, user[0]);
+    })
+    .catch(err => done(err));
+  }
+  ));
 
   app.use(function(req, res, next) {
     res.locals.currentUser = req.user;

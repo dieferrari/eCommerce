@@ -1,35 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchSingleProduct } from '../redux/actions/singleProduct';
+import { fetchSingleProduct, addProductReview } from '../redux/actions/singleProduct';
 import SingleProduct from '../components/SingleProduct';
-import {fetchUser} from '../redux/actions/user'
-import { fetchPost } from '../redux/actions/user'
-import { EditReview} from '../components/ReviewForm'
 
 class SingleProductContainer extends React.Component {
 	constructor(){
 		super()
 		this.state = {
-			user: {}
+			user: {
+				id:101,
+				firstName: 'Usuario',
+				lastName: 'Estatico',
+				email: 'estatico@cc.cc',
+			  }
 		}
 	}
 
 	componentDidMount() {
 		this.props.fetchSingleProduct(this.props.id)
-		this.props.fetchUser(102)
-		.then(user => {
-			this.setState({user})
-		})
 	}
 
 	render () {
+
 		return (
 			<SingleProduct
 				product={this.props.product}
-				user={this.props.id}
-				fetchPost={this.props.fetchPost}
-				fetchUser={this.state.user}
+				user={this.state.user.id}
+				addProductReview={this.props.addProductReview}
 			/>
 		)
 	}
@@ -41,15 +39,12 @@ const mapStateToProps = function(state, ownProps) {
 		product: state.singleProduct,
 		loading: state.loading,
 		id: ownProps.match.params.id,
-		review: state.review,
-		user: state.user.id,
 	}
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	fetchSingleProduct,
-	fetchUser,
-	fetchPost
+	addProductReview
 }, dispatch)
 // const mapDispatchToProps = function(dispatch) {
 // 	return bindActionCreators({fetchSingleProduct}, dispatch)
