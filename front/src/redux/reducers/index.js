@@ -6,13 +6,17 @@ import productsReducer from './products-reducer';
 import categoryReducer from './category-reducer';
 import userOrdersReducer from './user-order-reducer'
 import singleCategoryReducer from './single-category-reducer';
+import ordersReducer from './orders-reducer';
+import allUsersReducer from './allUsers-reducer'
 
 export default combineReducers ({
   loading: loadingReducer,
   singleProduct: singleProductReducer,
-  user: userReducer,
   products: productsReducer,
   category: categoryReducer,
-  userOrders: userOrdersReducer,
   singleCategory: singleCategoryReducer,
+  userOrders: userOrdersReducer,
+  allUsers:allUsersReducer,
+  user: userReducer,
+  orders:ordersReducer
 });

@@ -36,7 +36,8 @@ Reviews.belongsTo(Product,{as:'Product'})
 
 Orders.belongsToMany(Product,{through: OrderProduct});
 Product.belongsToMany(Orders,{through: OrderProduct});
-User.hasMany(Orders,{foreignKey: 'OwnerId'});
+Orders.belongsTo(User,{as:'Owner'})
+User.hasMany(Orders,{foreignKey: 'OwnerId',as:'orders'});
 
 
 module.exports={

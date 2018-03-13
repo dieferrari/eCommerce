@@ -1,6 +1,6 @@
 module.exports=[
     {id:101,
-    status:'cerrada',
+    status:'completado',
     OwnerId:101
     },
     {id:102,
