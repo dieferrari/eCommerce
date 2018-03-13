@@ -17,8 +17,10 @@ const create=require('./seeders')
 create()
 
 var corsOptions = {
-  origin: 'http://localhost:3000',
-  optionsSuccessStatus: 200
+  origin: true,
+  optionsSuccessStatus: 200,
+  credentials: true,
+  allowedHeaders: 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'.split(', '),
 }
 
 app.use(cors(corsOptions));
@@ -91,6 +93,11 @@ function(token, tokenSecret, profile, done) {
     .catch(err => done(err));
   }
   ));
+
+  app.use(function(req, res, next) {
+    res.locals.currentUser = req.user;
+    next()
+  })
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

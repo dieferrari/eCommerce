@@ -1,5 +1,4 @@
-import { SET_USER, FOUND_USER} from '../constants.js';
-import { RECEIVE_USER,DESLOG_USER } from '../constants';
+import { RECEIVE_USER,DESLOG_USER, FOUND_USER, SET_USER } from '../constants';
 const initialState = {
     user: {},
     carrito:[]
