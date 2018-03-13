@@ -15,6 +15,8 @@ export default ({categories,handleSubmit,product})=>
             <input type="text" name='stock' defaultValue={product.stock} /><br/><br/>
             <label > URL de imagen: </label>
             <input type="text" name='imgURL' defaultValue={product.imgURL} /><br/><br/>
+            <label > Disponible: </label>
+            <input type="text" name='available' defaultValue={product.available} /><br/><br/>
             <label > Categorias </label>
             {categories.map((category)=>{
                 if (product.categories.map(c=>c.id).indexOf(category.id)!=-1){

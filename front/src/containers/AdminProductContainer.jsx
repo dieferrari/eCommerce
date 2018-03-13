@@ -34,7 +34,8 @@ class AdminProductContainer extends React.Component{
             price:0,
             stock:0,
             imgURL:'',
-            categories:[]
+            categories:[],
+            available:true
         }
         return (
          <div>
