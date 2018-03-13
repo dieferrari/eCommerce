@@ -25,7 +25,7 @@ class AdminProductContainer extends React.Component{
         }
         this.props.postProducts({product,categories})
       }
-    
+      
     render (){
         const {categories,match}=this.props
         const product={
