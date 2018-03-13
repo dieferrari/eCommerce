@@ -6,6 +6,7 @@ import productsReducer from './products-reducer';
 import categoryReducer from './category-reducer';
 import userOrdersReducer from './user-order-reducer'
 import singleCategoryReducer from './single-category-reducer';
+import {reducer as reducerForm} from 'redux-form'
 import ordersReducer from './orders-reducer';
 import allUsersReducer from './allUsers-reducer'
 
@@ -15,6 +16,7 @@ export default combineReducers ({
   products: productsReducer,
   category: categoryReducer,
   singleCategory: singleCategoryReducer,
+  form: reducerForm,
   userOrders: userOrdersReducer,
   allUsers:allUsersReducer,
   user: userReducer,

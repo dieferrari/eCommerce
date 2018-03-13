@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {Reviews,User,Product}= require('../models')
+const {Reviews,User,Product, Categories}= require('../models')
 
 //trae todos los reviews de un usuario y a que productos fue hecho fue hecho
 router.get('/user/:id',function(req,res,net){
@@ -19,10 +19,30 @@ router.get('/user/:id',function(req,res,net){
 })
 //HOLIS GURÚ
 router.post('/', function (req, res, next) {
-    console.log('BODYYYY',req.body)
+    console.log('BODYYY',req.body)
 //ojo que el body traiga Author y Product con mayusculas ura
     Reviews.create(req.body)
-    .then(review=>res.status(200).send(review))
+    .then(()=>{
+        return Product.findById(req.body.ProductId,{
+            include: [{
+                model: Categories,
+                attributes:['id','name'],
+                through: {
+                    attributes:[],
+                }
+            },{
+                model: Reviews,
+                as:'reviews',
+                attributes:['id','rate','text'],
+                include:[{
+                    model:User,
+                    as:'Author',
+                    attributes:['id','firstName','lastName']
+                }]
+        }]//include 
+        })
+    })
+    .then(product=> res.send(product))
     .catch((err) => res.send(err))
 })
 

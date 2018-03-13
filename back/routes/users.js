@@ -50,7 +50,8 @@ router.post('/register', function (req, res, next) {
     })
 })
 router.post('/login',passport.authenticate('local'),function (req, res) {
-    res.status(200).send(req.user)
+    res.status(200).send(req.body)
+    console.log('LOGGED IN AS ',req.user.email)
 });
 router.delete('/delete/:userId', function (req, res, next) {
     User.destroy({

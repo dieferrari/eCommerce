@@ -10,7 +10,7 @@ export default ({products,handleChange}) => (
         <div className="container-fluid">
             <div className="card-group">
             {products.map(product => (
-                <div key={product.id} className="card" style={{ minWidth: '35rem', maxWidth: '35rem',margin: '30px' }}>
+                <div key={product.id} className="card" style={{ minWidth: '30', maxWidth: '30rem',margin: '30px' }}>
                   <Link to ={`/products/${product.id}`}>
                   <img style={{padding:"30px"}} className="responsive card-img-top" src={product.imgURL} alt="Card image cap"/>
                   </Link>
