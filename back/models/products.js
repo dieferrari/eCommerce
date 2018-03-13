@@ -18,7 +18,10 @@ const Product = db.define('product', {
     },
     imgURL:{
         type:Sequelize.STRING,
-    }
+    },
+    available:{ type: Sequelize.BOOLEAN,
+         allowNull: false,
+          defaultValue: true }
 })
 
 module.exports=Product;

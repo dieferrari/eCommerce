@@ -11,9 +11,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var cors = require('cors'); 
 var session = require('express-session');
-const create = require('./seeders');
-var FacebookStrategy = require('passport-facebook').Strategy;
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const create=require('./seeders')
 create()
 
 var corsOptions = {
@@ -25,11 +23,15 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
+<<<<<<< HEAD
 app.use(session({ 
   secret: 'niño de cobre',
   resave: false,
   saveUninitialized: false
 }))
+=======
+app.use(session({ secret: 'niño de cobre' }))
+>>>>>>> f2d4b63f65fcdd774b6e9ee1689ef948c6b103ae
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -42,15 +44,15 @@ passport.serializeUser(function(user, done) {
 // passport.deserializeUser(User.deserializeUser());
 passport.deserializeUser(function(id, done) {
   User.findById(id)
-  .then(user => done(null, user))
-  .catch(err => done(err));
+    .then(user => done(null, user))
+    .catch(err => done(err));
 });
 
 passport.use(new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password'
 },
-  function (email ,password, done) {
+  function (email, password, done) {
     User.findOne({
       where:{
          email: email 
@@ -69,34 +71,6 @@ passport.use(new LocalStrategy({
     })
   }
 ));
-passport.use(new FacebookStrategy({
-  clientID: 156258978423467,
-  clientSecret: '2eb4087000b45879ec370a9b9ee68332',
-  callbackURL: "http://localhost:3005/users/auth/facebook/callback"
-},
-function(accessToken, refreshToken, profile, done) {
-  console.log("AIUDAAAAAAAAAAAAAAAAAAAAAA",profile)
-  User.findOrCreate({where:{facebookId:profile.id},defaults:{fullName:profile.displayName}})
-  .then((user) => {
-    done(null, user[0]);
-  })
-  .catch(err => done(err));
-}
-));
-passport.use(new GoogleStrategy({
-  clientID: "921152971758-5pnnrjq7h9n50147j2qpfhvv77d9ou9j.apps.googleusercontent.com",
-  clientSecret: "3VAf_vHNwwYYo8Y-4tQt5-Lo",
-  callbackURL: "http://localhost:3005/users/auth/google/callback"
-},
-function(token, tokenSecret, profile, done) {
-  console.log("AQUIIIIIIIIIIIIIIIIII WEON",profile)
-    User.findOrCreate({where:{ googleId: profile.id }})
-    .then((user) => {
-      done(null, user[0]);
-    })
-    .catch(err => done(err));
-  }
-  ));
 
   app.use(function(req, res, next) {
     res.locals.currentUser = req.user;
@@ -104,8 +78,8 @@ function(token, tokenSecret, profile, done) {
   })
 
 // view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

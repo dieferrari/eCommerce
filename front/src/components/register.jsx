@@ -1,16 +1,38 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 
 export default ({ user , handleSubmit}) => (
-  <div>
-      <form onSubmit={(e)=>handleSubmit(e)} method="POST">
-          <input type="text" name="firstname" placeholder="Firstname"></input>
-          <input type="text" name="lastname" placeholder="Lastname"></input>
-          <input type="text" name="email" placeholder="Email"></input>
-          <input type="password" name="password" placeholder="password"></input>
-          <button type="submit">Register</button>
-      </form>
-      <a href="http://localhost:3005/users/auth/facebook">Login with Facebook</a>
-      <a href="http://localhost:3005/users/auth/google">Sign In with Google</a>
-      <a href="http://localhost:3000/login">Login</a>
-  </div>
+    <div>
+        <div class="d-flex justify-content-center">
+            <Link to={`http://localhost:3005/users/auth/google`}>
+                <img src="./google.png" width="300px" height="50px" />
+            </Link>
+        </div>
+        
+        <div class="d-flex justify-content-center">
+            <Link to ={`http://localhost:3005/users/auth/facebook`}>
+                <img src="./fb.png" width="300px" height="50px" />
+            </Link> 
+        </div>
+
+        <div class="d-flex justify-content-center">
+        <form onSubmit={(e)=>handleSubmit(e)} method="POST">
+
+            <div class="form-group">
+                <input name="firstname" type="text" class="form-control" placeholder="Firstname"/>
+            </div>
+            <div class="form-group">
+                <input name="lastname" type="text" class="form-control" placeholder="Lastname"/>
+            </div>
+            <div class="form-group">
+                <input name="email" type="email" class="form-control" placeholder="E-mail"/>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" class="form-control" placeholder="Password"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+</div>
+
 );

@@ -20,6 +20,9 @@ const User = db.define('user', {
             return this.getDataValue("firstName") + " " + this.getDataValue("lastName")
         }      
     },
+    isAdmin:{ type: Sequelize.BOOLEAN,
+        allowNull: false,
+         defaultValue: false },
     email: {
         type: Sequelize.STRING,
         validate: {

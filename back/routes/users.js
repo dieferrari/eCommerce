@@ -99,4 +99,20 @@ router.get('/:userId', function (req, res) {
     res.send(req.user);
 });
 
+//body={isAdmin:boolean}
+router.put('/:userId', function (req, res) {
+    User.findById(req.params.userId)
+    .then(usuario=>usuario.update(req.body))
+    .then(()=>User.findAll())
+    .then((users) => res.status(200).send(users))
+    .catch(err=>res.send(err))
+});
+//comprobadoo
+router.delete('/:userId', function (req, res) {
+    User.destroy({where:{id:req.params.userId}})
+    .then(()=>User.findAll())
+    .then((users) => res.status(200).send(users))
+    .catch(err=>res.send(err))
+});
+
 module.exports = router;

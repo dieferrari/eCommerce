@@ -9,10 +9,16 @@ import UserOrderContainer from '../containers/UserOrderContainer';
 import CarritosContainer from '../containers/CarritosContainer';
 import SingleUserContainer from '../containers/SingleUserContainer';
 import SingleCategoryContainer from '../containers/SingleCategoryContainer';
+<<<<<<< HEAD
 import EditReviewContainer from '../containers/EditReviewContainer'
+=======
+import AdminApp from './AdminApp';
+import Header from '../components/Header'
+>>>>>>> f2d4b63f65fcdd774b6e9ee1689ef948c6b103ae
 
 export default () => (
     <div>
+      <Header/>
       <Switch>
         <Route
           exact
@@ -44,12 +50,16 @@ export default () => (
         />
           
           <Route 
-          path="/category/:id"
+          path="/categories/:id"
           component={SingleCategoryContainer}
         />
           <Route 
           path="/user/:id"
           component={SingleUserContainer}
+        />
+          <Route 
+          path="/admin"
+          component={AdminApp}
         />
 
         <Route
