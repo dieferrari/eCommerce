@@ -4,13 +4,13 @@ import {Link} from 'react-router-dom'
 export default ({ user , handleSubmit}) => (
     <div>
         <div className="d-flex justify-content-center">
-            <a href={`http://localhost:3005/users/auth/google`}>
+            <a href={`/api/users/auth/google`}>
                 <img src="./google.png" width="300px" height="50px" />
             </a>
         </div>
         
         <div className="d-flex justify-content-center">
-            <a href={`http://localhost:3005/users/auth/facebook`}>
+            <a href={`/api/users/auth/facebook`}>
                 <img src="./fb.png" width="300px" height="50px" />
             </a> 
         </div>

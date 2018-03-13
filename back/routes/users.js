@@ -42,6 +42,7 @@ router.post('/register', function (req, res, next) {
         password:req.body.password,
     })
     .then((user) => {
+        console.log(user)
             res.send(user);
     })
     .catch((err) => {
@@ -67,19 +68,20 @@ router.get('/logout', function(req, res){
 router.get('/auth/facebook', passport.authenticate('facebook'));
 
 router.get('/auth/facebook/callback',passport.authenticate('facebook',
- {  successRedirect: 'http://localhost:3005',
-    failureRedirect: 'http://localhost:3005/login' }
+ {  successRedirect: '/',
+    failureRedirect: '/login' }
 ));
 router.get('/auth/google',
   passport.authenticate('google', 
   { scope: ['https://www.googleapis.com/auth/plus.login'] }
 ))
 router.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: 'http://localhost:3005/login' }),
+  passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect('htpp://localhost:3005/');
+    res.redirect('/');
   });
 router.get('/:userId/orders', function(req, res){
+    console.log("uola",req.user)
     Orders.findAll({    
         where: {
             OwnerId: req.params.userId,

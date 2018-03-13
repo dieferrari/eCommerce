@@ -7,20 +7,20 @@ const receiveAllUsers = (users) => ({
   });
 
   export const fetchAllUsers = () => dispatch => 
-  axios.get(`http://localhost:3005/users`)
+  axios.get(`/api/users`)
   .then(res => res.data)
   .then(users => {
     dispatch(receiveAllUsers(users))});
 
 
   export const editUser = (id,body) => dispatch => 
-  axios.put(`http://localhost:3005/users/${id}`,body)
+  axios.put(`/api/users/${id}`,body)
   .then(res => res.data)
   .then(users => {
     dispatch(receiveAllUsers(users))});
     
   export const deleteUser = (id) => dispatch => 
-  axios.delete(`http://localhost:3005/users/${id}`)
+  axios.delete(`/api/users/${id}`)
   .then(res => res.data)
   .then(users => {
     dispatch(receiveAllUsers(users))});

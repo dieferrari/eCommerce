@@ -8,7 +8,7 @@ const receiveCategories = (categories) => ({
 
 
 export const fetchCategories = () => dispatch =>
-  axios.get('http://localhost:3005/categories')
+  axios.get('/api/categories')
   .then(res => res.data)
   .then(categories => {
     dispatch(receiveCategories(categories)
@@ -16,7 +16,7 @@ export const fetchCategories = () => dispatch =>
 });
 
 export const postCategories = (category) => dispatch =>
-  axios.post('http://localhost:3005/categories',category)
+  axios.post('/api/categories',category)
   .then(res => res.data)
   .then(categories => {
     dispatch(receiveCategories(categories)
@@ -24,7 +24,7 @@ export const postCategories = (category) => dispatch =>
 });
 
 export const editCategories = (id,category) => dispatch =>
-  axios.put(`http://localhost:3005/categories/${id}`,category)
+  axios.put(`/api/categories/${id}`,category)
   .then(res => res.data)
   .then(categories => {
     dispatch(receiveCategories(categories)
@@ -32,7 +32,7 @@ export const editCategories = (id,category) => dispatch =>
 });
 
 export const deleteCategories = (id) => dispatch =>
-  axios.delete(`http://localhost:3005/categories/${id}`)
+  axios.delete(`/api/categories/${id}`)
   .then(res => res.data)
   .then(categories => {
     dispatch(receiveCategories(categories)

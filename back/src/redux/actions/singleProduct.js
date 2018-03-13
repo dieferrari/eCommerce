@@ -7,7 +7,7 @@ const receiveSingleProduct = (product) => ({
 });
 
 export const fetchSingleProduct = id => dispatch =>
-  axios.get(`http://localhost:3005/products/${id}`)
+  axios.get(`/api/products/${id}`)
     .then(res => res.data)
     .then(product => {
       console.log('product',product)
@@ -15,7 +15,7 @@ export const fetchSingleProduct = id => dispatch =>
 
 export const addProductReview = (ProductId, values, user) => dispatch => {
   axios
-  .post(`http://localhost:3005/reviews`, {...values, AuthorId: user, ProductId })
+  .post(`/api/reviews`, {...values, AuthorId: user, ProductId })
   // body {text,rate,AuthorId,ProductId}
   .then(res => res.data)
   .then(product => {
