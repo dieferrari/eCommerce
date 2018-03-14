@@ -27,7 +27,9 @@ class SingleProductContainer extends React.Component {
 	}
 
 	handleChange(value){
-				this.setState({cantidad : value})
+		if(value <= this.props.product.stock && value > 0){
+			this.setState({cantidad : value})
+		}
 	}
 
 	handleSubmit(evt){
