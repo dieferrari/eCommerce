@@ -88,7 +88,7 @@ router.get('/:userId/orders', function(req, res){
         },
         include: [{
             model: Product,
-            attributes:['id','name', 'price', 'imgURL'],
+            attributes:['id','name','description', 'price', 'imgURL'],
             through: {
                 attributes:['cantidad'],
             }
