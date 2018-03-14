@@ -19,7 +19,7 @@ router.param('userId', function (req, res, next, id) {
     User.findById(id,{
         include: [{
             model: Product,
-            attributes:['id','name', 'price'],
+            attributes:['id','name','description', 'price'],
             through: {
                 attributes:['cantidad'],
             }

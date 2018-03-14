@@ -6,7 +6,8 @@ export default ({handleSubmit,orden})=>(
         <div>    
         <h1>Usuario: {orden.Owner.fullName}</h1>
         <h2>Order ID:{orden.id} </h2>
-        <h3>Creada: {orden.createdAt}</h3><br/><br/>
+        <h3>Direccion de entrega: {orden.OwnerDirection}</h3>
+        <h4>Creada: {orden.createdAt}</h4><br/><br/>
         
         <table >
         <tbody>

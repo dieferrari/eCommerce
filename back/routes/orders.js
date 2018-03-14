@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const {User, Orders, Product, OrdersProducts} = require('../models');
-
+const enviar = require('../utils')
 
 router.get('/', function (req, res, next) {
     Orders.findAll({    
@@ -32,11 +32,14 @@ router.post('/', function (req, res, next) {
     const {userId,
         userMail,
         userDirection,
-        products}=req.body
+        products}=req.body 
+    //desarmo el body
+    var orderId;//inicio orderId
     Orders.create({OwnerId:userId,
         OwnerDirection:userDirection,
         OwnerMail:userMail})
     .then((orden)=>{
+        orderId=orden.id
        const productos=products.map(producto=>{
         return orden.addProduct(producto.id,{
              through: { cantidad: producto.cantidad }})})
@@ -44,6 +47,9 @@ router.post('/', function (req, res, next) {
     })
     .then(()=>User.findById(userId))
     .then(usuario=>usuario.setProducts([]))
+    .then(()=>{
+        enviar.enviarCheckoutEmail(userMail,orderId)
+    })
     .then(()=>Orders.findAll({    
         include: [{
             model: Product,
@@ -60,10 +66,20 @@ router.post('/', function (req, res, next) {
         res.send(orders)
     }).catch(err=>res.send(err))
 })
+
 //req.body={status:algo}
+//comprobado funciona
 router.put('/:id',function(req,res,next){
     Orders.findById(req.params.id)
     .then((orden)=>orden.update(req.body))
+    .then((orden)=>{
+        if(req.body.status=='procesando'){
+            enviar.enviarProcesandoEmail(orden.OwnerMail,orden.id,orden.OwnerDirection)
+        }
+        if(req.body.status=='completado'){
+            enviar.enviarCompletoEmail(orden.OwnerMail,orden.id)
+        }
+    })
     .then(()=>Orders.findAll({    
         include: [{
             model: Product,
