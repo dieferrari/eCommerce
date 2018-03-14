@@ -30756,7 +30756,15 @@ module.exports = hyphenate;
 
 
 
+<<<<<<< HEAD
+var _UserApp = __webpack_require__(455);
+
+var _UserApp2 = _interopRequireDefault(_UserApp);
+
+var _Header = __webpack_require__(454);
+=======
 var camelize = __webpack_require__(154);
+>>>>>>> c1a07561d27dc0df45237c9bcaf467b53059c120
 
 var msPattern = /^-ms-/;
 
@@ -30781,7 +30789,62 @@ function camelizeStyleName(string) {
   return camelize(string.replace(msPattern, 'ms-'));
 }
 
+<<<<<<< HEAD
+exports.default = function () {
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(_Header2.default, null),
+    _react2.default.createElement(
+      _reactRouterDom.Switch,
+      null,
+      _react2.default.createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: '/register',
+        component: _registerContainer2.default
+      }),
+      _react2.default.createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: '/products',
+        component: _ProductsContainer2.default
+      }),
+      _react2.default.createElement(_reactRouterDom.Route, {
+        path: '/products/:id',
+        component: _SingleProductContainer2.default
+      }),
+      _react2.default.createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: '/category',
+        component: _CategoryContainer2.default
+      }),
+      _react2.default.createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: '/carrito',
+        component: _CarritosContainer2.default
+      }),
+      _react2.default.createElement(_reactRouterDom.Route, {
+        path: '/categories/:id',
+        component: _SingleCategoryContainer2.default
+      }),
+      _react2.default.createElement(_reactRouterDom.Route, {
+        path: '/user',
+        component: _UserApp2.default
+      }),
+      _react2.default.createElement(_reactRouterDom.Route, {
+        path: '/admin',
+        component: _AdminApp2.default
+      }),
+      _react2.default.createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: '/login',
+        component: _loginContainer2.default
+      })
+    )
+  );
+};
+=======
 module.exports = camelizeStyleName;
+>>>>>>> c1a07561d27dc0df45237c9bcaf467b53059c120
 
 /***/ }),
 /* 154 */
@@ -50671,7 +50734,7 @@ exports.default = function (_ref) {
     _react2.default.createElement(
       'h1',
       null,
-      'User Orders'
+      'Tus Ordenes'
     ),
     !userOrders ? "Loading" : _react2.default.createElement(
       'div',
@@ -50681,19 +50744,19 @@ exports.default = function (_ref) {
           'div',
           { key: userOrder.id },
           _react2.default.createElement(
-            'p',
+            'h2',
             null,
             'Order ID: ',
             userOrder.id
           ),
           _react2.default.createElement(
-            'p',
+            'h3',
             null,
             'Status: ',
             userOrder.status
           ),
           _react2.default.createElement(
-            'p',
+            'h4',
             null,
             'Fecha de creacion: ',
             userOrder.createdAt
@@ -50713,7 +50776,7 @@ exports.default = function (_ref) {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _react = __webpack_require__(0);
@@ -50725,66 +50788,95 @@ var _reactRouterDom = __webpack_require__(3);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (_ref) {
-  var products = _ref.products;
+    var products = _ref.products;
 
 
-  var sumTotal = products.reduce(function (tot, record) {
-    return tot + record.orderProduct.cantidad * record.price;
-  }, 0);
+    var sumTotal = products.reduce(function (tot, record) {
+        return tot + record.orderProduct.cantidad * record.price;
+    }, 0);
 
-  return _react2.default.createElement(
-    'div',
-    null,
-    !products ? "Loading" : _react2.default.createElement(
-      'div',
-      null,
-      products.map(function (product) {
-        return _react2.default.createElement(
-          'p',
-          { key: product.id },
-          _react2.default.createElement(
-            _reactRouterDom.Link,
-            { to: '/products/' + product.id },
+    return _react2.default.createElement(
+        'div',
+        null,
+        !products ? "Loading" : _react2.default.createElement(
+            'div',
+            null,
             _react2.default.createElement(
-              'p',
-              null,
-              'Product Name:',
-              product.name
+                'table',
+                null,
+                _react2.default.createElement(
+                    'tbody',
+                    null,
+                    _react2.default.createElement(
+                        'tr',
+                        null,
+                        _react2.default.createElement(
+                            'th',
+                            null,
+                            'Producto'
+                        ),
+                        _react2.default.createElement(
+                            'th',
+                            null,
+                            'Descripcion'
+                        ),
+                        _react2.default.createElement(
+                            'th',
+                            null,
+                            'Precio'
+                        ),
+                        _react2.default.createElement(
+                            'th',
+                            null,
+                            'Cantidad'
+                        ),
+                        _react2.default.createElement(
+                            'th',
+                            null,
+                            'Total/Producto'
+                        )
+                    ),
+                    products.map(function (prod) {
+                        return _react2.default.createElement(
+                            'tr',
+                            { key: prod.id },
+                            _react2.default.createElement(
+                                'td',
+                                null,
+                                prod.name
+                            ),
+                            _react2.default.createElement(
+                                'td',
+                                null,
+                                prod.description
+                            ),
+                            _react2.default.createElement(
+                                'td',
+                                null,
+                                '$ ' + prod.price
+                            ),
+                            _react2.default.createElement(
+                                'td',
+                                null,
+                                prod.orderProduct.cantidad
+                            ),
+                            _react2.default.createElement(
+                                'td',
+                                null,
+                                '$ ' + prod.orderProduct.cantidad * prod.price
+                            )
+                        );
+                    })
+                )
             ),
             _react2.default.createElement(
-              'div',
-              null,
-              _react2.default.createElement('img', { src: product.imgURL, alt: '' })
+                'p',
+                null,
+                'Precio Final:$ ',
+                sumTotal
             )
-          ),
-          _react2.default.createElement(
-            'p',
-            null,
-            'Precio: ',
-            product.price
-          ),
-          _react2.default.createElement(
-            'p',
-            null,
-            'Cantidad: ',
-            product.orderProduct.cantidad
-          ),
-          _react2.default.createElement(
-            'p',
-            null,
-            'Total: ',
-            product.orderProduct.cantidad * product.price
-          )
-        );
-      }),
-      _react2.default.createElement(
-        'p',
-        null,
-        'Precio Final: ',
-        sumTotal
-      )
-    )
-  );
+        )
+    );
 };
 
 /***/ }),
@@ -51063,12 +51155,12 @@ exports.default = function (_ref) {
         null,
         _react2.default.createElement(
           _reactRouterDom.Link,
-          { to: '/orders' },
+          { to: '/user/' + user.id + '/orders' },
           _react2.default.createElement('img', { src: 'https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/1342761/580/386/m1/fpnw/wm0/cardboard-box-icon-01-.jpg?1465234338&s=ce34fb8219c58b48a7e22f2840e4e35e' }),
           _react2.default.createElement(
             'h3',
             null,
-            'Orders'
+            'Mis ordenes'
           )
         )
       ),
@@ -51082,7 +51174,7 @@ exports.default = function (_ref) {
           _react2.default.createElement(
             'h3',
             null,
-            'Cart'
+            'Carro de compras'
           )
         )
       )
@@ -51353,6 +51445,9 @@ var AdminApp = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+            if (!this.props.user.isAdmin) {
+                return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/login' });
+            }
             return _react2.default.createElement(
                 'div',
                 null,
@@ -51387,7 +51482,8 @@ var AdminApp = function (_React$Component) {
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
     return {
-        match: ownProps.match
+        match: ownProps.match,
+        user: state.user.user
     };
 };
 
@@ -59088,7 +59184,11 @@ exports.default = function () {
 };
 
 /***/ }),
+<<<<<<< HEAD
+/* 455 */
+=======
 /* 453 */
+>>>>>>> c1a07561d27dc0df45237c9bcaf467b53059c120
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59106,13 +59206,12 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(3);
 
-var _reactRedux = __webpack_require__(5);
+<<<<<<< HEAD
+var _reactRedux = __webpack_require__(4);
 
-var _UserCheckout = __webpack_require__(454);
+var _SingleUserContainer = __webpack_require__(456);
 
-var _UserCheckout2 = _interopRequireDefault(_UserCheckout);
-
-var _orders = __webpack_require__(140);
+var _SingleUserContainer2 = _interopRequireDefault(_SingleUserContainer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -59122,6 +59221,151 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var UserApp = function (_React$Component) {
+    _inherits(UserApp, _React$Component);
+
+    function UserApp() {
+        _classCallCheck(this, UserApp);
+
+        return _possibleConstructorReturn(this, (UserApp.__proto__ || Object.getPrototypeOf(UserApp)).apply(this, arguments));
+    }
+
+    _createClass(UserApp, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {}
+    }, {
+        key: 'render',
+        value: function render() {
+            /*if(!this.props.user){
+                console.log('entro')
+             return <Redirect to={`/login`} />
+            }*/
+            console.log('Entro');
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    _reactRouterDom.Switch,
+                    null,
+                    _react2.default.createElement(_reactRouterDom.Route, {
+                        path: this.props.match.path + '/:id',
+                        component: _SingleUserContainer2.default
+                    })
+                )
+            );
+        }
+    }]);
+
+    return UserApp;
+}(_react2.default.Component); //fin de admin app
+
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+    return {
+        match: ownProps.match,
+        user: state.user.user
+    };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {};
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(UserApp);
+
+/***/ }),
+/* 456 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(3);
+
+var _reactRedux = __webpack_require__(4);
+
+var _user = __webpack_require__(59);
+
+var _SingleUser = __webpack_require__(434);
+
+var _SingleUser2 = _interopRequireDefault(_SingleUser);
+
+var _userOrders = __webpack_require__(428);
+
+var _UserOrder = __webpack_require__(429);
+
+var _UserOrder2 = _interopRequireDefault(_UserOrder);
+
+var _UserCheckout = __webpack_require__(439);
+
+var _UserCheckout2 = _interopRequireDefault(_UserCheckout);
+
+var _orders = __webpack_require__(75);
+=======
+var _reactRedux = __webpack_require__(5);
+
+var _UserCheckout = __webpack_require__(454);
+
+var _UserCheckout2 = _interopRequireDefault(_UserCheckout);
+
+var _orders = __webpack_require__(140);
+>>>>>>> c1a07561d27dc0df45237c9bcaf467b53059c120
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+<<<<<<< HEAD
+var SingleUserContainer = function (_React$Component) {
+    _inherits(SingleUserContainer, _React$Component);
+
+    function SingleUserContainer(props) {
+        _classCallCheck(this, SingleUserContainer);
+
+        var _this = _possibleConstructorReturn(this, (SingleUserContainer.__proto__ || Object.getPrototypeOf(SingleUserContainer)).call(this, props));
+
+        _this.handleSubmit = _this.handleSubmit.bind(_this);
+        _this.checkoutHandleSubmit = _this.checkoutHandleSubmit.bind(_this);
+        return _this;
+    }
+
+    _createClass(SingleUserContainer, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            //va a volar
+            this.props.fetchUser(this.props.id);
+            this.props.fetchUserOrders(this.props.id);
+        }
+    }, {
+        key: 'handleSubmit',
+        value: function handleSubmit(e) {
+            e.preventDefault();
+            this.props.deslogUser();
+        }
+    }, {
+        key: 'checkoutHandleSubmit',
+        value: function checkoutHandleSubmit(e) {
+            e.preventDefault();
+            var body = {
+                userId: this.props.user.id,
+                userDirection: e.target[1].value,
+                userMail: e.target[0].value,
+                products: this.props.carrito.map(function (prod) {
+=======
 var UserCheckoutContainer = function (_React$Component) {
     _inherits(UserCheckoutContainer, _React$Component);
 
@@ -59176,6 +59420,7 @@ var UserCheckoutContainer = function (_React$Component) {
                 userDirection: e.target[1].value,
                 userMail: e.target[0].value,
                 products: this.state.carrito.map(function (prod) {
+>>>>>>> c1a07561d27dc0df45237c9bcaf467b53059c120
                     return { id: prod.id, cantidad: prod.carrito.cantidad };
                 }) };
             console.log(body);
@@ -59184,6 +59429,72 @@ var UserCheckoutContainer = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+<<<<<<< HEAD
+            var _this2 = this;
+
+            /*if(this.props.user.id!=this.props.id){
+                return <Redirect to='/login'/>
+            }*/
+            var _props = this.props,
+                match = _props.match,
+                user = _props.user,
+                userOrders = _props.userOrders,
+                carrito = _props.carrito;
+
+            console.log('Entrooooo');
+            return _react2.default.createElement(
+                _reactRouterDom.Switch,
+                null,
+                _react2.default.createElement(_reactRouterDom.Route, { exact: true,
+                    path: '' + match.path,
+                    render: function render() {
+                        return _react2.default.createElement(_SingleUser2.default, {
+                            handleSubmit: _this2.handleSubmit,
+                            user: user });
+                    } }),
+                _react2.default.createElement(_reactRouterDom.Route, {
+                    path: match.path + '/orders',
+                    render: function render() {
+                        return _react2.default.createElement(_UserOrder2.default, {
+                            userOrders: userOrders });
+                    } }),
+                _react2.default.createElement(_reactRouterDom.Route, {
+                    path: match.path + '/checkout',
+                    render: function render() {
+                        return _react2.default.createElement(_UserCheckout2.default, { user: user,
+                            carrito: carrito,
+                            handleSubmit: _this2.checkoutHandleSubmit });
+                    }
+                })
+            );
+        }
+    }]);
+
+    return SingleUserContainer;
+}(_react2.default.Component);
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+    return {
+        userOrders: state.userOrders,
+        user: state.user.user,
+        carrito: state.user.carrito,
+        id: ownProps.match.params.id,
+        match: ownProps.match
+    };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        fetchUser: function fetchUser(id) {
+            return dispatch((0, _user.fetchUser)(id));
+        },
+        deslogUser: function deslogUser() {
+            return dispatch((0, _user.deslogUser)());
+        },
+        fetchUserOrders: function fetchUserOrders(id) {
+            return dispatch((0, _userOrders.fetchUserOrders)(id));
+        },
+=======
             var _state = this.state,
                 user = _state.user,
                 carrito = _state.carrito; //PROPS
@@ -59205,12 +59516,16 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
+>>>>>>> c1a07561d27dc0df45237c9bcaf467b53059c120
         postOrders: function postOrders(body) {
             return dispatch((0, _orders.postOrders)(body));
         }
     };
 };
 
+<<<<<<< HEAD
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(SingleUserContainer);
+=======
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(UserCheckoutContainer);
 
 /***/ }),
@@ -59359,6 +59674,7 @@ exports.default = function (_ref) {
         )
     );
 };
+>>>>>>> c1a07561d27dc0df45237c9bcaf467b53059c120
 
 /***/ })
 /******/ ]);

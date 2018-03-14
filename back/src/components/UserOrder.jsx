@@ -5,15 +5,15 @@ import OrdersByUser from './OrdersByUser';
 export default ({ userOrders }) => {
   return(<div>
     {console.log('fffffff',userOrders)}
-    <h1>User Orders</h1>
+    <h1>Tus Ordenes</h1>
     {!userOrders ? "Loading" :
     <div>
     {userOrders.map(userOrder=>{
       return(
         <div key={userOrder.id}>
-        <p>Order ID: {userOrder.id}</p>
-        <p>Status: {userOrder.status}</p>
-        <p>Fecha de creacion: {userOrder.createdAt}</p>
+        <h2>Order ID: {userOrder.id}</h2>
+        <h3>Status: {userOrder.status}</h3>
+        <h4>Fecha de creacion: {userOrder.createdAt}</h4>
         <OrdersByUser products={userOrder.products}/>
         </div>
       )
