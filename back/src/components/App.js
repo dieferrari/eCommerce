@@ -12,6 +12,7 @@ import SingleCategoryContainer from '../containers/SingleCategoryContainer';
 import UserCheckoutContainer from '../containers/UserCheckoutContainer'
 import AdminApp from './AdminApp';
 import Header from '../components/Header';
+import UserApp from './UserApp';
 import { connect } from 'react-redux';
 import { Userlogged } from '../redux/actions/user'
 
@@ -63,6 +64,10 @@ class App extends React.Component{
             path="/login"
             component={LoginContainer}
           />
+          <Route
+          path="/user"
+          component={UserApp}
+        />
         {/* <Route
            exact
            path="/check"

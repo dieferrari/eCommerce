@@ -16,7 +16,6 @@ class SingleUserContainer extends React.Component {
     }
 	componentDidMount() {
     //va a volar
-    this.props.fetchUser(this.props.id)
     this.props.fetchUserOrders(this.props.id)
 	}
 	handleSubmit(e){
@@ -36,9 +35,7 @@ class SingleUserContainer extends React.Component {
              this.props.postOrders(body)
          }
 	render () {
-        if(this.props.user.id!=this.props.id){
-            return <Redirect to='/login'/>
-        }
+        
         const {match,user,userOrders,carrito}=this.props
         console.log('Entrooooo')
 		return (
