@@ -6,7 +6,7 @@ import ProductsContainer from '../containers/ProductsContainer';
 import SingleProductContainer from '../containers/SingleProductContainer';
 import CategoryContainer from '../containers/CategoryContainer';
 import UserOrderContainer from '../containers/UserOrderContainer';
-import CarritosContainer from '../containers/CarritosContainer';
+import CarritoContainer from '../containers/CarritoContainer';
 import SingleUserContainer from '../containers/SingleUserContainer';
 import SingleCategoryContainer from '../containers/SingleCategoryContainer';
 import UserCheckoutContainer from '../containers/UserCheckoutContainer'
@@ -40,7 +40,7 @@ export default () => (
         <Route
           exact
           path="/carrito"
-          component={CarritosContainer}
+          component={CarritoContainer}
         />
           <Route 
           path="/categories/:id"
