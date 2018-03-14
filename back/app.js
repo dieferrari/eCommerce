@@ -138,8 +138,8 @@ app.use(function (err, req, res, next) {
 
 db.sync({force: false})
 .then (() => {
-  create()
-  app.listen(3005,() => console.log('listening on port 3000'))
+  //create()
+  app.listen(3005,() => console.log('listening on port 3005'))
 })
 
 module.exports = app;
