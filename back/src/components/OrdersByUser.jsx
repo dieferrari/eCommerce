@@ -11,7 +11,7 @@ export default ({ products }) => {
       {!products ? "Loading" :
       <div>
       {products.map(product=>(
-        <p key={product.id}>
+        <div key={product.id}>
             <Link to={`/products/${product.id}`}>
               <p>Product Name:{product.name}</p>   
               <div>
@@ -21,7 +21,7 @@ export default ({ products }) => {
             <p>Precio: {product.price}</p>
             <p>Cantidad: {product.orderProduct.cantidad}</p>
             <p>Total: {product.orderProduct.cantidad * product.price}</p>
-        </p>
+        </div>
       ))}
       <p>Precio Final: {sumTotal}</p>
       </div>}

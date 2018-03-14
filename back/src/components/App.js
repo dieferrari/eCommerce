@@ -10,59 +10,79 @@ import CarritosContainer from '../containers/CarritosContainer';
 import SingleUserContainer from '../containers/SingleUserContainer';
 import SingleCategoryContainer from '../containers/SingleCategoryContainer';
 import AdminApp from './AdminApp';
-import Header from '../components/Header'
+import Header from '../components/Header';
+import { connect } from 'react-redux';
+import { Userlogged } from '../redux/actions/user'
 
-export default () => (
-    <div>
-      <Header/>
-      <Switch>
-        <Route
-          exact
-          path="/register"
-          component={RegisterContainer}
-        />
-        <Route
-          exact 
-          path="/products"
-          component={ProductsContainer}
-        />
-         <Route 
-          path="/products/:id"
-          component={SingleProductContainer}
-        />
-        <Route
-          exact 
-          path="/category"
-          component={CategoryContainer}
-        />
-        <Route 
-          path="/user/:id/orders"
-          component={UserOrderContainer}
+class App extends React.Component{
+
+  componentDidMount(){
+    console.log(this.props.Userlogged())
+  }
+  render(){
+    return (
+      <div>
+        <Header/>
+        <Switch>
+          <Route
+            exact
+            path="/register"
+            component={RegisterContainer}
           />
-        <Route
-          exact
-          path="/carrito"
-          component={CarritosContainer}
-        />
-          
+          <Route
+            exact 
+            path="/products"
+            component={ProductsContainer}
+          />
           <Route 
-          path="/categories/:id"
-          component={SingleCategoryContainer}
-        />
+            path="/products/:id"
+            component={SingleProductContainer}
+          />
+          <Route
+            exact 
+            path="/category"
+            component={CategoryContainer}
+          />
           <Route 
-          path="/user/:id"
-          component={SingleUserContainer}
-        />
-          <Route 
-          path="/admin"
-          component={AdminApp}
-        />
+            path="/user/:id/orders"
+            component={UserOrderContainer}
+            />
+          <Route
+            exact
+            path="/carrito"
+            component={CarritosContainer}
+          />
+            
+            <Route 
+            path="/categories/:id"
+            component={SingleCategoryContainer}
+          />
+            <Route 
+            path="/user/:id"
+            component={SingleUserContainer}
+          />
+            <Route 
+            path="/admin"
+            component={AdminApp}
+          />
+          <Route
+            exact
+            path="/login"
+            component={LoginContainer}
+          />
+        </Switch>
+      </div>
+    )
+  }
+}
+const mapStateToProps = (state,ownProps) => ({
+  match:ownProps.match
+})
 
-        <Route
-          exact
-          path="/login"
-          component={LoginContainer}
-        />
-      </Switch>
-    </div>
-);
+const mapDispatchToProps = dispatch => {
+return {
+    Userlogged: ()=> dispatch(Userlogged())
+}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App)
+

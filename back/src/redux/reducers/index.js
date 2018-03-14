@@ -9,7 +9,7 @@ import singleCategoryReducer from './single-category-reducer';
 import {reducer as reducerForm} from 'redux-form'
 import ordersReducer from './orders-reducer';
 import allUsersReducer from './allUsers-reducer'
-
+import flagReducer from './flag-reducer';
 export default combineReducers ({
   loading: loadingReducer,
   singleProduct: singleProductReducer,
@@ -20,5 +20,6 @@ export default combineReducers ({
   userOrders: userOrdersReducer,
   allUsers:allUsersReducer,
   user: userReducer,
-  orders:ordersReducer
+  orders:ordersReducer,
+  flag : flagReducer
 });

@@ -1,7 +1,11 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+import React from 'react';
+import {Link} from 'react-router-dom';
+// import { login, logout, isLoggedIn } from '../utils/Authservice';
+
 
 export default ({products,handleChange}) => (
+    // <div>
+    // {!isLoggedIn() ? "no estas logeado perro" :
     <div style={{padding:'50px'}}>
         <h2>Productos</h2>
         <div className="form-group">
@@ -23,4 +27,6 @@ export default ({products,handleChange}) => (
             </div>
         </div>
     </div>
+    // }
+    // </div>
 );

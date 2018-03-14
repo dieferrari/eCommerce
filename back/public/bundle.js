@@ -3193,7 +3193,7 @@ var createTransitionManager = function createTransitionManager() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.deslogUser = exports.comprobateUser = exports.fetchUser = exports.createUser = undefined;
+exports.deslogUser = exports.Userlogged = exports.loggedUser = exports.fetchUser = exports.createUser = undefined;
 
 var _axios = __webpack_require__(13);
 
@@ -3222,13 +3222,10 @@ var receiveUser = function receiveUser(user, carrito) {
     }
   };
 };
-var loginUser = function loginUser(user, carrito) {
+var loginUser = function loginUser(flag) {
   return {
     type: _constants.FOUND_USER,
-    fetch: {
-      user: user,
-      carrito: carrito
-    }
+    flag: flag
   };
 };
 var deslogearUser = function deslogearUser(user) {
@@ -3264,12 +3261,25 @@ var fetchUser = exports.fetchUser = function fetchUser(id) {
   };
 };
 
-var comprobateUser = exports.comprobateUser = function comprobateUser(user) {
+var loggedUser = exports.loggedUser = function loggedUser(user) {
   return function (dispatch) {
     _axios2.default.post('/api/users/login', user).then(function (res) {
       return res.data;
+    }).then(function (respuesta) {
+      console.log(respuesta);
+      dispatch(loginUser(true));
+    }).catch(function (err) {
+      dispatch(loginUser(false));
+    });
+  };
+};
+var Userlogged = exports.Userlogged = function Userlogged() {
+  return function (dispatch) {
+    _axios2.default.get('/api/users/userislogin').then(function (res) {
+      return res.data;
     }).then(function (user) {
-      dispatch(loginUser({ id: user.id,
+      console.log(user);
+      dispatch(receiveUser({ id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email }, user.products));
@@ -29326,6 +29336,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -29376,64 +29388,109 @@ var _Header = __webpack_require__(452);
 
 var _Header2 = _interopRequireDefault(_Header);
 
+var _reactRedux = __webpack_require__(5);
+
+var _user = __webpack_require__(59);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function () {
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(_Header2.default, null),
-    _react2.default.createElement(
-      _reactRouterDom.Switch,
-      null,
-      _react2.default.createElement(_reactRouterDom.Route, {
-        exact: true,
-        path: '/register',
-        component: _registerContainer2.default
-      }),
-      _react2.default.createElement(_reactRouterDom.Route, {
-        exact: true,
-        path: '/products',
-        component: _ProductsContainer2.default
-      }),
-      _react2.default.createElement(_reactRouterDom.Route, {
-        path: '/products/:id',
-        component: _SingleProductContainer2.default
-      }),
-      _react2.default.createElement(_reactRouterDom.Route, {
-        exact: true,
-        path: '/category',
-        component: _CategoryContainer2.default
-      }),
-      _react2.default.createElement(_reactRouterDom.Route, {
-        path: '/user/:id/orders',
-        component: _UserOrderContainer2.default
-      }),
-      _react2.default.createElement(_reactRouterDom.Route, {
-        exact: true,
-        path: '/carrito',
-        component: _CarritosContainer2.default
-      }),
-      _react2.default.createElement(_reactRouterDom.Route, {
-        path: '/categories/:id',
-        component: _SingleCategoryContainer2.default
-      }),
-      _react2.default.createElement(_reactRouterDom.Route, {
-        path: '/user/:id',
-        component: _SingleUserContainer2.default
-      }),
-      _react2.default.createElement(_reactRouterDom.Route, {
-        path: '/admin',
-        component: _AdminApp2.default
-      }),
-      _react2.default.createElement(_reactRouterDom.Route, {
-        exact: true,
-        path: '/login',
-        component: _loginContainer2.default
-      })
-    )
-  );
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var App = function (_React$Component) {
+  _inherits(App, _React$Component);
+
+  function App() {
+    _classCallCheck(this, App);
+
+    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+  }
+
+  _createClass(App, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      console.log(this.props.Userlogged());
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_Header2.default, null),
+        _react2.default.createElement(
+          _reactRouterDom.Switch,
+          null,
+          _react2.default.createElement(_reactRouterDom.Route, {
+            exact: true,
+            path: '/register',
+            component: _registerContainer2.default
+          }),
+          _react2.default.createElement(_reactRouterDom.Route, {
+            exact: true,
+            path: '/products',
+            component: _ProductsContainer2.default
+          }),
+          _react2.default.createElement(_reactRouterDom.Route, {
+            path: '/products/:id',
+            component: _SingleProductContainer2.default
+          }),
+          _react2.default.createElement(_reactRouterDom.Route, {
+            exact: true,
+            path: '/category',
+            component: _CategoryContainer2.default
+          }),
+          _react2.default.createElement(_reactRouterDom.Route, {
+            path: '/user/:id/orders',
+            component: _UserOrderContainer2.default
+          }),
+          _react2.default.createElement(_reactRouterDom.Route, {
+            exact: true,
+            path: '/carrito',
+            component: _CarritosContainer2.default
+          }),
+          _react2.default.createElement(_reactRouterDom.Route, {
+            path: '/categories/:id',
+            component: _SingleCategoryContainer2.default
+          }),
+          _react2.default.createElement(_reactRouterDom.Route, {
+            path: '/user/:id',
+            component: _SingleUserContainer2.default
+          }),
+          _react2.default.createElement(_reactRouterDom.Route, {
+            path: '/admin',
+            component: _AdminApp2.default
+          }),
+          _react2.default.createElement(_reactRouterDom.Route, {
+            exact: true,
+            path: '/login',
+            component: _loginContainer2.default
+          })
+        )
+      );
+    }
+  }]);
+
+  return App;
+}(_react2.default.Component);
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  return {
+    match: ownProps.match
+  };
 };
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    Userlogged: function Userlogged() {
+      return dispatch((0, _user.Userlogged)());
+    }
+  };
+};
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);
 
 /***/ }),
 /* 187 */
@@ -30961,6 +31018,10 @@ var _allUsersReducer = __webpack_require__(399);
 
 var _allUsersReducer2 = _interopRequireDefault(_allUsersReducer);
 
+var _flagReducer = __webpack_require__(453);
+
+var _flagReducer2 = _interopRequireDefault(_flagReducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = (0, _redux.combineReducers)({
@@ -30973,7 +31034,8 @@ exports.default = (0, _redux.combineReducers)({
   userOrders: _userOrderReducer2.default,
   allUsers: _allUsersReducer2.default,
   user: _userReducer2.default,
-  orders: _ordersReducer2.default
+  orders: _ordersReducer2.default,
+  flag: _flagReducer2.default
 });
 
 /***/ }),
@@ -31059,9 +31121,6 @@ exports.default = function () {
             return _extends({}, state, { user: action.fetch.user,
                 carrito: action.fetch.carrito });
         case _constants.RECEIVE_USER:
-            return _extends({}, state, { user: action.fetch.user,
-                carrito: action.fetch.carrito });
-        case _constants.FOUND_USER:
             return _extends({}, state, { user: action.fetch.user,
                 carrito: action.fetch.carrito });
         case _constants.DESLOG_USER:
@@ -40157,7 +40216,7 @@ var LoginContainer = function (_React$Component) {
         key: 'handleSubmit',
         value: function handleSubmit(event) {
             event.preventDefault();
-            _store2.default.dispatch((0, _user.comprobateUser)({
+            _store2.default.dispatch((0, _user.loggedUser)({
                 email: event.target[0].value,
                 password: event.target[1].value
             }));
@@ -40353,57 +40412,67 @@ var _reactRouterDom = __webpack_require__(3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import { login, logout, isLoggedIn } from '../utils/Authservice';
+
+
 exports.default = function (_ref) {
     var products = _ref.products,
         handleChange = _ref.handleChange;
-    return _react2.default.createElement(
-        'div',
-        { style: { padding: '50px' } },
-        _react2.default.createElement(
-            'h2',
-            null,
-            'Productos'
-        ),
+    return (
+        // <div>
+        // {!isLoggedIn() ? "no estas logeado perro" :
         _react2.default.createElement(
             'div',
-            { className: 'form-group' },
-            _react2.default.createElement('input', { style: { maxWidth: '35rem' }, type: 'text', className: 'form-control', id: 'formGroupExampleInput', onChange: function onChange(e) {
-                    return handleChange(e);
-                }, placeholder: 'Nombre del producto' })
-        ),
-        _react2.default.createElement(
-            'div',
-            { className: 'container-fluid' },
+            { style: { padding: '50px' } },
+            _react2.default.createElement(
+                'h2',
+                null,
+                'Productos'
+            ),
             _react2.default.createElement(
                 'div',
-                { className: 'card-group' },
-                products.map(function (product) {
-                    return _react2.default.createElement(
-                        'div',
-                        { key: product.id, className: 'card', style: { minWidth: '30', maxWidth: '30rem', margin: '30px' } },
-                        _react2.default.createElement(
-                            _reactRouterDom.Link,
-                            { to: '/products/' + product.id },
-                            _react2.default.createElement('img', { style: { padding: "30px" }, className: 'responsive card-img-top', src: product.imgURL, alt: 'Card image cap' })
-                        ),
-                        _react2.default.createElement(
+                { className: 'form-group' },
+                _react2.default.createElement('input', { style: { maxWidth: '35rem' }, type: 'text', className: 'form-control', id: 'formGroupExampleInput', onChange: function onChange(e) {
+                        return handleChange(e);
+                    }, placeholder: 'Nombre del producto' })
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'container-fluid' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'card-group' },
+                    products.map(function (product) {
+                        return _react2.default.createElement(
                             'div',
-                            { className: 'card-body' },
+                            { key: product.id, className: 'card', style: { minWidth: '30', maxWidth: '30rem', margin: '30px' } },
                             _react2.default.createElement(
-                                'h5',
-                                { className: 'card-title' },
-                                product.name
+                                _reactRouterDom.Link,
+                                { to: '/products/' + product.id },
+                                _react2.default.createElement('img', { style: { padding: "30px" }, className: 'responsive card-img-top', src: product.imgURL, alt: 'Card image cap' })
                             ),
                             _react2.default.createElement(
-                                'p',
-                                { className: 'card-text' },
-                                product.price
+                                'div',
+                                { className: 'card-body' },
+                                _react2.default.createElement(
+                                    'h5',
+                                    { className: 'card-title' },
+                                    product.name
+                                ),
+                                _react2.default.createElement(
+                                    'p',
+                                    { className: 'card-text' },
+                                    product.price
+                                )
                             )
-                        )
-                    );
-                })
+                        );
+                    })
+                )
             )
         )
+        // }
+        // </div>
+
     );
 };
 
@@ -50734,7 +50803,7 @@ exports.default = function (_ref) {
       null,
       products.map(function (product) {
         return _react2.default.createElement(
-          'p',
+          'div',
           { key: product.id },
           _react2.default.createElement(
             _reactRouterDom.Link,
@@ -59042,6 +59111,33 @@ exports.default = function () {
 			)
 		)
 	);
+};
+
+/***/ }),
+/* 453 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _constants = __webpack_require__(6);
+
+var initialState = false;
+
+exports.default = function () {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+    var action = arguments[1];
+
+    switch (action.type) {
+        case _constants.FOUND_USER:
+            return action.flag;
+        default:
+            return state;
+    }
 };
 
 /***/ })

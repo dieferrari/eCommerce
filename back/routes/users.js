@@ -15,8 +15,8 @@ router.get('/', function (req, res, next) {
     User.findAll()
         .then((users) => res.status(200).send(users))
 })
-router.param('userId', function (req, res, next, id) {
-    User.findById(id,{
+router.get('/userislogin',function(req,res,next){
+    User.findById(req.user.id,{
         include: [{
             model: Product,
             attributes:['id','name', 'price'],
@@ -25,14 +25,12 @@ router.param('userId', function (req, res, next, id) {
             }
         }]
     })
-        .then((user) => {
-            if (!user) {
-                console.log('404 ')
-            }
-            req.user = user;
-            return next();
-        })
-        .catch(next);
+    .then((user) => {
+       res.send(user)
+    })
+    .catch(err => {
+        res.send(err)
+    });
 })
 router.post('/register', function (req, res, next) {
     User.create({
@@ -51,8 +49,9 @@ router.post('/register', function (req, res, next) {
     })
 })
 router.post('/login',passport.authenticate('local'),function (req, res) {
-    res.status(200).send(req.body)
-    console.log('LOGGED IN AS ',req.user.email)
+    if(req.user){
+        res.send(true)
+    }
 });
 router.delete('/delete/:userId', function (req, res, next) {
     User.destroy({
@@ -67,21 +66,21 @@ router.get('/logout', function(req, res){
 });
 router.get('/auth/facebook', passport.authenticate('facebook'));
 
-router.get('/auth/facebook/callback',passport.authenticate('facebook',
- {  successRedirect: '/',
-    failureRedirect: '/login' }
-));
+router.get('/auth/facebook/callback',passport.authenticate('facebook'),function(req,res){
+    console.log(req.user)
+    res.status(200).send(req.user)
+});
 router.get('/auth/google',
   passport.authenticate('google', 
   { scope: ['https://www.googleapis.com/auth/plus.login'] }
 ))
 router.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  passport.authenticate('google'),
   function(req, res) {
-    res.redirect('/');
+      console.log(req.user)
+    res.status(200).send(req.user);
   });
 router.get('/:userId/orders', function(req, res){
-    console.log("uola",req.user)
     Orders.findAll({    
         where: {
             OwnerId: req.params.userId,
@@ -98,7 +97,19 @@ router.get('/:userId/orders', function(req, res){
     })
 })
 router.get('/:userId', function (req, res) {
-    res.send(req.user);
+    User.findById(req.params.userId,{
+        include: [{
+            model: Product,
+            attributes:['id','name', 'price'],
+            through: {
+                attributes:['cantidad'],
+            }
+        }]
+    })
+    .then((user) => {
+            res.send(user)
+    })
+    .catch(err => res.send(err));
 });
 
 //body={isAdmin:boolean}
