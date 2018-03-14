@@ -20,8 +20,8 @@ componentDidMount(){
 }
 
    render (){
-       if(!this.props.user.isAdmin){
-        return <Redirect to={`/login`} />
+       if(this.props.user.id==undefined){
+           console.log('loading')
        }
        return (
         <div>

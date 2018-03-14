@@ -1,4 +1,4 @@
-import { RECEIVE_USER,DESLOG_USER, FOUND_USER, SET_USER } from '../constants';
+import { RECEIVE_USER,DESLOG_USER, SET_USER } from '../constants';
 const initialState = {
     user: {},
     carrito:[]
@@ -10,9 +10,6 @@ export default (state = initialState, action) => {
             return {...state, user: action.fetch.user,
                 carrito: action.fetch.carrito}
         case RECEIVE_USER:
-            return {...state, user: action.fetch.user,
-                carrito: action.fetch.carrito}
-        case FOUND_USER:
             return {...state, user: action.fetch.user,
                 carrito: action.fetch.carrito}
         case DESLOG_USER:
