@@ -138,7 +138,11 @@ app.use(function (err, req, res, next) {
 
 db.sync({force: false})
 .then (() => {
+<<<<<<< HEAD
   // create()
+=======
+  //create()
+>>>>>>> 4167e6da9c84e6919079e610725708cec46fa424
   app.listen(3005,() => console.log('listening on port 3005'))
 })
 

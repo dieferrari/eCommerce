@@ -16,6 +16,7 @@ export default ({orders,handleChange})=>(
             <tr>
                 <th>Usuario</th>
                 <th>Order ID</th>
+                <th>Direccion de entrega</th>
                 <th>Estado</th>
                 <th>Acciones</th>
             </tr>
@@ -23,6 +24,7 @@ export default ({orders,handleChange})=>(
                     <tr key={orden.id}>
                         <td>{orden.Owner.fullName}</td>
                         <td>{orden.id}</td>
+                        <td>{orden.OwnerDirection}</td>
                         <td>{orden.status}</td>
                         <td><Link to={`/admin/orders/${orden.id}`}>Ver detalles - Editar</Link></td>
                     </tr>

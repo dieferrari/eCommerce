@@ -13293,6 +13293,7 @@ var postOrders = exports.postOrders = function postOrders(body) {
     return _axios2.default.post('/api/orders', body).then(function (res) {
       return res.data;
     }).then(function (orders) {
+      console.log('le pega');
       dispatch(receiveOrders(orders));
     });
   };
@@ -35038,6 +35039,10 @@ var _SingleCategoryContainer = __webpack_require__(435);
 
 var _SingleCategoryContainer2 = _interopRequireDefault(_SingleCategoryContainer);
 
+var _UserCheckoutContainer = __webpack_require__(453);
+
+var _UserCheckoutContainer2 = _interopRequireDefault(_UserCheckoutContainer);
+
 var _AdminApp = __webpack_require__(438);
 
 var _AdminApp2 = _interopRequireDefault(_AdminApp);
@@ -35100,6 +35105,11 @@ exports.default = function () {
         exact: true,
         path: '/login',
         component: _loginContainer2.default
+      }),
+      _react2.default.createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: '/check',
+        component: _UserCheckoutContainer2.default
       })
     )
   );
@@ -52081,6 +52091,11 @@ exports.default = function (_ref) {
                     _react2.default.createElement(
                         'th',
                         null,
+                        'Direccion de entrega'
+                    ),
+                    _react2.default.createElement(
+                        'th',
+                        null,
                         'Estado'
                     ),
                     _react2.default.createElement(
@@ -52102,6 +52117,11 @@ exports.default = function (_ref) {
                             'td',
                             null,
                             orden.id
+                        ),
+                        _react2.default.createElement(
+                            'td',
+                            null,
+                            orden.OwnerDirection
                         ),
                         _react2.default.createElement(
                             'td',
@@ -52263,6 +52283,12 @@ exports.default = function (_ref) {
             ),
             _react2.default.createElement(
                 'h3',
+                null,
+                'Direccion de entrega: ',
+                orden.OwnerDirection
+            ),
+            _react2.default.createElement(
+                'h4',
                 null,
                 'Creada: ',
                 orden.createdAt
@@ -59059,6 +59085,279 @@ exports.default = function () {
 			)
 		)
 	);
+};
+
+/***/ }),
+/* 453 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(3);
+
+var _reactRedux = __webpack_require__(5);
+
+var _UserCheckout = __webpack_require__(454);
+
+var _UserCheckout2 = _interopRequireDefault(_UserCheckout);
+
+var _orders = __webpack_require__(140);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var UserCheckoutContainer = function (_React$Component) {
+    _inherits(UserCheckoutContainer, _React$Component);
+
+    function UserCheckoutContainer(props) {
+        _classCallCheck(this, UserCheckoutContainer);
+
+        var _this = _possibleConstructorReturn(this, (UserCheckoutContainer.__proto__ || Object.getPrototypeOf(UserCheckoutContainer)).call(this, props));
+
+        _this.state = {
+            user: { "fullName": "Diego Ferrari",
+                "id": 102,
+                "firstName": "Diego",
+                "lastName": "Ferrari",
+                "isAdmin": false,
+                "email": "diego@cc.cc" },
+            carrito: [{
+                "id": 101,
+                "name": "Inspiron I5578",
+                "description": "Notebook 2 en 1 Dell Inspiron I5578 Intel Core i7 8GB 1TB",
+                "price": 23699,
+                "carrito": {
+                    "cantidad": 1
+                }
+            }, {
+                "id": 102,
+                "name": "HP 15-bs022la",
+                "description": "Notebook HP 15-bs022la Intel Core i7 12GB 1TB",
+                "price": 19499,
+                "carrito": {
+                    "cantidad": 1
+                }
+            }, {
+                "id": 103,
+                "name": "Acer Aspire",
+                "description": "Notebook Acer Aspire E5-575-76SD Intel Core i7",
+                "price": 16999,
+                "carrito": {
+                    "cantidad": 1
+                }
+            }]
+        };
+        _this.handleSubmit = _this.handleSubmit.bind(_this);
+        return _this;
+    }
+
+    _createClass(UserCheckoutContainer, [{
+        key: 'handleSubmit',
+        value: function handleSubmit(e) {
+            e.preventDefault();
+            var body = {
+                userId: this.state.user.id,
+                userDirection: e.target[1].value,
+                userMail: e.target[0].value,
+                products: this.state.carrito.map(function (prod) {
+                    return { id: prod.id, cantidad: prod.carrito.cantidad };
+                }) };
+            console.log(body);
+            this.props.postOrders(body);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _state = this.state,
+                user = _state.user,
+                carrito = _state.carrito; //PROPS
+
+            return _react2.default.createElement(_UserCheckout2.default, { user: user,
+                carrito: carrito,
+                handleSubmit: this.handleSubmit });
+        }
+    }]);
+
+    return UserCheckoutContainer;
+}(_react2.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        // user=state.user.user,
+        //carrito=state.user.carrito,
+    };
+};
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        postOrders: function postOrders(body) {
+            return dispatch((0, _orders.postOrders)(body));
+        }
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(UserCheckoutContainer);
+
+/***/ }),
+/* 454 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (_ref) {
+    var user = _ref.user,
+        carrito = _ref.carrito,
+        handleSubmit = _ref.handleSubmit;
+    return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+            'h1',
+            null,
+            'Confirmar Compra'
+        ),
+        _react2.default.createElement(
+            'table',
+            null,
+            _react2.default.createElement(
+                'tbody',
+                null,
+                _react2.default.createElement(
+                    'tr',
+                    null,
+                    _react2.default.createElement(
+                        'th',
+                        null,
+                        'Producto'
+                    ),
+                    _react2.default.createElement(
+                        'th',
+                        null,
+                        'Descripcion'
+                    ),
+                    _react2.default.createElement(
+                        'th',
+                        null,
+                        'Precio'
+                    ),
+                    _react2.default.createElement(
+                        'th',
+                        null,
+                        'Cantidad'
+                    ),
+                    _react2.default.createElement(
+                        'th',
+                        null,
+                        'Total/Producto'
+                    ),
+                    _react2.default.createElement(
+                        'th',
+                        null,
+                        'Boton'
+                    )
+                ),
+                !carrito ? 'loading...' : carrito.map(function (prod) {
+                    return _react2.default.createElement(
+                        'tr',
+                        { key: prod.id },
+                        _react2.default.createElement(
+                            'td',
+                            null,
+                            prod.name
+                        ),
+                        _react2.default.createElement(
+                            'td',
+                            null,
+                            prod.description
+                        ),
+                        _react2.default.createElement(
+                            'td',
+                            null,
+                            '$ ' + prod.price
+                        ),
+                        _react2.default.createElement(
+                            'td',
+                            null,
+                            prod.carrito.cantidad
+                        ),
+                        _react2.default.createElement(
+                            'td',
+                            null,
+                            '$ ' + prod.carrito.cantidad * prod.price
+                        ),
+                        _react2.default.createElement(
+                            'td',
+                            null,
+                            'boton'
+                        )
+                    );
+                })
+            )
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+            'h3',
+            null,
+            'Confirmacion de datos'
+        ),
+        _react2.default.createElement('br', null),
+        !user ? 'Loading' : _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+                'form',
+                { onSubmit: function onSubmit(e) {
+                        return handleSubmit(e);
+                    } },
+                _react2.default.createElement(
+                    'label',
+                    null,
+                    'e-Mail'
+                ),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement('input', { type: 'email', name: 'mail', defaultValue: user.email }),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement(
+                    'label',
+                    null,
+                    'Direccion de entrega'
+                ),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement('input', { type: 'text', name: 'direccion' }),
+                '  ',
+                _react2.default.createElement('br', null),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement('input', { type: 'submit', value: 'Comprar' })
+            )
+        )
+    );
 };
 
 /***/ })
