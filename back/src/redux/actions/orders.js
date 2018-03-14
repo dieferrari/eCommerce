@@ -21,6 +21,7 @@ export const postOrders = (body) => dispatch =>
   axios.post('/api/orders',body)
     .then(res => res.data)
     .then(orders => {
+      console.log('le pega')
       dispatch(receiveOrders(orders))});
 
 /* EJEMPLO body={

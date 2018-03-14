@@ -6,9 +6,10 @@ import ProductsContainer from '../containers/ProductsContainer';
 import SingleProductContainer from '../containers/SingleProductContainer';
 import CategoryContainer from '../containers/CategoryContainer';
 import UserOrderContainer from '../containers/UserOrderContainer';
-import CarritosContainer from '../containers/CarritosContainer';
+import CarritosContainer from '../containers/CarritoContainer';
 import SingleUserContainer from '../containers/SingleUserContainer';
 import SingleCategoryContainer from '../containers/SingleCategoryContainer';
+import UserCheckoutContainer from '../containers/UserCheckoutContainer'
 import AdminApp from './AdminApp';
 import Header from '../components/Header';
 import { connect } from 'react-redux';
@@ -43,10 +44,6 @@ class App extends React.Component{
             path="/category"
             component={CategoryContainer}
           />
-          <Route 
-            path="/user/:id/orders"
-            component={UserOrderContainer}
-            />
           <Route
             exact
             path="/carrito"
@@ -58,10 +55,6 @@ class App extends React.Component{
             component={SingleCategoryContainer}
           />
             <Route 
-            path="/user/:id"
-            component={SingleUserContainer}
-          />
-            <Route 
             path="/admin"
             component={AdminApp}
           />
@@ -70,6 +63,19 @@ class App extends React.Component{
             path="/login"
             component={LoginContainer}
           />
+        {/* <Route
+           exact
+           path="/check"
+           component={UserCheckoutContainer}
+         />
+         <Route 
+           path="/user/:id"
+           component={SingleUserContainer}
+         />
+         <Route 
+           path="/user/:id/orders"
+           component={UserOrderContainer}
+         />*/}
         </Switch>
       </div>
     )
@@ -85,4 +91,3 @@ return {
 }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App)
-

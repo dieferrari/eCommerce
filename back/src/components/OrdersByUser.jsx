@@ -7,23 +7,34 @@ export default ({ products }) => {
           return tot + record.orderProduct.cantidad * record.price;
       },0);
     
-    return(<div>
-      {!products ? "Loading" :
+    return(
+    <div>
+      {!products ? "Loading" :(
       <div>
-      {products.map(product=>(
-        <div key={product.id}>
-            <Link to={`/products/${product.id}`}>
-              <p>Product Name:{product.name}</p>   
-              <div>
-                <img src={product.imgURL} alt=""/>  
-              </div> 
-            </Link>
-            <p>Precio: {product.price}</p>
-            <p>Cantidad: {product.orderProduct.cantidad}</p>
-            <p>Total: {product.orderProduct.cantidad * product.price}</p>
-        </div>
-      ))}
-      <p>Precio Final: {sumTotal}</p>
-      </div>}
-    </div>)
+        <table >
+        <tbody>
+            <tr>
+                <th>Producto</th>
+                <th>Descripcion</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Total/Producto</th>
+            </tr>
+            {products.map(prod=>(
+              <tr key={prod.id}>
+              <td>{prod.name}</td>
+              <td>{prod.description}</td>
+              <td>{`$ ${prod.price}`}</td>
+              <td>{prod.orderProduct.cantidad}</td>
+              <td>{`$ ${prod.orderProduct.cantidad*prod.price}`}</td>
+          </tr>
+            ))}
+        </tbody>
+        </table> 
+        <p>Precio Final:$ {sumTotal}</p>
+      </div>)}
+    </div>
+    )
 };
+
+

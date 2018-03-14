@@ -27,4 +27,12 @@ module.exports = [
       email: 'Tomi@cc.cc',
       password: 'Pass123!',
     },
+    {
+      id:105,
+      firstName: 'admin',
+      lastName: 'admin',
+      email: 'hola.teststore@gmail.com',
+      password: 'admin1',
+      isAdmin:true,
+    },
   ];

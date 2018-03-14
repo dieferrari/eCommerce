@@ -19,7 +19,7 @@ router.get('/userislogin',function(req,res,next){
     User.findById(req.user.id,{
         include: [{
             model: Product,
-            attributes:['id','name', 'price'],
+            attributes:['id','name','description', 'price'],
             through: {
                 attributes:['cantidad'],
             }
@@ -87,7 +87,7 @@ router.get('/:userId/orders', function(req, res){
         },
         include: [{
             model: Product,
-            attributes:['id','name', 'price', 'imgURL'],
+            attributes:['id','name','description', 'price', 'imgURL'],
             through: {
                 attributes:['cantidad'],
             }
@@ -100,7 +100,7 @@ router.get('/:userId', function (req, res) {
     User.findById(req.params.userId,{
         include: [{
             model: Product,
-            attributes:['id','name', 'price'],
+            attributes:['id','name','description', 'price'],
             through: {
                 attributes:['cantidad'],
             }

@@ -10,6 +10,9 @@ import {reducer as reducerForm} from 'redux-form'
 import ordersReducer from './orders-reducer';
 import allUsersReducer from './allUsers-reducer'
 import flagReducer from './flag-reducer';
+// import localCarritoReducer from './carrito-reducer'
+
+
 export default combineReducers ({
   loading: loadingReducer,
   singleProduct: singleProductReducer,
