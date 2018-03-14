@@ -9,6 +9,7 @@ import UserOrderContainer from '../containers/UserOrderContainer';
 import CarritosContainer from '../containers/CarritosContainer';
 import SingleUserContainer from '../containers/SingleUserContainer';
 import SingleCategoryContainer from '../containers/SingleCategoryContainer';
+import UserCheckoutContainer from '../containers/UserCheckoutContainer'
 import AdminApp from './AdminApp';
 import Header from '../components/Header'
 
@@ -62,6 +63,11 @@ export default () => (
           exact
           path="/login"
           component={LoginContainer}
+        />
+        <Route
+          exact
+          path="/check"
+          component={UserCheckoutContainer}
         />
       </Switch>
     </div>
