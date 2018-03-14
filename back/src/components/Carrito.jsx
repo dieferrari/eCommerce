@@ -1,18 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ListGroup, ListGroupItem, Col } from 'reactstrap';
 
-export default ({ Carrito }) => (
+export default ({localCarrito, userCarrito}) => (
     <div>
       <h1>Carrito</h1>
-      {!Carrito ? "Loading" :
-      <div>
-      {Carrito.map(product=>{
-        return(
-        <Link to={"/products/" + product.id}>
-        <p key={product.id}>{product.name}</p>
-        </Link>
-        )
-      })}
-      </div>}
+      {!localCarrito ? "loading" : 
+      <ListGroup>
+        {localCarrito.map(product => {
+          <ListGroupItem key={product.id}>
+          {console.log(product.name)}
+            <Col>
+              <div>
+                <img src="" alt=""/>
+              </div>
+            </Col>
+            <Col>
+              <div>
+                <h3>{product.name}</h3>
+              </div>
+            </Col>
+          </ListGroupItem>
+        })
+        }
+      </ListGroup>
+      }
     </div>
   );
