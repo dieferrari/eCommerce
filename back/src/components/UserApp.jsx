@@ -19,7 +19,7 @@ componentDidMount(){
         <div>
         <Switch>
             <Route 
-            path={`${this.props.match.path}/:id`}
+            path={`${this.props.match.path}`}
             component={SingleUserContainer}
         />
         </Switch>

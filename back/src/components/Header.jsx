@@ -2,14 +2,14 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 
-export default () => (
+export default ({categories,user,carrito,handleDeslogSubmit}) => (
 	<div>
 		<nav  className="navbar navbar-light bg-light justify-content-between">
 			<a className="navbar-brand">e-Commerce</a>
 			
 			<ul className="nav nav-pills">
   			<li className="nav-item">
-   				<Link className="nav-link active" to={`/`}>All Products</Link>
+   				<Link className="nav-link active" to={`/products`}>All Products</Link>
   			</li>
   			<li className="nav-item dropdown">
    				<a className="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Categories</a>
@@ -18,25 +18,27 @@ export default () => (
 						<a className="dropdown-item" href="#">Another action</a>
 						<a className="dropdown-item" href="#">Something else here</a>
 					<div className="dropdown-divider"></div>
-						<a className="dropdown-item" href="#">Separated link</a>
+						<a className="dropdown-item" href="/category">Todas las categorias</a>
     			</div>
   			</li>
   			<li className="nav-item">
-    			<Link className="nav-link" to={`/carrito`}>Cart <span>(5)</span></Link> 
+    			<Link className="nav-link" to={`/carrito`}>Cart <span>{`(${carrito.length||'LC'})`}</span></Link> 
   			</li>
   			<li className="nav-item">
-    			<a className="nav-link disabled" href="#">Disabled</a>
+			  <Link className="nav-link" to={`/user`}>{user.id?'Mi Cuenta':''}<span></span></Link> 
   			</li>
 			</ul>
-				
-				
 			<form className="form-inline">
 					<input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
 					<button className="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
 			</form>
-			<Link to={`/login`}>
-					Login / Register
-			</Link>
+			{user.id?(
+				<Link onClick={(e)=>handleDeslogSubmit(e)} to='#'>
+				Cerrar Sesion
+				</Link>
+			):(<Link to={`/login`}>
+					Login
+			</Link>)}
 		</nav>
 	</div>
 )

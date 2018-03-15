@@ -20,9 +20,10 @@ componentDidMount(){
 }
 
    render (){
-       if(this.props.user.id==undefined){
-           console.log('loading')
-       }
+       if(!this.props.user.isAdmin){
+           return (<div>
+               <h1>Espacio solo para Administradores</h1>
+               </div>)}
        return (
         <div>
         <Switch>
