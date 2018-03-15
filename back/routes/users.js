@@ -49,9 +49,21 @@ router.post('/register', function (req, res, next) {
     })
 })
 router.post('/login',passport.authenticate('local'),function (req, res) {
-    if(req.user){
-        res.send(true)
-    }
+    User.findById(req.user.id,{
+        include: [{
+            model: Product,
+            attributes:['id','name','description', 'price'],
+            through: {
+                attributes:['cantidad'],
+            }
+        }]
+    })
+    .then((user) => {
+       res.send(user)
+    })
+    .catch(err => {
+        res.send(err)
+    });
 });
 router.delete('/delete/:userId', function (req, res, next) {
     User.destroy({

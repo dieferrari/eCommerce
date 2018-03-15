@@ -11,20 +11,23 @@ import SingleUserContainer from '../containers/SingleUserContainer';
 import SingleCategoryContainer from '../containers/SingleCategoryContainer';
 import UserCheckoutContainer from '../containers/UserCheckoutContainer'
 import AdminApp from './AdminApp';
-import Header from '../components/Header';
+import HeaderContainer from '../containers/HeaderContainer';
 import UserApp from './UserApp';
 import { connect } from 'react-redux';
 import { Userlogged } from '../redux/actions/user'
+import RouteHook from 'react-route-hook';
 
 class App extends React.Component{
-
-  componentDidMount(){
-    console.log(this.props.Userlogged())
+componentDidMount(){
+  this.props.Userlogged()
+}
+  componentWillReceiveProps(){
+    this.props.Userlogged()
   }
   render(){
     return (
       <div>
-        <Header/>
+        <HeaderContainer/>
         <Switch>
           <Route
             exact
@@ -59,7 +62,8 @@ class App extends React.Component{
             path="/admin"
             component={AdminApp}
           />
-          <Route
+          <RouteHook
+            onChange={this.props.Userlogged}
             exact
             path="/login"
             component={LoginContainer}
@@ -88,7 +92,8 @@ class App extends React.Component{
   }
 }
 const mapStateToProps = (state,ownProps) => ({
-  match:ownProps.match
+  match:ownProps.match,
+  user:state.user.user
 })
 
 const mapDispatchToProps = dispatch => {

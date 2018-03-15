@@ -1593,6 +1593,7 @@ var fetchUser = exports.fetchUser = function fetchUser(id) {
       dispatch(receiveUser({ id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
+        isAdmin: user.isAdmin,
         email: user.email }, user.products));
       return user;
     });
@@ -1603,11 +1604,12 @@ var loggedUser = exports.loggedUser = function loggedUser(user) {
   return function (dispatch) {
     _axios2.default.post('/api/users/login', user).then(function (res) {
       return res.data;
-    }).then(function (respuesta) {
-      console.log(respuesta);
-      dispatch(loginUser(true));
-    }).catch(function (err) {
-      dispatch(loginUser(false));
+    }).then(function (user) {
+      dispatch(receiveUser({ id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        isAdmin: user.isAdmin,
+        email: user.email }, user.products));
     });
   };
 };
@@ -1616,10 +1618,10 @@ var Userlogged = exports.Userlogged = function Userlogged() {
     _axios2.default.get('/api/users/userislogin').then(function (res) {
       return res.data;
     }).then(function (user) {
-      console.log(user);
       dispatch(receiveUser({ id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
+        isAdmin: user.isAdmin,
         email: user.email }, user.products));
     });
   };
@@ -13298,7 +13300,7 @@ exports.default = function (_ref) {
         null,
         _react2.default.createElement(
           _reactRouterDom.Link,
-          { to: '/user/' + user.id + '/orders' },
+          { to: '/user/orders' },
           _react2.default.createElement('img', { src: 'https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/1342761/580/386/m1/fpnw/wm0/cardboard-box-icon-01-.jpg?1465234338&s=ce34fb8219c58b48a7e22f2840e4e35e' }),
           _react2.default.createElement(
             'h3',
@@ -35209,9 +35211,9 @@ var _AdminApp = __webpack_require__(440);
 
 var _AdminApp2 = _interopRequireDefault(_AdminApp);
 
-var _Header = __webpack_require__(454);
+var _HeaderContainer = __webpack_require__(458);
 
-var _Header2 = _interopRequireDefault(_Header);
+var _HeaderContainer2 = _interopRequireDefault(_HeaderContainer);
 
 var _UserApp = __webpack_require__(455);
 
@@ -35220,6 +35222,10 @@ var _UserApp2 = _interopRequireDefault(_UserApp);
 var _reactRedux = __webpack_require__(4);
 
 var _user = __webpack_require__(24);
+
+var _reactRouteHook = __webpack_require__(453);
+
+var _reactRouteHook2 = _interopRequireDefault(_reactRouteHook);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35241,7 +35247,12 @@ var App = function (_React$Component) {
   _createClass(App, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      console.log(this.props.Userlogged());
+      this.props.Userlogged();
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps() {
+      this.props.Userlogged();
     }
   }, {
     key: 'render',
@@ -35249,7 +35260,7 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_Header2.default, null),
+        _react2.default.createElement(_HeaderContainer2.default, null),
         _react2.default.createElement(
           _reactRouterDom.Switch,
           null,
@@ -35285,7 +35296,8 @@ var App = function (_React$Component) {
             path: '/admin',
             component: _AdminApp2.default
           }),
-          _react2.default.createElement(_reactRouterDom.Route, {
+          _react2.default.createElement(_reactRouteHook2.default, {
+            onChange: this.props.Userlogged,
             exact: true,
             path: '/login',
             component: _loginContainer2.default
@@ -35305,7 +35317,8 @@ var App = function (_React$Component) {
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
-    match: ownProps.match
+    match: ownProps.match,
+    user: state.user.user
   };
 };
 
@@ -46226,9 +46239,9 @@ var _login2 = _interopRequireDefault(_login);
 
 var _user = __webpack_require__(24);
 
-var _store = __webpack_require__(34);
+var _reactRouterDom = __webpack_require__(3);
 
-var _store2 = _interopRequireDefault(_store);
+var _reactRedux = __webpack_require__(4);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -46246,7 +46259,6 @@ var LoginContainer = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (LoginContainer.__proto__ || Object.getPrototypeOf(LoginContainer)).call(this));
 
-        _this.state = {};
         _this.handleSubmit = _this.handleSubmit.bind(_this);
         return _this;
     }
@@ -46255,22 +46267,41 @@ var LoginContainer = function (_React$Component) {
         key: 'handleSubmit',
         value: function handleSubmit(event) {
             event.preventDefault();
-            _store2.default.dispatch((0, _user.loggedUser)({
+            this.props.loggedUser({
                 email: event.target[0].value,
                 password: event.target[1].value
-            }));
+            });
         }
     }, {
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_login2.default, { handleSubmit: this.handleSubmit });
+            var user = this.props.user;
+            // if(user.id){
+            //   return  <Redirect to='/'/>
+            // }
+
+            return _react2.default.createElement(_login2.default, { user: user, handleSubmit: this.handleSubmit });
         }
     }]);
 
     return LoginContainer;
 }(_react2.default.Component);
 
-exports.default = LoginContainer;
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        user: state.user.user
+
+    };
+};
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        loggedUser: function loggedUser(credentials) {
+            return dispatch((0, _user.loggedUser)(credentials));
+        }
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LoginContainer);
 
 /***/ }),
 /* 407 */
@@ -46291,13 +46322,19 @@ var _reactRouterDom = __webpack_require__(3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function (props) {
+exports.default = function (_ref) {
+    var handleSubmit = _ref.handleSubmit,
+        user = _ref.user;
     return _react2.default.createElement(
         'div',
         { className: 'd-flex justify-content-center' },
-        _react2.default.createElement(
+        user.id ? _react2.default.createElement(
+            'h1',
+            null,
+            'Ya estas Loggeado ' + user.id
+        ) : _react2.default.createElement(
             'form',
-            { onSubmit: props.handleSubmit, method: 'POST' },
+            { onSubmit: handleSubmit, method: 'POST' },
             _react2.default.createElement(
                 'div',
                 { className: 'form-group' },
@@ -46323,7 +46360,6 @@ exports.default = function (props) {
                 { type: 'submit', className: 'btn btn-primary' },
                 'Login'
             ),
-            ' ',
             _react2.default.createElement(
                 _reactRouterDom.Link,
                 { to: '/register' },
@@ -51665,8 +51701,16 @@ var AdminApp = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            if (this.props.user.id == undefined) {
-                console.log('loading');
+            if (!this.props.user.isAdmin) {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'h1',
+                        null,
+                        'Espacio solo para Administradores'
+                    )
+                );
             }
             return _react2.default.createElement(
                 'div',
@@ -59302,7 +59346,11 @@ var _reactRouterDom = __webpack_require__(3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function () {
+exports.default = function (_ref) {
+	var categories = _ref.categories,
+	    user = _ref.user,
+	    carrito = _ref.carrito,
+	    handleDeslogSubmit = _ref.handleDeslogSubmit;
 	return _react2.default.createElement(
 		'div',
 		null,
@@ -59322,7 +59370,7 @@ exports.default = function () {
 					{ className: 'nav-item' },
 					_react2.default.createElement(
 						_reactRouterDom.Link,
-						{ className: 'nav-link active', to: '/' },
+						{ className: 'nav-link active', to: '/products' },
 						'All Products'
 					)
 				),
@@ -59355,8 +59403,8 @@ exports.default = function () {
 						_react2.default.createElement('div', { className: 'dropdown-divider' }),
 						_react2.default.createElement(
 							'a',
-							{ className: 'dropdown-item', href: '#' },
-							'Separated link'
+							{ className: 'dropdown-item', href: '/category' },
+							'Todas las categorias'
 						)
 					)
 				),
@@ -59370,7 +59418,7 @@ exports.default = function () {
 						_react2.default.createElement(
 							'span',
 							null,
-							'(5)'
+							'(' + (carrito.length || 'LC') + ')'
 						)
 					)
 				),
@@ -59378,9 +59426,10 @@ exports.default = function () {
 					'li',
 					{ className: 'nav-item' },
 					_react2.default.createElement(
-						'a',
-						{ className: 'nav-link disabled', href: '#' },
-						'Disabled'
+						_reactRouterDom.Link,
+						{ className: 'nav-link', to: '/user' },
+						user.id ? 'Mi Cuenta' : '',
+						_react2.default.createElement('span', null)
 					)
 				)
 			),
@@ -59394,10 +59443,16 @@ exports.default = function () {
 					'Search'
 				)
 			),
-			_react2.default.createElement(
+			user.id ? _react2.default.createElement(
+				_reactRouterDom.Link,
+				{ onClick: function onClick(e) {
+						return handleDeslogSubmit(e);
+					}, to: '#' },
+				'Cerrar Sesion'
+			) : _react2.default.createElement(
 				_reactRouterDom.Link,
 				{ to: '/login' },
-				'Login / Register'
+				'Login'
 			)
 		)
 	);
@@ -59463,7 +59518,7 @@ var UserApp = function (_React$Component) {
                     _reactRouterDom.Switch,
                     null,
                     _react2.default.createElement(_reactRouterDom.Route, {
-                        path: this.props.match.path + '/:id',
+                        path: '' + this.props.match.path,
                         component: _SingleUserContainer2.default
                     })
                 )
@@ -59552,7 +59607,7 @@ var SingleUserContainer = function (_React$Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             //va a volar
-            this.props.fetchUserOrders(this.props.id);
+            this.props.fetchUserOrders(this.props.user.id);
         }
     }, {
         key: 'handleSubmit',
@@ -59586,6 +59641,7 @@ var SingleUserContainer = function (_React$Component) {
                 carrito = _props.carrito;
 
             console.log('Entrooooo');
+            console.log('eeeeeeee', user);
             return _react2.default.createElement(
                 _reactRouterDom.Switch,
                 null,
@@ -59622,7 +59678,6 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
         userOrders: state.userOrders,
         user: state.user.user,
         carrito: state.user.carrito,
-        id: ownProps.match.params.id,
         match: ownProps.match
     };
 };
@@ -59720,6 +59775,91 @@ var EditReviewForm = function EditReviewForm(props) {
 };
 
 exports.default = (0, _reduxForm.reduxForm)({ form: 'ProductReview' })(EditReviewForm);
+
+/***/ }),
+/* 458 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(4);
+
+var _user = __webpack_require__(24);
+
+var _Header = __webpack_require__(454);
+
+var _Header2 = _interopRequireDefault(_Header);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var HeaderContainer = function (_React$Component) {
+    _inherits(HeaderContainer, _React$Component);
+
+    function HeaderContainer(props) {
+        _classCallCheck(this, HeaderContainer);
+
+        var _this = _possibleConstructorReturn(this, (HeaderContainer.__proto__ || Object.getPrototypeOf(HeaderContainer)).call(this, props));
+
+        _this.handleDeslogSubmit = _this.handleDeslogSubmit.bind(_this);
+        return _this;
+    }
+
+    _createClass(HeaderContainer, [{
+        key: 'handleDeslogSubmit',
+        value: function handleDeslogSubmit(e) {
+            e.preventDefault();
+            this.props.deslogUser();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                categories = _props.categories,
+                user = _props.user,
+                carrito = _props.carrito;
+
+            return _react2.default.createElement(_Header2.default, { handleDeslogSubmit: this.handleDeslogSubmit,
+                user: user, carrito: carrito, categories: categories
+            });
+        }
+    }]);
+
+    return HeaderContainer;
+}(_react2.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        categories: state.category.category,
+        user: state.user.user,
+        carrito: state.user.carrito
+    };
+};
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        deslogUser: function deslogUser() {
+            return dispatch((0, _user.deslogUser)());
+        }
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(HeaderContainer);
 
 /***/ })
 /******/ ]);
