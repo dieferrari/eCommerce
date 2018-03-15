@@ -29,6 +29,7 @@ export default ({user,carrito,handleSubmit})=>(
         <h3>Confirmacion de datos</h3>
         <br/>
         {!user?'Loading':(
+            
             <div>
             <form onSubmit={(e)=>handleSubmit(e)}>
                 <label >e-Mail</label><br/>

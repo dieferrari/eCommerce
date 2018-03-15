@@ -19,12 +19,9 @@ const registerUser = (user,carrito) => ({
       carrito:carrito
     }
   });
-  const loginUser = (user,carrito) => ({
+  const loginUser = (flag) => ({
     type: FOUND_USER,
-    fetch:{
-      user:user,
-      carrito:carrito
-    }
+    flag
   })
   const deslogearUser = (user) => ({
     type: DESLOG_USER
@@ -47,17 +44,30 @@ export const fetchUser = id => dispatch =>
     dispatch(receiveUser({id:user.id,
       firstName:user.firstName, 
       lastName:user.lastName,
+      isAdmin:user.isAdmin,
       email:user.email},user.products))
       return user
     });
 
-export const comprobateUser = user => dispatch => {
+export const loggedUser = user => dispatch => {
   axios.post(`/api/users/login`,user)
   .then(res => res.data)
   .then(user => {
-    dispatch(loginUser({id:user.id,
+   dispatch(receiveUser({id:user.id,
+    firstName:user.firstName, 
+    lastName:user.lastName,
+    isAdmin:user.isAdmin,
+    email:user.email},user.products))
+  })
+}
+export const Userlogged = () => dispatch => {axios
+  .get(`/api/users/userislogin`)
+  .then(res => res.data)
+  .then(user => {
+    dispatch(receiveUser({id:user.id,
       firstName:user.firstName, 
       lastName:user.lastName,
+      isAdmin:user.isAdmin,
       email:user.email},user.products))
   })
 }

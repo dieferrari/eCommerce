@@ -20,6 +20,10 @@ componentDidMount(){
 }
 
    render (){
+       if(!this.props.user.isAdmin){
+           return (<div>
+               <h1>Espacio solo para Administradores</h1>
+               </div>)}
        return (
         <div>
         <Switch>
@@ -48,7 +52,8 @@ componentDidMount(){
 
 }//fin de admin app
 const mapStateToProps = (state,ownProps) => ({
-    match:ownProps.match
+    match:ownProps.match,
+    user:state.user.user
 })
 
 const mapDispatchToProps = dispatch => {

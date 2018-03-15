@@ -9,6 +9,7 @@ import singleCategoryReducer from './single-category-reducer';
 import {reducer as reducerForm} from 'redux-form'
 import ordersReducer from './orders-reducer';
 import allUsersReducer from './allUsers-reducer'
+import flagReducer from './flag-reducer';
 // import localCarritoReducer from './carrito-reducer'
 
 
@@ -23,5 +24,5 @@ export default combineReducers ({
   allUsers:allUsersReducer,
   user: userReducer,
   orders:ordersReducer,
-  // localCarrito: localCarritoReducer,
+  flag : flagReducer
 });
