@@ -10,6 +10,7 @@ import AdminCategoryContainer from '../containers/AdminCategoryContainer';
 import AdminOrdersContainer from '../containers/AdminOrdersContainer'
 import AdminUsersContainer from '../containers/AdminUsersContainer'
 import RouteHook from 'react-route-hook';
+import { Userlogged } from '../redux/actions/user'
 class AdminApp extends React.Component{
 
 componentDidMount(){
@@ -17,6 +18,7 @@ componentDidMount(){
     this.props.fetchCategories();
     this.props.fetchOrders();
     this.props.fetchAllUsers();
+    this.props.Userlogged()
 }
 
    render (){
@@ -61,7 +63,8 @@ const mapDispatchToProps = dispatch => {
     fetchProducts: () => dispatch(fetchProducts()),
     fetchCategories:()=> dispatch(fetchCategories()),
     fetchOrders:()=>dispatch(fetchOrders()),
-    fetchAllUsers:()=>dispatch(fetchAllUsers())
+    fetchAllUsers:()=>dispatch(fetchAllUsers()),
+    Userlogged:()=>dispatch(Userlogged()),
 
   }
 }

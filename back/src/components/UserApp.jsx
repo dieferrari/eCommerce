@@ -2,11 +2,11 @@ import React from 'react';
 import {Route,Redirect,Switch, Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import SingleUserContainer from '../containers/SingleUserContainer2';
-
+import { Userlogged } from '../redux/actions/user'
 class UserApp extends React.Component{
 
 componentDidMount(){
-                                                             
+                                   
 }
 
    render (){
@@ -33,7 +33,9 @@ const mapStateToProps = (state,ownProps) => ({
     user:state.user.user
 })
 
-const mapDispatchToProps = dispatch => ({})
+const mapDispatchToProps = dispatch => ({
+    Userlogged:()=>dispatch(Userlogged()),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserApp)
 

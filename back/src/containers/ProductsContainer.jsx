@@ -2,6 +2,7 @@ import React from 'react'
 import Products from '../components/Products'
 import {fetchProducts} from '../redux/actions/products'
 import {connect} from 'react-redux'
+import { Userlogged } from '../redux/actions/user'
 
 class ProductsContainer extends React.Component {
     constructor(props){
@@ -13,6 +14,7 @@ class ProductsContainer extends React.Component {
 
     componentDidMount() {
         this.props.recibeProducts()
+        
     }
 
     handleChange (evt) {
@@ -41,6 +43,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     recibeProducts: () => dispatch(fetchProducts()),
+    Userlogged:()=>dispatch(Userlogged()),
   }
 }
 
