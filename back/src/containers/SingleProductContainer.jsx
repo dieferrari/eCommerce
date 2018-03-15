@@ -10,12 +10,6 @@ class SingleProductContainer extends React.Component {
 	super(props);
 		this.state = {
 			cantidad:1,
-			user: {
-				id:101,
-				firstName: 'Usuario',
-				lastName: 'Estatico',
-				email: 'estatico@cc.cc',
-			  }
 		}
 	this.handleChange = this.handleChange.bind(this);
 	this.handleSubmit = this.handleSubmit.bind(this);
@@ -46,7 +40,7 @@ class SingleProductContainer extends React.Component {
 				handleChange={this.handleChange}
 				cantidad={this.state.cantidad}
 				handleSubmit={this.handleSubmit}
-				user={this.state.user.id}
+				user={this.props.user.id}
 				addProductReview={this.props.addProductReview}
 			/>
 		)
@@ -59,6 +53,7 @@ const mapStateToProps = function(state, ownProps) {
 		product: state.singleProduct,
 		loading: state.loading,
 		id: ownProps.match.params.id,
+		user: state.user.user
 	}
 }
 
