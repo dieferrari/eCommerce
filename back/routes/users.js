@@ -92,10 +92,10 @@ router.get('/auth/google/callback',
       console.log(req.user)
     res.status(200).send(req.user);
   });
-router.get('/:userId/orders', function(req, res){
+router.get('/orders', function(req, res){
     Orders.findAll({    
         where: {
-            OwnerId: req.params.userId,
+            OwnerId: req.user.id,
         },
         include: [{
             model: Product,
