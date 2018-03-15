@@ -46726,7 +46726,7 @@ var addProductReview = exports.addProductReview = function addProductReview(Prod
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.addCarrito = undefined;
+exports.updateCarrito = exports.addCarrito = undefined;
 
 var _constants = __webpack_require__(6);
 
@@ -46736,6 +46736,15 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //     type: ADD_LOCAL_CARRITO,
 //     products,
 // });
+var actualizarCarrito = function actualizarCarrito(user, products) {
+    return {
+        type: _constants.RECEIVE_USER,
+        fetch: {
+            user: user,
+            carrito: products
+        }
+    };
+};
 
 var addCarrito = exports.addCarrito = function addCarrito(product) {
     return function (dispatch) {
@@ -46759,6 +46768,21 @@ var addCarrito = exports.addCarrito = function addCarrito(product) {
 
         localStorage.setItem('localCarrito', JSON.stringify(cart));
         // dispatch(setCarrito(cart));
+    };
+};
+var updateCarrito = exports.updateCarrito = function updateCarrito(products) {
+    return function (dispatch) {
+        axios.put('/api/carrito', products).then(function (data) {
+            return res.data;
+        }).then(function (user) {
+            console.log(user);
+            dispatch(actualizarCarrito({
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email
+            }, user.products));
+        });
     };
 };
 //Nico, soy el niño de cobre, ya te queda en el local storage lo que compras, ahora hay que comprobar que lo que pida no
@@ -59567,14 +59591,6 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(UserApp);
-
-
-for (var i = 0; a < array.length - 1; i++) {
-    var arr = [];
-    for (var j = i + 1; a < array.length; j++) {
-        arr.push(a[j] - a[i]);
-    }
-}
 
 /***/ }),
 /* 457 */

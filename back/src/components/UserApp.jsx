@@ -36,11 +36,3 @@ const mapStateToProps = (state,ownProps) => ({
 const mapDispatchToProps = dispatch => ({})
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserApp)
-
-for (var i = 0; a < array.length -1 ; i++) {
-    var arr = [];
-    for (var j = i+1; a < array.length; j++) {
-        arr.push(a[j]-a[i])  
-    }
-    
-}
