@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route,Switch } from 'react-router-dom';
+import { Route,Switch, Redirect } from 'react-router-dom';
 import RegisterContainer from '../containers/register-container';
 import LoginContainer from '../containers/login-container';
 import ProductsContainer from '../containers/ProductsContainer';
@@ -72,6 +72,7 @@ componentDidMount(){
           path="/user"
           component={UserApp}
         />
+        <Redirect from='/' to='/products' />
         {/* <Route
            exact
            path="/check"
