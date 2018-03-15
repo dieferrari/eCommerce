@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { fetchSingleProduct, addProductReview  } from '../redux/actions/singleProduct';
 import {addCarrito} from '../redux/actions/carrito';
 import SingleProduct from '../components/SingleProduct';
-
+import { Userlogged } from '../redux/actions/user'
 class SingleProductContainer extends React.Component {
 	constructor(props){
 	super(props);
@@ -18,6 +18,7 @@ class SingleProductContainer extends React.Component {
 
 	componentDidMount() {
 		this.props.fetchSingleProduct(this.props.id)
+	
 	}
 
 	handleChange(value){
@@ -61,6 +62,7 @@ const mapDispatchToProps = function(dispatch) {
 	return {
 		fetchSingleProduct: (id) => dispatch(fetchSingleProduct(id)),
 		addCarrito: (product) => dispatch(addCarrito(product)),
+		Userlogged:()=>dispatch(Userlogged()),
 		addProductReview: (productId,user,values) => dispatch(addProductReview(productId,user,values))
 	}
 }

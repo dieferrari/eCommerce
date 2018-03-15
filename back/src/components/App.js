@@ -18,74 +18,54 @@ import { Userlogged } from '../redux/actions/user'
 import RouteHook from 'react-route-hook';
 
 class App extends React.Component{
-componentDidMount(){
-  this.props.Userlogged()
-}
-  componentWillReceiveProps(){
-    this.props.Userlogged()
-  }
+
   render(){
     return (
       <div>
         <HeaderContainer/>
         <Switch>
-          <Route
+          <RouteHook onEnter={this.props.Userlogged}
             exact
             path="/register"
             component={RegisterContainer}
           />
-          <Route
+          <RouteHook onEnter={this.props.Userlogged}
             exact 
             path="/products"
             component={ProductsContainer}
           />
-          <Route 
+          <RouteHook onEnter={this.props.Userlogged} 
             path="/products/:id"
             component={SingleProductContainer}
           />
-          <Route
+          <RouteHook onEnter={this.props.Userlogged}
             exact 
             path="/category"
             component={CategoryContainer}
           />
-          <Route
+          <RouteHook onEnter={this.props.Userlogged}
             exact
             path="/carrito"
             component={CarritosContainer}
           />
-            
-            <Route 
+            <RouteHook onEnter={this.props.Userlogged} 
             path="/categories/:id"
             component={SingleCategoryContainer}
           />
-            <Route 
+            <RouteHook onEnter={this.props.Userlogged} 
             path="/admin"
             component={AdminApp}
           />
-          <RouteHook
-            onChange={this.props.Userlogged}
+          <RouteHook onEnter={this.props.Userlogged}
             exact
             path="/login"
             component={LoginContainer}
           />
-          <Route
+          <RouteHook onEnter={this.props.Userlogged}
           path="/user"
           component={UserApp}
         />
         <Redirect from='/' to='/products' />
-        {/* <Route
-           exact
-           path="/check"
-           component={UserCheckoutContainer}
-         />
-         <Route 
-           path="/user/:id"
-           component={SingleUserContainer}
-         />
-         <Route 
-           path="/user/:id/orders"
-           component={UserOrderContainer}
-         />*/}
         </Switch>
       </div>
     )
