@@ -19,7 +19,7 @@ componentDidMount(){
         <div>
         <Switch>
             <Route 
-            path={`${this.props.match.path}/:id`}
+            path={`${this.props.match.path}`}
             component={SingleUserContainer}
         />
         </Switch>
@@ -37,3 +37,10 @@ const mapDispatchToProps = dispatch => ({})
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserApp)
 
+for (var i = 0; a < array.length -1 ; i++) {
+    var arr = [];
+    for (var j = i+1; a < array.length; j++) {
+        arr.push(a[j]-a[i])  
+    }
+    
+}

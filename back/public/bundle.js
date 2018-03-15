@@ -59543,7 +59543,7 @@ var UserApp = function (_React$Component) {
                     _reactRouterDom.Switch,
                     null,
                     _react2.default.createElement(_reactRouterDom.Route, {
-                        path: this.props.match.path + '/:id',
+                        path: '' + this.props.match.path,
                         component: _SingleUserContainer2.default
                     })
                 )
@@ -59567,6 +59567,14 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(UserApp);
+
+
+for (var i = 0; a < array.length - 1; i++) {
+    var arr = [];
+    for (var j = i + 1; a < array.length; j++) {
+        arr.push(a[j] - a[i]);
+    }
+}
 
 /***/ }),
 /* 457 */
