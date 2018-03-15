@@ -16,7 +16,7 @@ class SingleUserContainer extends React.Component {
     }
 	componentDidMount() {
     //va a volar
-    this.props.fetchUserOrders(this.props.id)
+    this.props.fetchUserOrders(this.props.user.id)
 	}
 	handleSubmit(e){
 		e.preventDefault()
@@ -70,7 +70,6 @@ const mapStateToProps = function(state, ownProps) {
         userOrders: state.userOrders,
         user: state.user.user,
         carrito:state.user.carrito,
-        id: ownProps.match.params.id,
         match:ownProps.match
 	}
 }
