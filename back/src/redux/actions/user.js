@@ -52,18 +52,16 @@ export const loggedUser = user => dispatch => {
   axios.post(`/api/users/login`,user)
   .then(res => res.data)
   .then(respuesta => {
-    console.log(respuesta)
-    dispatch(loginUser(true))
-  })
-  .catch((err) => {
-    dispatch(loginUser(false))
+   dispatch(receiveUser({id:user.id,
+    firstName:user.firstName, 
+    lastName:user.lastName,
+    email:user.email},[]))
   })
 }
 export const Userlogged = () => dispatch => {axios
   .get(`/api/users/userislogin`)
   .then(res => res.data)
   .then(user => {
-    console.log(user)
     dispatch(receiveUser({id:user.id,
       firstName:user.firstName, 
       lastName:user.lastName,

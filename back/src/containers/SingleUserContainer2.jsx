@@ -38,6 +38,7 @@ class SingleUserContainer extends React.Component {
         
         const {match,user,userOrders,carrito}=this.props
         console.log('Entrooooo')
+        console.log('eeeeeeee',user)
 		return (
             <Switch>
                 <Route exact

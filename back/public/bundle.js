@@ -1144,6 +1144,118 @@ function getNative(object, key) {
 
 /***/ }),
 /* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.deslogUser = exports.Userlogged = exports.loggedUser = exports.fetchUser = exports.createUser = undefined;
+
+var _axios = __webpack_require__(13);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _constants = __webpack_require__(6);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var registerUser = function registerUser(user, carrito) {
+  return {
+    type: _constants.SET_USER,
+    fetch: {
+      user: user,
+      carrito: carrito
+    }
+  };
+}; //devuelve un user pero carritos y orders con listas vacias
+
+var receiveUser = function receiveUser(user, carrito) {
+  return {
+    type: _constants.RECEIVE_USER,
+    fetch: {
+      user: user,
+      carrito: carrito
+    }
+  };
+};
+var loginUser = function loginUser(flag) {
+  return {
+    type: _constants.FOUND_USER,
+    flag: flag
+  };
+};
+var deslogearUser = function deslogearUser(user) {
+  return {
+    type: _constants.DESLOG_USER
+  };
+};
+
+var createUser = exports.createUser = function createUser(user) {
+  return function (dispatch) {
+    _axios2.default.post('/api/users/register', user).then(function (res) {
+      return res.data;
+    }).then(function (user) {
+      dispatch(registerUser({ id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email }, []));
+    });
+  };
+};
+
+var fetchUser = exports.fetchUser = function fetchUser(id) {
+  return function (dispatch) {
+    return _axios2.default.get('/api/users/' + id).then(function (res) {
+      return res.data;
+    }).then(function (user) {
+      dispatch(receiveUser({ id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email }, user.products));
+      return user;
+    });
+  };
+};
+
+var loggedUser = exports.loggedUser = function loggedUser(user) {
+  return function (dispatch) {
+    _axios2.default.post('/api/users/login', user).then(function (res) {
+      return res.data;
+    }).then(function (respuesta) {
+      dispatch(receiveUser({ id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email }, []));
+    });
+  };
+};
+var Userlogged = exports.Userlogged = function Userlogged() {
+  return function (dispatch) {
+    _axios2.default.get('/api/users/userislogin').then(function (res) {
+      return res.data;
+    }).then(function (user) {
+      dispatch(receiveUser({ id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email }, user.products));
+    });
+  };
+};
+var deslogUser = exports.deslogUser = function deslogUser() {
+  return function (dispatch) {
+    return _axios2.default.get('/api/users/logout').then(function (res) {
+      return res.data;
+    }).then(function (user) {
+      dispatch(deslogearUser());
+    });
+  };
+};
+
+/***/ }),
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1181,7 +1293,7 @@ function baseGetTag(value) {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1278,7 +1390,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1338,7 +1450,7 @@ module.exports = invariant;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1384,7 +1496,7 @@ if (process.env.NODE_ENV === 'production') {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1451,7 +1563,7 @@ var createPath = exports.createPath = function createPath(location) {
 };
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1519,119 +1631,6 @@ var createPath = function createPath(location) {
   if (hash && hash !== '#') path += hash.charAt(0) === '#' ? hash : '#' + hash;
 
   return path;
-};
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.deslogUser = exports.Userlogged = exports.loggedUser = exports.fetchUser = exports.createUser = undefined;
-
-var _axios = __webpack_require__(13);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _constants = __webpack_require__(6);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var registerUser = function registerUser(user, carrito) {
-  return {
-    type: _constants.SET_USER,
-    fetch: {
-      user: user,
-      carrito: carrito
-    }
-  };
-}; //devuelve un user pero carritos y orders con listas vacias
-
-var receiveUser = function receiveUser(user, carrito) {
-  return {
-    type: _constants.RECEIVE_USER,
-    fetch: {
-      user: user,
-      carrito: carrito
-    }
-  };
-};
-var loginUser = function loginUser(flag) {
-  return {
-    type: _constants.FOUND_USER,
-    flag: flag
-  };
-};
-var deslogearUser = function deslogearUser(user) {
-  return {
-    type: _constants.DESLOG_USER
-  };
-};
-
-var createUser = exports.createUser = function createUser(user) {
-  return function (dispatch) {
-    _axios2.default.post('/api/users/register', user).then(function (res) {
-      return res.data;
-    }).then(function (user) {
-      dispatch(registerUser({ id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email }, []));
-    });
-  };
-};
-
-var fetchUser = exports.fetchUser = function fetchUser(id) {
-  return function (dispatch) {
-    return _axios2.default.get('/api/users/' + id).then(function (res) {
-      return res.data;
-    }).then(function (user) {
-      dispatch(receiveUser({ id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email }, user.products));
-      return user;
-    });
-  };
-};
-
-var loggedUser = exports.loggedUser = function loggedUser(user) {
-  return function (dispatch) {
-    _axios2.default.post('/api/users/login', user).then(function (res) {
-      return res.data;
-    }).then(function (respuesta) {
-      console.log(respuesta);
-      dispatch(loginUser(true));
-    }).catch(function (err) {
-      dispatch(loginUser(false));
-    });
-  };
-};
-var Userlogged = exports.Userlogged = function Userlogged() {
-  return function (dispatch) {
-    _axios2.default.get('/api/users/userislogin').then(function (res) {
-      return res.data;
-    }).then(function (user) {
-      console.log(user);
-      dispatch(receiveUser({ id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email }, user.products));
-    });
-  };
-};
-var deslogUser = exports.deslogUser = function deslogUser() {
-  return function (dispatch) {
-    return _axios2.default.get('/api/users/logout').then(function (res) {
-      return res.data;
-    }).then(function (user) {
-      dispatch(deslogearUser());
-    });
-  };
 };
 
 /***/ }),
@@ -1923,7 +1922,7 @@ module.exports = warning;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return locationsAreEqual; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_resolve_pathname__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_value_equal__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PathUtils__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PathUtils__ = __webpack_require__(24);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
@@ -2027,7 +2026,7 @@ exports.default = (0, _redux.createStore)(_reducers2.default, composeEnhancers((
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getPrototype_js__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__isObjectLike_js__ = __webpack_require__(16);
 
@@ -2160,7 +2159,7 @@ function toPath(value) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__isObjectLike_js__ = __webpack_require__(16);
 
 
@@ -2746,7 +2745,7 @@ var editOrders = exports.editOrders = function editOrders(id, body) {
 
 
 if (process.env.NODE_ENV !== 'production') {
-  var invariant = __webpack_require__(20);
+  var invariant = __webpack_require__(21);
   var warning = __webpack_require__(32);
   var ReactPropTypesSecret = __webpack_require__(53);
   var loggedTypeFailures = {};
@@ -2837,7 +2836,7 @@ var _valueEqual = __webpack_require__(84);
 
 var _valueEqual2 = _interopRequireDefault(_valueEqual);
 
-var _PathUtils = __webpack_require__(22);
+var _PathUtils = __webpack_require__(23);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3623,7 +3622,7 @@ MapCache.prototype.set = __WEBPACK_IMPORTED_MODULE_4__mapCacheSet_js__["a" /* de
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__isObject_js__ = __webpack_require__(14);
 
 
@@ -7243,7 +7242,7 @@ function baseKeys(object) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Promise_js__ = __webpack_require__(304);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Set_js__ = __webpack_require__(305);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__WeakMap_js__ = __webpack_require__(306);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__baseGetTag_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__baseGetTag_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__toSource_js__ = __webpack_require__(119);
 
 
@@ -7730,7 +7729,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash_isfunction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_lodash_isfunction__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash_isobject__ = __webpack_require__(419);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash_isobject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_lodash_isobject__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_popper__ = __webpack_require__(420);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash_tonumber__ = __webpack_require__(426);
@@ -13303,7 +13302,7 @@ var UncontrolledTooltip = function (_Component) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_dom__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_dom__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Portal__ = __webpack_require__(428);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LegacyPortal__ = __webpack_require__(430);
@@ -13481,7 +13480,7 @@ exports.default = function (_ref) {
         null,
         _react2.default.createElement(
           _reactRouterDom.Link,
-          { to: '/user/' + user.id + '/orders' },
+          { to: '/user/orders' },
           _react2.default.createElement('img', { src: 'https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/1342761/580/386/m1/fpnw/wm0/cardboard-box-icon-01-.jpg?1465234338&s=ce34fb8219c58b48a7e22f2840e4e35e' }),
           _react2.default.createElement(
             'h3',
@@ -13888,7 +13887,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(21);
+var _reactDom = __webpack_require__(22);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -13932,7 +13931,7 @@ _reactDom2.default.render(_react2.default.createElement(
  * LICENSE file in the root directory of this source tree.
  */
 
-var m=__webpack_require__(19),n=__webpack_require__(31),p=__webpack_require__(12),q="function"===typeof Symbol&&Symbol["for"],r=q?Symbol["for"]("react.element"):60103,t=q?Symbol["for"]("react.call"):60104,u=q?Symbol["for"]("react.return"):60105,v=q?Symbol["for"]("react.portal"):60106,w=q?Symbol["for"]("react.fragment"):60107,x="function"===typeof Symbol&&Symbol.iterator;
+var m=__webpack_require__(20),n=__webpack_require__(31),p=__webpack_require__(12),q="function"===typeof Symbol&&Symbol["for"],r=q?Symbol["for"]("react.element"):60103,t=q?Symbol["for"]("react.call"):60104,u=q?Symbol["for"]("react.return"):60105,v=q?Symbol["for"]("react.portal"):60106,w=q?Symbol["for"]("react.fragment"):60107,x="function"===typeof Symbol&&Symbol.iterator;
 function y(a){for(var b=arguments.length-1,e="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,c=0;c<b;c++)e+="\x26args[]\x3d"+encodeURIComponent(arguments[c+1]);b=Error(e+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}
 var z={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};function A(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}A.prototype.isReactComponent={};A.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?y("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};A.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};
 function B(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}function C(){}C.prototype=A.prototype;var D=B.prototype=new C;D.constructor=B;m(D,A.prototype);D.isPureReactComponent=!0;function E(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}var F=E.prototype=new C;F.constructor=E;m(F,A.prototype);F.unstable_isAsyncReactComponent=!0;F.render=function(){return this.props.children};var G={current:null},H=Object.prototype.hasOwnProperty,I={key:!0,ref:!0,__self:!0,__source:!0};
@@ -13968,9 +13967,9 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(19);
+var _assign = __webpack_require__(20);
 var emptyObject = __webpack_require__(31);
-var invariant = __webpack_require__(20);
+var invariant = __webpack_require__(21);
 var warning = __webpack_require__(32);
 var emptyFunction = __webpack_require__(12);
 var checkPropTypes = __webpack_require__(52);
@@ -15328,7 +15327,7 @@ module.exports = react;
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(0),l=__webpack_require__(77),B=__webpack_require__(19),C=__webpack_require__(12),ba=__webpack_require__(78),da=__webpack_require__(79),ea=__webpack_require__(80),fa=__webpack_require__(81),ia=__webpack_require__(82),D=__webpack_require__(31);
+var aa=__webpack_require__(0),l=__webpack_require__(77),B=__webpack_require__(20),C=__webpack_require__(12),ba=__webpack_require__(78),da=__webpack_require__(79),ea=__webpack_require__(80),fa=__webpack_require__(81),ia=__webpack_require__(82),D=__webpack_require__(31);
 function E(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:E("227");
 var oa={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function pa(a,b){return(a&b)===b}
 var ta={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ta,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){ua.hasOwnProperty(f)?E("48",f):void 0;var g=f.toLowerCase(),h=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:pa(h,b.MUST_USE_PROPERTY),
@@ -15626,10 +15625,10 @@ if (process.env.NODE_ENV !== "production") {
 'use strict';
 
 var React = __webpack_require__(0);
-var invariant = __webpack_require__(20);
+var invariant = __webpack_require__(21);
 var warning = __webpack_require__(32);
 var ExecutionEnvironment = __webpack_require__(77);
-var _assign = __webpack_require__(19);
+var _assign = __webpack_require__(20);
 var emptyFunction = __webpack_require__(12);
 var EventListener = __webpack_require__(78);
 var getActiveElement = __webpack_require__(79);
@@ -31243,9 +31242,9 @@ BrowserRouter.propTypes = {
 
 
 var emptyFunction = __webpack_require__(12);
-var invariant = __webpack_require__(20);
+var invariant = __webpack_require__(21);
 var warning = __webpack_require__(32);
-var assign = __webpack_require__(19);
+var assign = __webpack_require__(20);
 
 var ReactPropTypesSecret = __webpack_require__(53);
 var checkPropTypes = __webpack_require__(52);
@@ -31793,7 +31792,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 
 var emptyFunction = __webpack_require__(12);
-var invariant = __webpack_require__(20);
+var invariant = __webpack_require__(21);
 var ReactPropTypesSecret = __webpack_require__(53);
 
 module.exports = function() {
@@ -31866,7 +31865,7 @@ var _invariant2 = _interopRequireDefault(_invariant);
 
 var _LocationUtils = __webpack_require__(54);
 
-var _PathUtils = __webpack_require__(22);
+var _PathUtils = __webpack_require__(23);
 
 var _createTransitionManager = __webpack_require__(55);
 
@@ -32243,7 +32242,7 @@ var _invariant2 = _interopRequireDefault(_invariant);
 
 var _LocationUtils = __webpack_require__(54);
 
-var _PathUtils = __webpack_require__(22);
+var _PathUtils = __webpack_require__(23);
 
 var _createTransitionManager = __webpack_require__(55);
 
@@ -32647,7 +32646,7 @@ var _warning = __webpack_require__(8);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _PathUtils = __webpack_require__(22);
+var _PathUtils = __webpack_require__(23);
 
 var _LocationUtils = __webpack_require__(54);
 
@@ -33563,7 +33562,7 @@ Redirect.contextTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__LocationUtils__ = __webpack_require__(33);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_3__LocationUtils__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_3__LocationUtils__["b"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PathUtils__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PathUtils__ = __webpack_require__(24);
 /* unused harmony reexport parsePath */
 /* unused harmony reexport createPath */
 
@@ -33586,7 +33585,7 @@ Redirect.contextTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(89);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -33890,7 +33889,7 @@ var createBrowserHistory = function createBrowserHistory() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(89);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -34208,7 +34207,7 @@ var createHashHistory = function createHashHistory() {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PathUtils__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PathUtils__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__createTransitionManager__ = __webpack_require__(59);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -34393,7 +34392,7 @@ var createMemoryHistory = function createMemoryHistory() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_history_PathUtils__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_history_PathUtils__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_history_PathUtils___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_history_PathUtils__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Router__ = __webpack_require__(57);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -35392,17 +35391,21 @@ var _AdminApp = __webpack_require__(441);
 
 var _AdminApp2 = _interopRequireDefault(_AdminApp);
 
-var _Header = __webpack_require__(455);
+var _HeaderContainer = __webpack_require__(455);
 
-var _Header2 = _interopRequireDefault(_Header);
+var _HeaderContainer2 = _interopRequireDefault(_HeaderContainer);
 
-var _UserApp = __webpack_require__(456);
+var _UserApp = __webpack_require__(457);
 
 var _UserApp2 = _interopRequireDefault(_UserApp);
 
 var _reactRedux = __webpack_require__(4);
 
-var _user = __webpack_require__(24);
+var _user = __webpack_require__(18);
+
+var _reactRouteHook = __webpack_require__(454);
+
+var _reactRouteHook2 = _interopRequireDefault(_reactRouteHook);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35424,7 +35427,12 @@ var App = function (_React$Component) {
   _createClass(App, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      console.log(this.props.Userlogged());
+      this.props.Userlogged();
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps() {
+      this.props.Userlogged();
     }
   }, {
     key: 'render',
@@ -35432,7 +35440,7 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_Header2.default, null),
+        _react2.default.createElement(_HeaderContainer2.default, null),
         _react2.default.createElement(
           _reactRouterDom.Switch,
           null,
@@ -35468,7 +35476,8 @@ var App = function (_React$Component) {
             path: '/admin',
             component: _AdminApp2.default
           }),
-          _react2.default.createElement(_reactRouterDom.Route, {
+          _react2.default.createElement(_reactRouteHook2.default, {
+            onChange: this.props.Userlogged,
             exact: true,
             path: '/login',
             component: _loginContainer2.default
@@ -35487,7 +35496,8 @@ var App = function (_React$Component) {
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
-    match: ownProps.match
+    match: ownProps.match,
+    user: state.user.user
   };
 };
 
@@ -35521,7 +35531,7 @@ var _register = __webpack_require__(193);
 
 var _register2 = _interopRequireDefault(_register);
 
-var _user = __webpack_require__(24);
+var _user = __webpack_require__(18);
 
 var _store = __webpack_require__(34);
 
@@ -40604,7 +40614,7 @@ function baseTimes(n, iteratee) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__isObjectLike_js__ = __webpack_require__(16);
 
 
@@ -40656,7 +40666,7 @@ function stubFalse() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__isLength_js__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__isObjectLike_js__ = __webpack_require__(16);
 
@@ -46223,11 +46233,11 @@ var _login = __webpack_require__(407);
 
 var _login2 = _interopRequireDefault(_login);
 
-var _user = __webpack_require__(24);
+var _user = __webpack_require__(18);
 
-var _store = __webpack_require__(34);
+var _reactRouterDom = __webpack_require__(3);
 
-var _store2 = _interopRequireDefault(_store);
+var _reactRedux = __webpack_require__(4);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -46245,7 +46255,6 @@ var LoginContainer = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (LoginContainer.__proto__ || Object.getPrototypeOf(LoginContainer)).call(this));
 
-        _this.state = {};
         _this.handleSubmit = _this.handleSubmit.bind(_this);
         return _this;
     }
@@ -46254,22 +46263,41 @@ var LoginContainer = function (_React$Component) {
         key: 'handleSubmit',
         value: function handleSubmit(event) {
             event.preventDefault();
-            _store2.default.dispatch((0, _user.loggedUser)({
+            this.props.loggedUser({
                 email: event.target[0].value,
                 password: event.target[1].value
-            }));
+            });
         }
     }, {
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_login2.default, { handleSubmit: this.handleSubmit });
+            var user = this.props.user;
+            // if(user.id){
+            //   return  <Redirect to='/'/>
+            // }
+
+            return _react2.default.createElement(_login2.default, { user: user, handleSubmit: this.handleSubmit });
         }
     }]);
 
     return LoginContainer;
 }(_react2.default.Component);
 
-exports.default = LoginContainer;
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        user: state.user.user
+
+    };
+};
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        loggedUser: function loggedUser(credentials) {
+            return dispatch((0, _user.loggedUser)(credentials));
+        }
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LoginContainer);
 
 /***/ }),
 /* 407 */
@@ -46290,13 +46318,19 @@ var _reactRouterDom = __webpack_require__(3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function (props) {
+exports.default = function (_ref) {
+    var handleSubmit = _ref.handleSubmit,
+        user = _ref.user;
     return _react2.default.createElement(
         'div',
         { className: 'd-flex justify-content-center' },
-        _react2.default.createElement(
+        user.id ? _react2.default.createElement(
+            'h1',
+            null,
+            'Ya estas Loggeado ' + user.id
+        ) : _react2.default.createElement(
             'form',
-            { onSubmit: props.handleSubmit, method: 'POST' },
+            { onSubmit: handleSubmit, method: 'POST' },
             _react2.default.createElement(
                 'div',
                 { className: 'form-group' },
@@ -46322,7 +46356,6 @@ exports.default = function (props) {
                 { type: 'submit', className: 'btn btn-primary' },
                 'Login'
             ),
-            ' ',
             _react2.default.createElement(
                 _reactRouterDom.Link,
                 { to: '/register' },
@@ -50630,7 +50663,7 @@ module.exports = toNumber;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_dom__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_dom__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils__ = __webpack_require__(429);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -50702,7 +50735,7 @@ var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.do
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
@@ -51287,7 +51320,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(4);
 
-var _user = __webpack_require__(24);
+var _user = __webpack_require__(18);
 
 var _SingleUser = __webpack_require__(143);
 
@@ -59371,6 +59404,91 @@ HigherComponent.defaultProps = {
 
 
 Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(4);
+
+var _user = __webpack_require__(18);
+
+var _Header = __webpack_require__(456);
+
+var _Header2 = _interopRequireDefault(_Header);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var HeaderContainer = function (_React$Component) {
+    _inherits(HeaderContainer, _React$Component);
+
+    function HeaderContainer(props) {
+        _classCallCheck(this, HeaderContainer);
+
+        var _this = _possibleConstructorReturn(this, (HeaderContainer.__proto__ || Object.getPrototypeOf(HeaderContainer)).call(this, props));
+
+        _this.handleDeslogSubmit = _this.handleDeslogSubmit.bind(_this);
+        return _this;
+    }
+
+    _createClass(HeaderContainer, [{
+        key: 'handleDeslogSubmit',
+        value: function handleDeslogSubmit(e) {
+            e.preventDefault();
+            this.props.deslogUser();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                categories = _props.categories,
+                user = _props.user,
+                carrito = _props.carrito;
+
+            return _react2.default.createElement(_Header2.default, { handleDeslogSubmit: this.handleDeslogSubmit,
+                user: user, carrito: carrito, categories: categories
+            });
+        }
+    }]);
+
+    return HeaderContainer;
+}(_react2.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        categories: state.category.category,
+        user: state.user.user,
+        carrito: state.user.carrito
+    };
+};
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        deslogUser: function deslogUser() {
+            return dispatch((0, _user.deslogUser)());
+        }
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(HeaderContainer);
+
+/***/ }),
+/* 456 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
@@ -59382,7 +59500,11 @@ var _reactRouterDom = __webpack_require__(3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function () {
+exports.default = function (_ref) {
+	var categories = _ref.categories,
+	    user = _ref.user,
+	    carrito = _ref.carrito,
+	    handleDeslogSubmit = _ref.handleDeslogSubmit;
 	return _react2.default.createElement(
 		'div',
 		null,
@@ -59402,7 +59524,7 @@ exports.default = function () {
 					{ className: 'nav-item' },
 					_react2.default.createElement(
 						_reactRouterDom.Link,
-						{ className: 'nav-link active', to: '/' },
+						{ className: 'nav-link active', to: '/products' },
 						'All Products'
 					)
 				),
@@ -59435,8 +59557,8 @@ exports.default = function () {
 						_react2.default.createElement('div', { className: 'dropdown-divider' }),
 						_react2.default.createElement(
 							'a',
-							{ className: 'dropdown-item', href: '#' },
-							'Separated link'
+							{ className: 'dropdown-item', href: '/category' },
+							'Todas las categorias'
 						)
 					)
 				),
@@ -59450,7 +59572,7 @@ exports.default = function () {
 						_react2.default.createElement(
 							'span',
 							null,
-							'(5)'
+							'(' + (carrito.length || 'LC') + ')'
 						)
 					)
 				),
@@ -59458,9 +59580,10 @@ exports.default = function () {
 					'li',
 					{ className: 'nav-item' },
 					_react2.default.createElement(
-						'a',
-						{ className: 'nav-link disabled', href: '#' },
-						'Disabled'
+						_reactRouterDom.Link,
+						{ className: 'nav-link', to: '/user' },
+						user.id ? 'Mi Cuenta' : '',
+						_react2.default.createElement('span', null)
 					)
 				)
 			),
@@ -59474,17 +59597,23 @@ exports.default = function () {
 					'Search'
 				)
 			),
-			_react2.default.createElement(
+			user.id ? _react2.default.createElement(
+				_reactRouterDom.Link,
+				{ onClick: function onClick(e) {
+						return handleDeslogSubmit(e);
+					}, to: '#' },
+				'Cerrar Sesion'
+			) : _react2.default.createElement(
 				_reactRouterDom.Link,
 				{ to: '/login' },
-				'Login / Register'
+				'Login'
 			)
 		)
 	);
 };
 
 /***/ }),
-/* 456 */
+/* 457 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59504,7 +59633,7 @@ var _reactRouterDom = __webpack_require__(3);
 
 var _reactRedux = __webpack_require__(4);
 
-var _SingleUserContainer = __webpack_require__(457);
+var _SingleUserContainer = __webpack_require__(458);
 
 var _SingleUserContainer2 = _interopRequireDefault(_SingleUserContainer);
 
@@ -59543,7 +59672,7 @@ var UserApp = function (_React$Component) {
                     _reactRouterDom.Switch,
                     null,
                     _react2.default.createElement(_reactRouterDom.Route, {
-                        path: this.props.match.path + '/:id',
+                        path: '' + this.props.match.path,
                         component: _SingleUserContainer2.default
                     })
                 )
@@ -59569,7 +59698,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(UserApp);
 
 /***/ }),
-/* 457 */
+/* 458 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59589,7 +59718,7 @@ var _reactRouterDom = __webpack_require__(3);
 
 var _reactRedux = __webpack_require__(4);
 
-var _user = __webpack_require__(24);
+var _user = __webpack_require__(18);
 
 var _SingleUser = __webpack_require__(143);
 
@@ -59666,6 +59795,7 @@ var SingleUserContainer = function (_React$Component) {
                 carrito = _props.carrito;
 
             console.log('Entrooooo');
+            console.log('eeeeeeee', user);
             return _react2.default.createElement(
                 _reactRouterDom.Switch,
                 null,
