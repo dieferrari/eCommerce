@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import Category from '../components/Category';
 import { bindActionCreators } from 'redux';
 import { fetchCategories } from '../redux/actions/category';
-
+import { Userlogged } from '../redux/actions/user'
 class CategoryContainer extends React.Component{
 
   componentDidMount() {
     const {fetchCategories} = this.props;
     fetchCategories();
+    
   }
 
   render(){
@@ -27,7 +28,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  fetchCategories,
+  fetchCategories, Userlogged
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryContainer);
