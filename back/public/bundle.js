@@ -57712,6 +57712,8 @@ var formatter = new Intl.NumberFormat('en-US', {
   // and is usually already 2 Copy Paste For The Win
 });
 
+var total = 0;
+
 exports.default = function (_ref) {
   var localCarrito = _ref.localCarrito,
       handleChange = _ref.handleChange,
@@ -57731,17 +57733,13 @@ exports.default = function (_ref) {
       _react2.default.createElement(
         _reactstrap.Row,
         null,
-        _react2.default.createElement(
-          _reactstrap.Col,
-          { sm: { size: 'auto', offset: 6 } },
-          'Price'
-        )
+        _react2.default.createElement(_reactstrap.Col, { sm: { size: 'auto', offset: 6 } })
       ),
       localCarrito.map(function (product, index) {
         return _react2.default.createElement(
           _reactstrap.ListGroupItem,
           { key: product.id },
-          console.log(product),
+          total = total + product.price,
           _react2.default.createElement(
             _reactstrap.Row,
             null,
@@ -57844,11 +57842,28 @@ exports.default = function (_ref) {
       })
     ),
     _react2.default.createElement(
+      _reactstrap.Row,
+      null,
+      _react2.default.createElement(
+        _reactstrap.Col,
+        { sm: { size: 'auto', offset: 6 } },
+        ' ',
+        _react2.default.createElement(
+          'h4',
+          null,
+          ' Total: ',
+          formatter.format(total),
+          ' '
+        )
+      )
+    ),
+    _react2.default.createElement('br', null),
+    _react2.default.createElement(
       _reactRouterDom.Link,
       { to: '/user/checkout' },
       _react2.default.createElement(
         'button',
-        null,
+        { className: "col-1 btn btn-success" },
         'Comprar!'
       )
     )

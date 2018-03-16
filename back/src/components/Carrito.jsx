@@ -11,6 +11,7 @@ var formatter = new Intl.NumberFormat('en-US', {
   // and is usually already 2 Copy Paste For The Win
 });
 
+var total = 0
 
 export default ({localCarrito, handleChange, handleClick, alertMessage}) => (
     <div>
@@ -19,11 +20,12 @@ export default ({localCarrito, handleChange, handleClick, alertMessage}) => (
        
         <ListGroup>
         <Row>
-          <Col sm={{ size: 'auto', offset: 6 }}>Price</Col>        
+          <Col sm={{ size: 'auto', offset: 6 }}></Col>        
         </Row>
           {localCarrito.map((product, index) => (
+            
             <ListGroupItem key={product.id}>
-            {console.log(product)}
+            {total = total + product.price}
               <Row>
                   <div className="d-inline-flex p-2">
                     <img src={product.imgURL} style={{width:"100px", height:"100px"}} alt=""/>
@@ -77,6 +79,10 @@ export default ({localCarrito, handleChange, handleClick, alertMessage}) => (
         }
         </ListGroup>
       }
-      <Link to={`/user/checkout`}><button >Comprar!</button></Link>
+        <Row>
+          <Col sm={{ size: 'auto', offset: 6 }}> <h4> Total: {formatter.format(total)} </h4></Col>        
+        </Row>
+        <br/>
+      <Link to={`/user/checkout`}><button className={"col-1 btn btn-success"} >Comprar!</button></Link>
     </div>
   );
