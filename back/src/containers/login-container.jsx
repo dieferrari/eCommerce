@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
     super();
     this.handleSubmit=this.handleSubmit.bind(this)
     }
-    
+
     handleSubmit(event) {
         event.preventDefault()
         this.props.loggedUser({
