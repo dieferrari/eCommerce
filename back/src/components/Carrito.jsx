@@ -34,7 +34,7 @@ export default ({localCarrito, handleChange, handleClick, alertMessage}) => (
                     {product.stock == 0 ? <small><h6 className= "text-danger">Out of Stock</h6></small> : <small><h6 className= "text-success">In Stock</h6></small>}
                     <br/>
                     <br/>
-                    <button onClick={()=>handleClick(index)} type="button" className="btn btn-sm btn-outline-danger">Remove</button>
+                    <button onClick={()=>handleClick(index,product.id)} type="button" className="btn btn-sm btn-outline-danger">Remove</button>
                   </div>
                 </Col>
                 <Col>
@@ -62,13 +62,13 @@ export default ({localCarrito, handleChange, handleClick, alertMessage}) => (
                       <a className="dropdown-item" href="#">+10</a>
                     </div>
                   </div> */}
-
-                    <button onClick={()=>handleChange(product.stock, product.cantidad-1, index)} type="button" name="resta" className="btn btn-outline-secondary">-</button>
-                    <input onChange={(evt) => handleChange(product.stock, evt.target.value, index)} value={product.cantidad} />
                     
-                    <button onClick={()=>handleChange(product.stock, product.cantidad+1, index)} type="button" name="suma" className="btn btn-outline-secondary">+</button>
+                    <button onClick={()=>handleChange(product.stock, product.cantidad-1, index,product.id)} type="button" name="resta" className="btn btn-outline-secondary">-</button>
+                    <input onChange={(evt) => handleChange(product.stock, evt.target.value, index,product.id)} value={product.cantidad} />
+                    
+                    <button onClick={()=>handleChange(product.stock, product.cantidad+1, index,product.id)} type="button" name="suma" className="btn btn-outline-secondary">+</button>
                     <br/>
-                    { alertMessage === index ? <h6 className= "text-danger"><small>there is only {product.stock} in stock</small></h6> : <br/>}
+                    { alertMessage === index ? <h6 className= "text-danger"><small>Hay solo {product.stock} en stock</small></h6> : <br/>}
                   </div>
                 </Col>
               </Row>

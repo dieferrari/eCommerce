@@ -10,6 +10,13 @@ function isLoggedIn(req, res, next) {
       res.sendStatus(403);
     }
 }
+const popularProducts=[{
+    model: Product,
+    attributes:['id','name','description', 'price','stock', 'imgURL'],
+    through: {
+        attributes:['cantidad'],
+    }
+}]
 
 router.get('/', function (req, res, next) {
     User.findAll()
@@ -17,13 +24,7 @@ router.get('/', function (req, res, next) {
 })
 router.get('/userislogin',function(req,res,next){
     User.findById(req.user.id,{
-        include: [{
-            model: Product,
-            attributes:['id','name','description', 'price'],
-            through: {
-                attributes:['cantidad'],
-            }
-        }]
+        include: popularProducts
     })
     .then((user) => {
        res.send(user)
@@ -50,13 +51,7 @@ router.post('/register', function (req, res, next) {
 })
 router.post('/login',passport.authenticate('local'),function (req, res) {
     User.findById(req.user.id,{
-        include: [{
-            model: Product,
-            attributes:['id','name','description', 'price'],
-            through: {
-                attributes:['cantidad'],
-            }
-        }]
+        include: popularProducts
     })
     .then((user) => {
        res.send(user)
@@ -92,31 +87,19 @@ router.get('/auth/google/callback',
       console.log(req.user)
     res.status(200).send(req.user);
   });
-router.get('/:userId/orders', function(req, res){
+router.get('/orders', function(req, res){
     Orders.findAll({    
         where: {
-            OwnerId: req.params.userId,
+            OwnerId: req.user.id,
         },
-        include: [{
-            model: Product,
-            attributes:['id','name','description', 'price', 'imgURL'],
-            through: {
-                attributes:['cantidad'],
-            }
-        }]
+        include:popularProducts
     }).then(orders => {
         res.send(orders)
     })
 })
 router.get('/:userId', function (req, res) {
     User.findById(req.params.userId,{
-        include: [{
-            model: Product,
-            attributes:['id','name','description', 'price'],
-            through: {
-                attributes:['cantidad'],
-            }
-        }]
+        include:popularProducts
     })
     .then((user) => {
             res.send(user)
