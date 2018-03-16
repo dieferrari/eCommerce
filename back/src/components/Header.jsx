@@ -1,8 +1,19 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import { fetchCategories } from '../redux/actions/category';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+class Header extends React.Component {
 
-export default ({categories,user,carrito,handleDeslogSubmit}) => (
+	componentDidMount() {
+		const {fetchCategories} = this.props;
+		fetchCategories();
+	}
+
+	render(){
+		const {categories,user,carrito,handleDeslogSubmit} = this.props;
+		return(
 	<div>
 		<nav  className="navbar navbar-light bg-light justify-content-between">
 			<a className="navbar-brand">e-Commerce</a>
@@ -14,9 +25,9 @@ export default ({categories,user,carrito,handleDeslogSubmit}) => (
   			<li className="nav-item dropdown">
    				<a className="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Categories</a>
     			<div className="dropdown-menu">
-						<a className="dropdown-item" href="#">Action</a>
-						<a className="dropdown-item" href="#">Another action</a>
-						<a className="dropdown-item" href="#">Something else here</a>
+						{categories.map(category=>(
+							<a key={category.id} className="dropdown-item" href={`/categories/${category.id}`}>{category.name}</a>
+						))}
 					<div className="dropdown-divider"></div>
 						<a className="dropdown-item" href="/category">Todas las categorias</a>
     			</div>
@@ -40,5 +51,16 @@ export default ({categories,user,carrito,handleDeslogSubmit}) => (
 					Login
 			</Link>)}
 		</nav>
-	</div>
-)
+	</div>)
+	}
+}
+
+const mapStateToProps = state => ({
+	categories: state.category.category,
+  })
+  
+  const mapDispatchToProps = dispatch => bindActionCreators({
+	fetchCategories,
+  }, dispatch);
+
+  export default connect(mapStateToProps, mapDispatchToProps)(Header);
