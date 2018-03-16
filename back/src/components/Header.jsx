@@ -6,18 +6,14 @@ import { bindActionCreators } from 'redux';
 
 class Header extends React.Component {
 
-<<<<<<< HEAD
-export default ({categories,user,carrito,handleDeslogSubmit, location}) => (
-=======
 	componentDidMount() {
 		const {fetchCategories} = this.props;
 		fetchCategories();
 	}
 
 	render(){
-		const {categories,user,carrito,handleDeslogSubmit} = this.props;
+		const {categories,user,carrito,handleDeslogSubmit, location} = this.props;
 		return(
->>>>>>> 579cb964aa470d100a1ce44ab58ce878d533315c
 	<div>
 		<nav  className="navbar navbar-light bg-light justify-content-between">
 			<a className="navbar-brand">e-Commerce</a>

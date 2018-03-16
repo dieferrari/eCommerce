@@ -32,10 +32,7 @@ export default ({ user, handleSubmit }) =>{
           </div>
           <div>  
             <Link to={`/user/checkout`}>
-<<<<<<< HEAD
               <img src="https://t3.ftcdn.net/jpg/00/30/30/64/240_F_30306492_54Fq37acp3NBQHlfSkQ1WQrpBS2yyOyt.jpg"/>
-=======
->>>>>>> 579cb964aa470d100a1ce44ab58ce878d533315c
               <h3>Checkout</h3>
               <img src="https://t3.ftcdn.net/jpg/00/30/30/64/240_F_30306492_54Fq37acp3NBQHlfSkQ1WQrpBS2yyOyt.jpg"/>
             </Link>
