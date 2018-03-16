@@ -41,7 +41,12 @@ export default ({ product, user, addProductReview ,handleChange,cantidad,handleS
             <button className="btn btn-success">Add to cart</button>
           </form>
         </div>  
-        {user.isAdmin?'Es un adminnnn':'Noo es adminnn'}
+        {user.isAdmin ?
+          <div>
+            <Link to={`/admin/products/${product.id}/edit`}><button>Edit</button></Link>
+            <Link to={`/admin/products/${product.id}/delete`}><button>Delete</button></Link> 
+          </div>
+        : ""}
         {user.id?(<ReviewForm onSubmit={submit}/>):('')}
         
         {product.categories.map(cat => (
