@@ -102,8 +102,8 @@ const mapDispatchToProps = function(dispatch) {
     editCarrito: (value, index) => dispatch(editCarrito(value, index)),
     removeCarrito: (index) => dispatch(removeCarrito(index)),
     mergeCarritos:(localCarrito)=>dispatch(mergeCarritos(localCarrito)),
-   editUserCarrito:(item)=>dispatch(editUserCarrito(item)),
-   removeUserCarrito:(id)=>dispatch(removeUserCarrito(id))
+    editUserCarrito:(item)=>dispatch(editUserCarrito(item)),
+    removeUserCarrito:(id)=>dispatch(removeUserCarrito(id))
   }
 }
 
