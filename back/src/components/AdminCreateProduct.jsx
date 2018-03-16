@@ -15,8 +15,22 @@ export default ({categories,handleSubmit,product})=>
             <input type="text" name='stock' defaultValue={product.stock} /><br/><br/>
             <label > URL de imagen: </label>
             <input type="text" name='imgURL' defaultValue={product.imgURL} /><br/><br/>
-            <label > Disponible: </label>
-            <input type="text" name='available' defaultValue={product.available} /><br/><br/>
+            
+            {product.available?(
+                    <div>
+                    <label > Disponible: </label><br/>
+                    <input type="radio" name="available" value="true" defaultChecked='true'/> Si <br/>
+                    <input type="radio" name="available" value='false'/> No <br/>
+                    </div>
+                    
+            ):(
+                    <div>
+                    <label > Disponible: </label><br/>
+                    <input type="radio" name="available" value="true" /> Si <br/>
+                    <input type="radio" name="available" value='false' defaultChecked='true'/> No <br/>
+                    </div>
+            )}
+            <br/><br/>
             <label > Categorias </label>
             {categories.map((category)=>{
                 if (product.categories.map(c=>c.id).indexOf(category.id)!=-1){

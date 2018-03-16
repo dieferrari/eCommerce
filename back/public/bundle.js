@@ -13915,7 +13915,7 @@ var editUserCarrito = exports.editUserCarrito = function editUserCarrito(item) {
 
 var removeUserCarrito = exports.removeUserCarrito = function removeUserCarrito(id) {
     return function (dispatch) {
-        _axios2.default.delete('/api/carrito', id).then(function (res) {
+        _axios2.default.delete('/api/carrito/' + id).then(function (res) {
             return res.data;
         }).then(function (user) {
             dispatch(receiveUser({ id: user.id,
@@ -20008,12 +20008,37 @@ exports.default = function (_ref) {
             _react2.default.createElement('input', { type: 'text', name: 'imgURL', defaultValue: product.imgURL }),
             _react2.default.createElement('br', null),
             _react2.default.createElement('br', null),
-            _react2.default.createElement(
-                'label',
+            product.available ? _react2.default.createElement(
+                'div',
                 null,
-                ' Disponible: '
+                _react2.default.createElement(
+                    'label',
+                    null,
+                    ' Disponible: '
+                ),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement('input', { type: 'radio', name: 'available', value: 'true', defaultChecked: 'true' }),
+                ' Si ',
+                _react2.default.createElement('br', null),
+                _react2.default.createElement('input', { type: 'radio', name: 'available', value: 'false' }),
+                ' No ',
+                _react2.default.createElement('br', null)
+            ) : _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'label',
+                    null,
+                    ' Disponible: '
+                ),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement('input', { type: 'radio', name: 'available', value: 'true' }),
+                ' Si ',
+                _react2.default.createElement('br', null),
+                _react2.default.createElement('input', { type: 'radio', name: 'available', value: 'false', defaultChecked: 'true' }),
+                ' No ',
+                _react2.default.createElement('br', null)
             ),
-            _react2.default.createElement('input', { type: 'text', name: 'available', defaultValue: product.available }),
             _react2.default.createElement('br', null),
             _react2.default.createElement('br', null),
             _react2.default.createElement(
@@ -57426,7 +57451,7 @@ var CarritoContainer = function (_React$Component) {
 
       console.log("HANDLE USER, stock: " + stock + " value: " + value + " index: " + index + " id: " + id);
       if (value <= stock && value > 0) {
-        //this.props.editUserCarrito(value, id);
+        //this.props.editUserCarrito({id:id,cantidad:value});
         console.log('EL VALOR ESTA BIEN');
       } else if (value > 0) {
         this.setState({ alertMessage: index });
@@ -58204,11 +58229,10 @@ var AdminProductContainer = function (_React$Component) {
             var categories = [];
             for (var i = 0; i < evt.target.length; i++) {
                 if (evt.target[i].type == 'text') {
-                    if (evt.target[i].name == 'available') {
-                        product[evt.target[i].name] = evt.target[i].value == 'true' ? true : false;
-                    } else {
-                        product[evt.target[i].name] = evt.target[i].value;
-                    }
+                    product[evt.target[i].name] = evt.target[i].value;
+                }
+                if (evt.target[i].type == 'radio' && evt.target[i].checked == true) {
+                    product[evt.target[i].name] = evt.target[i].value == 'true' ? true : false;
                 }
                 if (evt.target[i].type == 'checkbox' && evt.target[i].checked == true) {
                     categories.push(evt.target[i].value);
@@ -58334,16 +58358,15 @@ var AdminSingleProductContainer = function (_React$Component) {
             var categories = [];
             for (var i = 0; i < evt.target.length; i++) {
                 if (evt.target[i].type == 'text') {
-                    if (evt.target[i].name == 'available') {
-                        product[evt.target[i].name] = evt.target[i].value == 'true' ? true : false;
-                    } else {
-                        product[evt.target[i].name] = evt.target[i].value;
-                    }
+                    product[evt.target[i].name] = evt.target[i].value;
+                }
+                if (evt.target[i].type == 'radio' && evt.target[i].checked == true) {
+                    product[evt.target[i].name] = evt.target[i].value == 'true' ? true : false;
                 }
                 if (evt.target[i].type == 'checkbox' && evt.target[i].checked == true) {
                     categories.push(evt.target[i].value);
                 }
-            } //for
+            } //for        
             this.props.editProducts(this.props.id, { product: product, categories: categories });
         } //handlesubmit
 

@@ -88,7 +88,7 @@ export const editUserCarrito = (item) => dispatch => {
 }
 
 export const removeUserCarrito = (id) => dispatch => {
-    axios.delete(`/api/carrito`, id)
+    axios.delete(`/api/carrito/${id}`)
     .then(res => {
      return res.data})
     .then(user => {
