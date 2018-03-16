@@ -12,7 +12,7 @@ class Header extends React.Component {
 	}
 
 	render(){
-		const {categories,user,carrito,handleDeslogSubmit} = this.props;
+		const {categories,user,carrito,handleDeslogSubmit, location} = this.props;
 		return(
 	<div>
 		<nav  className="navbar navbar-light bg-light justify-content-between">
@@ -47,7 +47,7 @@ class Header extends React.Component {
 				<Link onClick={(e)=>handleDeslogSubmit(e)} to='#'>
 				Cerrar Sesion
 				</Link>
-			):(<Link to={`/login`}>
+			):(<Link to={{pathname: '/login', state: { from: location }}}>
 					Login
 			</Link>)}
 		</nav>

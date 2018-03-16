@@ -14,16 +14,17 @@ handleDeslogSubmit(e){
 }
 
 render(){
-    const {categories,user,carrito}=this.props
+    const {categories,user,carrito, location}=this.props
     return(<Header handleDeslogSubmit={this.handleDeslogSubmit}
-    user={user} carrito={carrito} categories={categories}
+    user={user} carrito={carrito} categories={categories} location={location}
     />)
 }
 }
-const mapStateToProps=(state)=>({
+const mapStateToProps=(state, ownProps)=>({
     categories:state.category.category,
     user:state.user.user,
-    carrito:state.user.carrito
+    carrito:state.user.carrito,
+    location: ownProps.location
 })
 const mapDispatchToProps=(dispatch)=>({
     deslogUser:()=>dispatch(deslogUser())
