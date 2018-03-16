@@ -7,6 +7,7 @@ import { fetchUserOrders } from '../redux/actions/userOrders'
 import UserOrders from '../components/UserOrder';
 import UserCheckout from '../components/UserCheckout';
 import {postOrders} from '../redux/actions/orders'
+import RouteHook from 'react-route-hook';
 
 class SingleUserContainer extends React.Component {
     constructor(props){
@@ -16,7 +17,7 @@ class SingleUserContainer extends React.Component {
     }
 	componentDidMount() {
     //va a volar
-    this.props.fetchUserOrders(this.props.user.id)
+    this.props.fetchUserOrders()
 	}
 	handleSubmit(e){
 		e.preventDefault()
@@ -41,19 +42,19 @@ class SingleUserContainer extends React.Component {
         console.log('eeeeeeee',user)
 		return (
             <Switch>
-                <Route exact
+                <RouteHook exact
             path={`${match.path}`}
             render={
                 ()=><SingleUser
 				handleSubmit={this.handleSubmit}
                 user={user}/>
                   }/>
-            <Route 
+            <RouteHook 
             path={`${match.path}/orders`}
             render={
                 ()=><UserOrders
 				userOrders={userOrders}/>}/>
-            <Route
+            <RouteHook
             path={`${match.path}/checkout`}
             render={
                  ()=><UserCheckout user={user}
@@ -77,7 +78,7 @@ const mapStateToProps = function(state, ownProps) {
 const mapDispatchToProps = (dispatch)=>({
     fetchUser:(id)=>dispatch(fetchUser(id)),
     deslogUser:()=>dispatch(deslogUser()),
-    fetchUserOrders:(id)=>dispatch(fetchUserOrders(id)),
+    fetchUserOrders:()=>dispatch(fetchUserOrders()),
     postOrders:(body)=>dispatch(postOrders(body))
 })
 

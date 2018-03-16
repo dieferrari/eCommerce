@@ -33,7 +33,7 @@ router.post('/',isLoggedIn,function(req,res,next){
 router.delete('/:id',isLoggedIn,function(req,res,next){
     User.findById(req.user.id)
         .then(user => {
-            return user.removeProducts([req.params.id])
+            return user.removeProducts(req.params.id)
         })
         .then(() => {
             return User.findById(req.user.id,{

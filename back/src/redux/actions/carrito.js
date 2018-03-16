@@ -1,16 +1,20 @@
 import {ADD_LOCAL_CARRITO,RECEIVE_USER} from '../constants.js';
+import axios from 'axios';
 
 // const setCarrito = (products) => ({
 //     type: ADD_LOCAL_CARRITO,
 //     products,
 // });
-const actualizarCarrito = (user,products) => ({
-    type:RECEIVE_USER,
+
+
+const receiveUser = (user,carrito) => ({
+    type: RECEIVE_USER,
     fetch:{
-        user,
-        carrito:products
+      user:user,
+      carrito:carrito
     }
-})
+  });
+
 
 export const addCarrito = (product) => dispatch => {
     var cart = [product];
@@ -40,20 +44,8 @@ export const addCarrito = (product) => dispatch => {
     localStorage.setItem('localCarrito', JSON.stringify(cart));
     // dispatch(setCarrito(cart));
 }
-export const updateCarrito = (products) => dispatch =>{
-    axios.put(`/api/carrito`,products)
-    .then(data => res.data)
-    .then((user) => {
-        console.log(user)
-        dispatch(actualizarCarrito({
-            id:user.id,
-            firstName:user.firstName,
-            lastName:user.lastName,
-            email:user.email
-        },user.products))
-    })
-}
 
+//==============LOCAL STORAGE
 export const editCarrito = (value, index) => dispatch => {
     var stringFromStorage = localStorage.getItem('localCarrito');
     var cartFromStorage = JSON.parse(stringFromStorage);
@@ -69,7 +61,47 @@ export const removeCarrito = (index) => dispatch => {
     cartFromStorage.splice(index,1);
     localStorage.setItem('localCarrito', JSON.stringify(cartFromStorage))
 }
+//============================
+//============================BASE DE DATOS
+//Lc=[{prod-0},{prod-1}]
+export const mergeCarritos = (Lc) => dispatch => {
+    return axios.post(`/api/carrito`, Lc)
+    .then(res => res.data)
+    .then(user => {
+        dispatch(receiveUser({id:user.id,
+        firstName:user.firstName, 
+        lastName:user.lastName,
+        isAdmin:user.isAdmin,
+        email:user.email},user.products))
+    })
+}
 
+export const editUserCarrito = (item) => dispatch => {
+    axios.put(`/api/carrito`, item)
+    .then(res => {
+        return res.data})
+    .then(user => {
+        dispatch(receiveUser({id:user.id,
+        firstName:user.firstName, 
+        lastName:user.lastName,
+        isAdmin:user.isAdmin,
+        email:user.email},user.products))
+    })
+}
+
+export const removeUserCarrito = (id) => dispatch => {
+    axios.delete(`/api/carrito/${id}`)
+    .then(res => {
+     return res.data})
+    .then(user => {
+      dispatch(receiveUser({id:user.id,
+        firstName:user.firstName, 
+        lastName:user.lastName,
+        isAdmin:user.isAdmin,
+        email:user.email},user.products))
+    })
+}
+//============================
 
 //Nico, soy el niño de cobre, ya te queda en el local storage lo que compras, ahora hay que comprobar que lo que pida no
 // supere el stock disponible..... Y hacer que cuando el loco/a(#niUnaMenos) se logee, le agregue ese cart a su State.

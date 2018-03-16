@@ -5,7 +5,7 @@ const updateCarrito = (cart,newProds) => {
         var FindProd = cart.find((element) => element.id === prod.id)
         if(!FindProd){
             product = Product.build(prod)
-            product.setDataValue('carrito', { cantidad : prod.carrito.cantidad })
+            product.setDataValue('carrito', { cantidad : prod.cantidad })
             console.log(product)
             cart.push(product)
         }else{

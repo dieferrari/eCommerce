@@ -50,9 +50,10 @@ export const fetchUser = id => dispatch =>
     });
 
 export const loggedUser = user => dispatch => {
-  axios.post(`/api/users/login`,user)
+  return axios.post(`/api/users/login`,user)
   .then(res => res.data)
   .then(user => {
+    console.log('USEEEER', user)
    dispatch(receiveUser({id:user.id,
     firstName:user.firstName, 
     lastName:user.lastName,

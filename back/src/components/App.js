@@ -7,7 +7,6 @@ import SingleProductContainer from '../containers/SingleProductContainer';
 import CategoryContainer from '../containers/CategoryContainer';
 import UserOrderContainer from '../containers/UserOrderContainer';
 import CarritosContainer from '../containers/CarritoContainer';
-import SingleUserContainer from '../containers/SingleUserContainer';
 import SingleCategoryContainer from '../containers/SingleCategoryContainer';
 import UserCheckoutContainer from '../containers/UserCheckoutContainer'
 import AdminApp from './AdminApp';
