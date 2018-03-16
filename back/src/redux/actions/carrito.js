@@ -16,8 +16,10 @@ const receiveUser = (user,carrito) => ({
   });
 
 
-export const addCarrito = (product) => dispatch => {
+export const addCarrito = (product, value) => dispatch => {
     var cart = [product];
+    console.log("ADD CARRITO, VALUE: "+value)
+    if (value) {cart[0].cantidad = value}
     var stringFromStorage = localStorage.getItem('localCarrito');   
     var cartFromStorage = JSON.parse(stringFromStorage);
     var updatedQty = false;
