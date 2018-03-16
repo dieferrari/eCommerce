@@ -13834,9 +13834,13 @@ var receiveUser = function receiveUser(user, carrito) {
     };
 };
 
-var addCarrito = exports.addCarrito = function addCarrito(product) {
+var addCarrito = exports.addCarrito = function addCarrito(product, value) {
     return function (dispatch) {
         var cart = [product];
+        console.log("ADD CARRITO, VALUE: " + value);
+        if (value) {
+            cart[0].cantidad = value;
+        }
         var stringFromStorage = localStorage.getItem('localCarrito');
         var cartFromStorage = JSON.parse(stringFromStorage);
         var updatedQty = false;
@@ -52605,6 +52609,8 @@ var _reactRedux = __webpack_require__(4);
 
 var _user = __webpack_require__(10);
 
+var _carrito = __webpack_require__(140);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -52621,8 +52627,16 @@ var ProductsContainer = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (ProductsContainer.__proto__ || Object.getPrototypeOf(ProductsContainer)).call(this, props));
 
-        _this.state = { inputValue: '' };
+        _this.state = {
+            inputValue: '',
+            localCarrito: JSON.parse(localStorage.getItem("localCarrito")),
+            alertMessage: false,
+            flagCantidad: 1,
+            flagIndex: -1
+        };
         _this.handleChange = _this.handleChange.bind(_this);
+        _this.handleCantidad = _this.handleCantidad.bind(_this);
+        _this.handleSubmit = _this.handleSubmit.bind(_this);
 
         return _this;
     }
@@ -52641,6 +52655,46 @@ var ProductsContainer = function (_React$Component) {
             });
         }
     }, {
+        key: 'handleCantidad',
+        value: function handleCantidad(stock, value, index) {
+            var _this2 = this;
+
+            console.log("CLICK CANTIDAD PRODUCTS, stock: " + stock + " value: " + value + " index: " + index);
+            if (value <= stock && value > 0) {
+                this.setState({ flagCantidad: value, flagIndex: index });
+            } else if (value > 0) {
+                this.setState({ alertMessage: index });
+                setInterval(function () {
+                    _this2.setState({ alertMessage: false });
+                }, 5000);
+            }
+        }
+    }, {
+        key: 'handleSubmit',
+        value: function handleSubmit(evt, product) {
+            // filtro por id de producto en el carrito
+            //me devuelve un arreglo vacio o de un objeto
+            // y si me trae algo llamo a editUserCarrito({id:obj.id,cantidad:obj.carrito.cantidad+value})
+            //si no trae nada llamo editUserCarrito({id:id,cantidad:value})
+            evt.preventDefault();
+            console.log("CLICK SUBMIT PRODUCT  " + 'FLAGCANTIDAD: ' + this.state.flagCantidad);
+            console.log('USEEEEEER', this.props.user.id);
+            if (this.props.user.id) {
+                var foundProduct = this.props.carrito.filter(function (prod) {
+                    return prod.id === product.id;
+                });
+                console.log('PRODUCTO ENCONTRADO:', foundProduct);
+                if (foundProduct.length) {
+                    this.props.editUserCarrito({ id: foundProduct[0].id, cantidad: foundProduct[0].carrito.cantidad + this.state.flagCantidad });
+                } else {
+                    this.props.editUserCarrito({ id: product.id, cantidad: this.state.flagCantidad });
+                }
+            } else {
+                this.props.addCarrito(product, this.state.flagCantidad);
+            }
+            this.state.flagCantidad = 1;
+        }
+    }, {
         key: 'render',
         value: function render() {
             var inputValue = this.state.inputValue;
@@ -52650,7 +52704,16 @@ var ProductsContainer = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement(_Products2.default, { products: productosFiltrados, handleChange: this.handleChange })
+                _react2.default.createElement(_Products2.default, {
+                    products: productosFiltrados,
+                    handleChange: this.handleChange,
+                    handleCantidad: this.handleCantidad,
+                    handleSubmit: this.handleSubmit,
+                    user: this.props.user,
+                    flagCantidad: this.state.flagCantidad,
+                    flagIndex: this.state.flagIndex,
+                    alertMessage: this.state.alertMessage
+                })
             );
         }
     }]);
@@ -52661,7 +52724,9 @@ var ProductsContainer = function (_React$Component) {
 var mapStateToProps = function mapStateToProps(state) {
     return {
         products: state.products,
-        loading: state.loading
+        loading: state.loading,
+        user: state.user.user,
+        carrito: state.user.carrito
     };
 };
 
@@ -52672,6 +52737,15 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
         },
         Userlogged: function Userlogged() {
             return dispatch((0, _user.Userlogged)());
+        },
+        editUserCarrito: function editUserCarrito(item) {
+            return dispatch((0, _carrito.editUserCarrito)(item));
+        },
+        editCarrito: function editCarrito(value, index) {
+            return dispatch((0, _carrito.editCarrito)(value, index));
+        },
+        addCarrito: function addCarrito(product, value) {
+            return dispatch((0, _carrito.addCarrito)(product, value));
         }
     };
 };
@@ -52699,10 +52773,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // import { login, logout, isLoggedIn } from '../utils/Authservice';
 
+// Create our number formatter.
+var formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0
+    // the default value for minimumFractionDigits depends on the currency
+    // and is usually already 2 Copy Paste For The Win
+});
 
 exports.default = function (_ref) {
     var products = _ref.products,
-        handleChange = _ref.handleChange;
+        handleChange = _ref.handleChange,
+        handleCantidad = _ref.handleCantidad,
+        handleSubmit = _ref.handleSubmit,
+        flagCantidad = _ref.flagCantidad,
+        flagIndex = _ref.flagIndex,
+        alertMessage = _ref.alertMessage;
     return (
         // <div>
         // {!isLoggedIn() ? "no estas logeado perro" :
@@ -52727,7 +52814,7 @@ exports.default = function (_ref) {
                 _react2.default.createElement(
                     'div',
                     { className: 'card-group' },
-                    products.map(function (product) {
+                    products.map(function (product, index) {
                         return _react2.default.createElement(
                             'div',
                             { key: product.id, className: 'card', style: { minWidth: '30', maxWidth: '30rem', margin: '30px' } },
@@ -52747,7 +52834,69 @@ exports.default = function (_ref) {
                                 _react2.default.createElement(
                                     'p',
                                     { className: 'card-text' },
-                                    product.price
+                                    formatter.format(product.price)
+                                ),
+                                product.stock == 0 ? _react2.default.createElement(
+                                    'small',
+                                    null,
+                                    _react2.default.createElement(
+                                        'h6',
+                                        { className: 'text-danger' },
+                                        'Out of Stock'
+                                    )
+                                ) : _react2.default.createElement(
+                                    'small',
+                                    null,
+                                    _react2.default.createElement(
+                                        'h6',
+                                        { className: 'text-success' },
+                                        'In Stock'
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                null,
+                                _react2.default.createElement(
+                                    'form',
+                                    { onSubmit: function onSubmit(evt) {
+                                            return handleSubmit(evt, product);
+                                        } },
+                                    _react2.default.createElement(
+                                        'button',
+                                        { onClick: function onClick() {
+                                                return handleCantidad(product.stock, flagCantidad - 1, index, product.id);
+                                            }, type: 'button', name: 'resta', className: 'btn btn-outline-secondary' },
+                                        '-'
+                                    ),
+                                    _react2.default.createElement('input', { onChange: function onChange(evt) {
+                                            return handleCantidad(product.stock, evt.target.value, index, product.id);
+                                        }, value: index == flagIndex ? flagCantidad : 1 }),
+                                    _react2.default.createElement(
+                                        'button',
+                                        { onClick: function onClick() {
+                                                return handleCantidad(product.stock, flagCantidad + 1, index, product.id);
+                                            }, type: 'button', name: 'suma', className: 'btn btn-outline-secondary' },
+                                        '+'
+                                    ),
+                                    _react2.default.createElement('br', null),
+                                    alertMessage === index ? _react2.default.createElement(
+                                        'h6',
+                                        { className: 'text-danger' },
+                                        _react2.default.createElement(
+                                            'small',
+                                            null,
+                                            'Hay solo ',
+                                            product.stock,
+                                            ' en stock'
+                                        )
+                                    ) : _react2.default.createElement('br', null),
+                                    _react2.default.createElement('br', null),
+                                    _react2.default.createElement(
+                                        'button',
+                                        { className: 'btn btn-success' },
+                                        'Add to cart'
+                                    )
                                 )
                             )
                         );
@@ -53103,7 +53252,28 @@ exports.default = function (_ref) {
             )
           )
         ),
-        user.isAdmin ? 'Es un adminnnn' : 'Noo es adminnn',
+        user.isAdmin ? _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: '/admin/products/' + product.id + '/edit' },
+            _react2.default.createElement(
+              'button',
+              null,
+              'Edit'
+            )
+          ),
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: '/admin/products/' + product.id + '/delete' },
+            _react2.default.createElement(
+              'button',
+              null,
+              'Delete'
+            )
+          )
+        ) : "",
         user.id ? _react2.default.createElement(_ReviewForm2.default, { onSubmit: submit }) : '',
         product.categories.map(function (cat) {
           return _react2.default.createElement(
@@ -60083,13 +60253,9 @@ exports.default = function (_ref) {
     'div',
     null,
     _react2.default.createElement(
-      'button',
-      { onClick: handleSubmit },
-      'Deslogearse'
-    ),
-    _react2.default.createElement(
       'h1',
       null,
+      'Bienvenido ',
       user.firstName
     ),
     _react2.default.createElement(
@@ -60100,34 +60266,92 @@ exports.default = function (_ref) {
         null,
         user.email
       ),
-      _react2.default.createElement(
+      user.isAdmin ? _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
           _reactRouterDom.Link,
-          { to: '/user/orders' },
-          _react2.default.createElement('img', { src: 'https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/1342761/580/386/m1/fpnw/wm0/cardboard-box-icon-01-.jpg?1465234338&s=ce34fb8219c58b48a7e22f2840e4e35e' }),
+          { to: '/admin/users' },
           _react2.default.createElement(
-            'h3',
+            'button',
             null,
-            'Mis ordenes'
+            'Users'
+          )
+        ),
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/admin/orders' },
+          _react2.default.createElement(
+            'button',
+            null,
+            'Orders'
+          )
+        ),
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/admin/categories' },
+          _react2.default.createElement(
+            'button',
+            null,
+            'Categories'
+          )
+        ),
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/admin/products' },
+          _react2.default.createElement(
+            'button',
+            null,
+            'Products'
           )
         )
-      ),
-      _react2.default.createElement(
+      ) : "",
+      !user.isAdmin ? _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
-          _reactRouterDom.Link,
-          { to: '/carrito' },
-          _react2.default.createElement('img', { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnmUmvGdHJoUn7OdpAMkYsW1Wc8ELK_kLnmoG_Lys7C1ACILZEqQ' }),
+          'div',
+          null,
           _react2.default.createElement(
-            'h3',
-            null,
-            'Carro de compras'
+            _reactRouterDom.Link,
+            { to: '/user/orders' },
+            _react2.default.createElement('img', { src: 'https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/1342761/580/386/m1/fpnw/wm0/cardboard-box-icon-01-.jpg?1465234338&s=ce34fb8219c58b48a7e22f2840e4e35e' }),
+            _react2.default.createElement(
+              'h3',
+              null,
+              'Mis ordenes'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: '/carrito' },
+            _react2.default.createElement('img', { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnmUmvGdHJoUn7OdpAMkYsW1Wc8ELK_kLnmoG_Lys7C1ACILZEqQ' }),
+            _react2.default.createElement(
+              'h3',
+              null,
+              'Carro de compras'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: '/' + user.id + '/checkout' },
+            _react2.default.createElement('img', { src: 'https://t3.ftcdn.net/jpg/00/30/30/64/240_F_30306492_54Fq37acp3NBQHlfSkQ1WQrpBS2yyOyt.jpg' }),
+            _react2.default.createElement(
+              'h3',
+              null,
+              'Checkout'
+            )
           )
         )
-      )
+      ) : ""
     )
   );
 };
