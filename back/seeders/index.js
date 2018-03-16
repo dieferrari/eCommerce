@@ -35,7 +35,7 @@ module.exports=function(){
     .then(order=>{
         return order.addProducts([103],{ through: { cantidad: 1 }})
     }).then(()=>{
-        return Product.findById(102)
+        return Product.findById(101)
     })
     .then(producto=>{
         return producto.addCategories([105])
@@ -57,6 +57,24 @@ module.exports=function(){
     })
     .then(producto=>{
         return producto.addCategories([105])
+    })
+    .then(()=>{
+        return Product.findById(105)
+    })
+    .then(producto=>{
+        return producto.addCategories([101])
+    })
+    .then(()=>{
+        return Product.findById(106)
+    })
+    .then(producto=>{
+        return producto.addCategories([101])
+    })
+    .then(()=>{
+        return Product.findById(107)
+    })
+    .then(producto=>{
+        return producto.addCategories([101])
     })
     .then(()=>{
         return User.findById(102)

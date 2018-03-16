@@ -1,7 +1,9 @@
 import React from 'react'
+import {Redirect} from 'react-router-dom'
 
-export default ({user,carrito,handleSubmit})=>(
-    <div>
+export default ({user,carrito,handleSubmit,flag})=>(
+    <div>{flag?<Redirect to='/user/orders'/>:(
+        <div>
         <h1>Confirmar Compra</h1>
         <table >
         <tbody>
@@ -40,6 +42,7 @@ export default ({user,carrito,handleSubmit})=>(
             </form>
             </div>
         )}
+        </div>)}
             
         
     </div>

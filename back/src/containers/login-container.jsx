@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
     this.handleSubmit=this.handleSubmit.bind(this)
     this.handleSubmitLocal = this.handleSubmitLocal.bind(this)
     }
+
     handleSubmit(event) {
         event.preventDefault()
         this.props.loggedUser({
@@ -31,25 +32,34 @@ import { connect } from 'react-redux';
     )
     }
     render () {
-        const {user}=this.props
+        const {user,location}=this.props
+        const { from } = location.state || { from: '/'}
         if (JSON.parse(localStorage.getItem('localCarrito')).length > 0){
             return (
                 <div>
-                    <Login user={user} handleSubmit={this.handleSubmitLocal}/>
+                    <Login user={user} handleSubmit={this.handleSubmitLocal} from={from} location={location}/>
                 </div>
             )
         }else{ 
             return (
                 <div>
-                    <Login user={user} handleSubmit={this.handleSubmit}/>
+                    <Login user={user} handleSubmit={this.handleSubmit} from={from} location={location}/>
                 </div>
             )
         }
         
+        // const {user, location}=this.props
+        // console.log(location)
+        // const { from } = location.state || { from: '/'}
+        
+        // return (
+        //     <Login user={user} handleSubmit={this.handleSubmit} from={from} location={location}/>
+        // )
     }
 }
-const mapStateToProps=(state)=>({
+const mapStateToProps=(state, ownProps)=>({
     user:state.user.user,
+    location: ownProps.location
 
 })
 const mapDispatchToProps=(dispatch)=>({
