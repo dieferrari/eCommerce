@@ -13,7 +13,7 @@ var formatter = new Intl.NumberFormat('en-US', {
 
 export default ({ product, user, addProductReview ,handleChange,cantidad,handleSubmit}) => {
   const submit = (values) =>{
-    addProductReview(product.id, values, user);
+    addProductReview(product.id, values, user.id);
   }
 
   return(
@@ -30,7 +30,6 @@ export default ({ product, user, addProductReview ,handleChange,cantidad,handleS
         <br/>
         <h6>Stock: {product.stock}</h6>
         <br/>
-        
         <h6><small>description</small></h6>
         <p className="card-text">{product.description}</p>
         <div className="section" style={{paddingBottom:"20px"}}>
@@ -42,7 +41,8 @@ export default ({ product, user, addProductReview ,handleChange,cantidad,handleS
             <button className="btn btn-success">Add to cart</button>
           </form>
         </div>  
-        {user?(<ReviewForm onSubmit={submit}/>):('')}
+        {user.isAdmin?'Es un adminnnn':'Noo es adminnn'}
+        {user.id?(<ReviewForm onSubmit={submit}/>):('')}
         
         {product.categories.map(cat => (
           <div key={cat.id}>
