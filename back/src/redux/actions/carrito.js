@@ -4,6 +4,17 @@
 //     type: ADD_LOCAL_CARRITO,
 //     products,
 // });
+import axios from 'axios';
+import { RECEIVE_USER } from '../constants';
+
+const receiveUser = (user,carrito) => ({
+    type: RECEIVE_USER,
+    fetch:{
+      user:user,
+      carrito:carrito
+    }
+  });
+
 
 export const addCarrito = (product) => dispatch => {
     var cart = [product];
@@ -48,6 +59,45 @@ export const removeCarrito = (index) => dispatch => {
     console.log("REMOOOOOOOOOOOOOOOOOOVE", cartFromStorage[index])
     cartFromStorage.splice(index,1);
     localStorage.setItem('localCarrito', JSON.stringify(cartFromStorage))
+}
+//Lc=[{prod-0},{prod-1}]
+export const mergeCarritos = (Lc) => dispatch => {
+    axios.post(`/api/carrito`, Lc)
+    .then(res => {
+        return res.data})
+    .then(user => {
+        dispatch(receiveUser({id:user.id,
+        firstName:user.firstName, 
+        lastName:user.lastName,
+        isAdmin:user.isAdmin,
+        email:user.email},user.products))
+    })
+}
+
+export const editUserCarrito = (item) => dispatch => {
+    axios.put(`/api/carrito`, item)
+    .then(res => {
+        return res.data})
+    .then(user => {
+        dispatch(receiveUser({id:user.id,
+        firstName:user.firstName, 
+        lastName:user.lastName,
+        isAdmin:user.isAdmin,
+        email:user.email},user.products))
+    })
+}
+
+export const removeUserCarrito = (id) => dispatch => {
+    axios.delete(`/api/carrito`, id)
+    .then(res => {
+     return res.data})
+    .then(user => {
+      dispatch(receiveUser({id:user.id,
+        firstName:user.firstName, 
+        lastName:user.lastName,
+        isAdmin:user.isAdmin,
+        email:user.email},user.products))
+    })
 }
 
 

@@ -611,7 +611,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.deslogUser = exports.Userlogged = exports.loggedUser = exports.fetchUser = exports.createUser = undefined;
 
-var _axios = __webpack_require__(14);
+var _axios = __webpack_require__(13);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -1078,6 +1078,12 @@ var root = __WEBPACK_IMPORTED_MODULE_0__freeGlobal_js__["a" /* default */] || fr
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(196);
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -1115,12 +1121,6 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(196);
 
 /***/ }),
 /* 15 */
@@ -1864,7 +1864,7 @@ module.exports = emptyObject;
 
 
 
-var emptyFunction = __webpack_require__(13);
+var emptyFunction = __webpack_require__(14);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -2515,7 +2515,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.deleteProducts = exports.editProducts = exports.postProducts = exports.fetchProducts = undefined;
 
-var _axios = __webpack_require__(14);
+var _axios = __webpack_require__(13);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -2582,7 +2582,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.deleteCategories = exports.editCategories = exports.postCategories = exports.fetchCategories = undefined;
 
-var _axios = __webpack_require__(14);
+var _axios = __webpack_require__(13);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -2649,7 +2649,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.editOrders = exports.postOrders = exports.fetchOrders = undefined;
 
-var _axios = __webpack_require__(14);
+var _axios = __webpack_require__(13);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -10302,7 +10302,7 @@ module.exports = ExecutionEnvironment;
  * @typechecks
  */
 
-var emptyFunction = __webpack_require__(13);
+var emptyFunction = __webpack_require__(14);
 
 /**
  * Upstream version of event listener. Does not take into account specific
@@ -13806,15 +13806,33 @@ var silenceEvent = function silenceEvent(event) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.removeUserCarrito = exports.editUserCarrito = exports.mergeCarritos = exports.removeCarrito = exports.editCarrito = exports.addCarrito = undefined;
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+var _axios = __webpack_require__(13);
 
-//import {ADD_LOCAL_CARRITO, EDIT_LOCAL_CARRITO} from '../constants.js';
+var _axios2 = _interopRequireDefault(_axios);
+
+var _constants = __webpack_require__(6);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } //import {ADD_LOCAL_CARRITO, EDIT_LOCAL_CARRITO} from '../constants.js';
 
 // const setCarrito = (products) => ({
 //     type: ADD_LOCAL_CARRITO,
 //     products,
 // });
+
+
+var receiveUser = function receiveUser(user, carrito) {
+    return {
+        type: _constants.RECEIVE_USER,
+        fetch: {
+            user: user,
+            carrito: carrito
+        }
+    };
+};
 
 var addCarrito = exports.addCarrito = function addCarrito(product) {
     return function (dispatch) {
@@ -13864,6 +13882,48 @@ var removeCarrito = exports.removeCarrito = function removeCarrito(index) {
         console.log("REMOOOOOOOOOOOOOOOOOOVE", cartFromStorage[index]);
         cartFromStorage.splice(index, 1);
         localStorage.setItem('localCarrito', JSON.stringify(cartFromStorage));
+    };
+};
+//Lc=[{prod-0},{prod-1}]
+var mergeCarritos = exports.mergeCarritos = function mergeCarritos(Lc) {
+    return function (dispatch) {
+        _axios2.default.post('/api/carrito', Lc).then(function (res) {
+            return res.data;
+        }).then(function (user) {
+            dispatch(receiveUser({ id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                isAdmin: user.isAdmin,
+                email: user.email }, user.products));
+        });
+    };
+};
+
+var editUserCarrito = exports.editUserCarrito = function editUserCarrito(item) {
+    return function (dispatch) {
+        _axios2.default.put('/api/carrito', item).then(function (res) {
+            return res.data;
+        }).then(function (user) {
+            dispatch(receiveUser({ id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                isAdmin: user.isAdmin,
+                email: user.email }, user.products));
+        });
+    };
+};
+
+var removeUserCarrito = exports.removeUserCarrito = function removeUserCarrito(id) {
+    return function (dispatch) {
+        _axios2.default.delete('/api/carrito', id).then(function (res) {
+            return res.data;
+        }).then(function (user) {
+            dispatch(receiveUser({ id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                isAdmin: user.isAdmin,
+                email: user.email }, user.products));
+        });
     };
 };
 
@@ -19577,7 +19637,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.fetchUserOrders = undefined;
 
-var _axios = __webpack_require__(14);
+var _axios = __webpack_require__(13);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -19910,7 +19970,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.deleteUser = exports.editUser = exports.fetchAllUsers = undefined;
 
-var _axios = __webpack_require__(14);
+var _axios = __webpack_require__(13);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -20175,7 +20235,7 @@ _reactDom2.default.render(_react2.default.createElement(
  * LICENSE file in the root directory of this source tree.
  */
 
-var m=__webpack_require__(20),n=__webpack_require__(31),p=__webpack_require__(13),q="function"===typeof Symbol&&Symbol["for"],r=q?Symbol["for"]("react.element"):60103,t=q?Symbol["for"]("react.call"):60104,u=q?Symbol["for"]("react.return"):60105,v=q?Symbol["for"]("react.portal"):60106,w=q?Symbol["for"]("react.fragment"):60107,x="function"===typeof Symbol&&Symbol.iterator;
+var m=__webpack_require__(20),n=__webpack_require__(31),p=__webpack_require__(14),q="function"===typeof Symbol&&Symbol["for"],r=q?Symbol["for"]("react.element"):60103,t=q?Symbol["for"]("react.call"):60104,u=q?Symbol["for"]("react.return"):60105,v=q?Symbol["for"]("react.portal"):60106,w=q?Symbol["for"]("react.fragment"):60107,x="function"===typeof Symbol&&Symbol.iterator;
 function y(a){for(var b=arguments.length-1,e="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,c=0;c<b;c++)e+="\x26args[]\x3d"+encodeURIComponent(arguments[c+1]);b=Error(e+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}
 var z={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};function A(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}A.prototype.isReactComponent={};A.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?y("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};A.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};
 function B(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}function C(){}C.prototype=A.prototype;var D=B.prototype=new C;D.constructor=B;m(D,A.prototype);D.isPureReactComponent=!0;function E(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}var F=E.prototype=new C;F.constructor=E;m(F,A.prototype);F.unstable_isAsyncReactComponent=!0;F.render=function(){return this.props.children};var G={current:null},H=Object.prototype.hasOwnProperty,I={key:!0,ref:!0,__self:!0,__source:!0};
@@ -20215,7 +20275,7 @@ var _assign = __webpack_require__(20);
 var emptyObject = __webpack_require__(31);
 var invariant = __webpack_require__(21);
 var warning = __webpack_require__(32);
-var emptyFunction = __webpack_require__(13);
+var emptyFunction = __webpack_require__(14);
 var checkPropTypes = __webpack_require__(51);
 
 // TODO: this is special because it gets imported during build.
@@ -21571,7 +21631,7 @@ module.exports = react;
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(0),l=__webpack_require__(78),B=__webpack_require__(20),C=__webpack_require__(13),ba=__webpack_require__(79),da=__webpack_require__(80),ea=__webpack_require__(81),fa=__webpack_require__(82),ia=__webpack_require__(83),D=__webpack_require__(31);
+var aa=__webpack_require__(0),l=__webpack_require__(78),B=__webpack_require__(20),C=__webpack_require__(14),ba=__webpack_require__(79),da=__webpack_require__(80),ea=__webpack_require__(81),fa=__webpack_require__(82),ia=__webpack_require__(83),D=__webpack_require__(31);
 function E(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:E("227");
 var oa={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function pa(a,b){return(a&b)===b}
 var ta={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ta,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){ua.hasOwnProperty(f)?E("48",f):void 0;var g=f.toLowerCase(),h=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:pa(h,b.MUST_USE_PROPERTY),
@@ -21873,7 +21933,7 @@ var invariant = __webpack_require__(21);
 var warning = __webpack_require__(32);
 var ExecutionEnvironment = __webpack_require__(78);
 var _assign = __webpack_require__(20);
-var emptyFunction = __webpack_require__(13);
+var emptyFunction = __webpack_require__(14);
 var EventListener = __webpack_require__(79);
 var getActiveElement = __webpack_require__(80);
 var shallowEqual = __webpack_require__(81);
@@ -37485,7 +37545,7 @@ BrowserRouter.propTypes = {
 
 
 
-var emptyFunction = __webpack_require__(13);
+var emptyFunction = __webpack_require__(14);
 var invariant = __webpack_require__(21);
 var warning = __webpack_require__(32);
 var assign = __webpack_require__(20);
@@ -38035,7 +38095,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 
 
-var emptyFunction = __webpack_require__(13);
+var emptyFunction = __webpack_require__(14);
 var invariant = __webpack_require__(21);
 var ReactPropTypesSecret = __webpack_require__(52);
 
@@ -52950,7 +53010,7 @@ exports.addProductReview = exports.fetchSingleProduct = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _axios = __webpack_require__(14);
+var _axios = __webpack_require__(13);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -57404,12 +57464,16 @@ var CarritoContainer = function (_React$Component) {
     _this.state = {
       localCarrito: JSON.parse(localStorage.getItem("localCarrito")),
       alertMessage: false
-    };
-
-    _this.handleChange = _this.handleChange.bind(_this);
+      //============================HANDLE LOCAL
+    };_this.handleChange = _this.handleChange.bind(_this);
     _this.handleClick = _this.handleClick.bind(_this);
+    //============================HANDLE BASE DE DATOS
+    _this.handleUserChange = _this.handleUserChange.bind(_this);
+    _this.handleUserClick = _this.handleUserClick.bind(_this);
     return _this;
   }
+  //============================CARRITO LOCAL
+
 
   _createClass(CarritoContainer, [{
     key: 'handleChange',
@@ -57437,20 +57501,66 @@ var CarritoContainer = function (_React$Component) {
       newLocalCarrito.splice(index, 1);
       this.setState({ localCarrito: newLocalCarrito });
     }
+    //============================CARRITO BASE DE DATOS ARREGLAR INDEX COMO ID
+
+  }, {
+    key: 'handleUserChange',
+    value: function handleUserChange(stock, value, index, id) {
+      var _this3 = this;
+
+      console.log("HANDLE USER, stock: " + stock + " value: " + value + " index: " + index + " id: " + id);
+      if (value <= stock && value > 0) {
+        //this.props.editUserCarrito(value, id);
+        console.log('EL VALOR ESTA BIEN');
+      } else if (value > 0) {
+        this.setState({ alertMessage: index });
+        setInterval(function () {
+          _this3.setState({ alertMessage: false });
+        }, 5000);
+      }
+    }
+  }, {
+    key: 'handleUserClick',
+    value: function handleUserClick(index, id) {
+      //this.props.removeUserCarrito(id)
+      console.log('USER HANDLE CLICK', id);
+    }
+    //========================================================
+
   }, {
     key: 'render',
     value: function render() {
+      var _props = this.props,
+          user = _props.user,
+          carrito = _props.carrito;
 
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(_Carrito2.default, {
-          localCarrito: this.state.localCarrito,
-          handleChange: this.handleChange,
-          alertMessage: this.state.alertMessage,
-          handleClick: this.handleClick
-        })
-      );
+      var touchCarrito = carrito.map(function (prod) {
+        return Object.assign({}, prod, { cantidad: prod.carrito.cantidad });
+      });
+      console.log(touchCarrito, 'TTTTTTTTT');
+      if (user.id) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(_Carrito2.default, {
+            localCarrito: touchCarrito,
+            handleChange: this.handleUserChange,
+            alertMessage: this.state.alertMessage,
+            handleClick: this.handleUserClick
+          })
+        );
+      } else {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(_Carrito2.default, {
+            localCarrito: this.state.localCarrito,
+            handleChange: this.handleChange,
+            alertMessage: this.state.alertMessage,
+            handleClick: this.handleClick
+          })
+        );
+      }
     }
   }]);
 
@@ -57459,7 +57569,8 @@ var CarritoContainer = function (_React$Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    carrito: state.user.carrito
+    carrito: state.user.carrito,
+    user: state.user.user
   };
 };
 
@@ -57470,6 +57581,15 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     removeCarrito: function removeCarrito(index) {
       return dispatch((0, _carrito.removeCarrito)(index));
+    },
+    mergeCarritos: function mergeCarritos(localCarrito) {
+      return dispatch((0, _carrito.mergeCarritos)(localCarrito));
+    },
+    editUserCarrito: function editUserCarrito(item) {
+      return dispatch((0, _carrito.editUserCarrito)(item));
+    },
+    removeUserCarrito: function removeUserCarrito(id) {
+      return dispatch((0, _carrito.removeUserCarrito)(id));
     }
   };
 };
@@ -57577,7 +57697,7 @@ exports.default = function (_ref) {
                 _react2.default.createElement(
                   'button',
                   { onClick: function onClick() {
-                      return handleClick(index);
+                      return handleClick(index, product.id);
                     }, type: 'button', className: 'btn btn-sm btn-outline-danger' },
                   'Remove'
                 )
@@ -57605,17 +57725,17 @@ exports.default = function (_ref) {
                 _react2.default.createElement(
                   'button',
                   { onClick: function onClick() {
-                      return handleChange(product.stock, product.cantidad - 1, index);
+                      return handleChange(product.stock, product.cantidad - 1, index, product.id);
                     }, type: 'button', name: 'resta', className: 'btn btn-outline-secondary' },
                   '-'
                 ),
                 _react2.default.createElement('input', { onChange: function onChange(evt) {
-                    return handleChange(product.stock, evt.target.value, index);
+                    return handleChange(product.stock, evt.target.value, index, product.id);
                   }, value: product.cantidad }),
                 _react2.default.createElement(
                   'button',
                   { onClick: function onClick() {
-                      return handleChange(product.stock, product.cantidad + 1, index);
+                      return handleChange(product.stock, product.cantidad + 1, index, product.id);
                     }, type: 'button', name: 'suma', className: 'btn btn-outline-secondary' },
                   '+'
                 ),
@@ -57626,9 +57746,9 @@ exports.default = function (_ref) {
                   _react2.default.createElement(
                     'small',
                     null,
-                    'there is only ',
+                    'Hay solo ',
                     product.stock,
-                    ' in stock'
+                    ' en stock'
                   )
                 ) : _react2.default.createElement('br', null)
               )
@@ -57821,7 +57941,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.fetchSingleCategory = undefined;
 
-var _axios = __webpack_require__(14);
+var _axios = __webpack_require__(13);
 
 var _axios2 = _interopRequireDefault(_axios);
 
