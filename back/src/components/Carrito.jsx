@@ -74,8 +74,9 @@ export default ({localCarrito, handleChange, handleClick, alertMessage}) => (
               </Row>
             </ListGroupItem>
           ))
-          }
+        }
         </ListGroup>
       }
+      <Link to={`/user/checkout`}><button >Comprar!</button></Link>
     </div>
   );

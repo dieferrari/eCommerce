@@ -57693,6 +57693,15 @@ exports.default = function (_ref) {
           )
         );
       })
+    ),
+    _react2.default.createElement(
+      _reactRouterDom.Link,
+      { to: '/user/checkout' },
+      _react2.default.createElement(
+        'button',
+        null,
+        'Comprar!'
+      )
     )
   );
 };
@@ -60121,13 +60130,13 @@ exports.default = function (_ref) {
           null,
           _react2.default.createElement(
             _reactRouterDom.Link,
-            { to: '/user/orders' },
-            _react2.default.createElement('img', { src: 'https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/1342761/580/386/m1/fpnw/wm0/cardboard-box-icon-01-.jpg?1465234338&s=ce34fb8219c58b48a7e22f2840e4e35e' }),
+            { to: 'user/orders' },
             _react2.default.createElement(
               'h3',
               null,
               'Mis ordenes'
-            )
+            ),
+            _react2.default.createElement('img', { src: 'https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/1342761/580/386/m1/fpnw/wm0/cardboard-box-icon-01-.jpg?1465234338&s=ce34fb8219c58b48a7e22f2840e4e35e' })
           )
         ),
         _react2.default.createElement(
@@ -60135,13 +60144,13 @@ exports.default = function (_ref) {
           null,
           _react2.default.createElement(
             _reactRouterDom.Link,
-            { to: '/carrito' },
-            _react2.default.createElement('img', { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnmUmvGdHJoUn7OdpAMkYsW1Wc8ELK_kLnmoG_Lys7C1ACILZEqQ' }),
+            { to: 'carrito' },
             _react2.default.createElement(
               'h3',
               null,
               'Carro de compras'
-            )
+            ),
+            _react2.default.createElement('img', { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnmUmvGdHJoUn7OdpAMkYsW1Wc8ELK_kLnmoG_Lys7C1ACILZEqQ' })
           )
         ),
         _react2.default.createElement(
@@ -60149,13 +60158,13 @@ exports.default = function (_ref) {
           null,
           _react2.default.createElement(
             _reactRouterDom.Link,
-            { to: '/' + user.id + '/checkout' },
-            _react2.default.createElement('img', { src: 'https://t3.ftcdn.net/jpg/00/30/30/64/240_F_30306492_54Fq37acp3NBQHlfSkQ1WQrpBS2yyOyt.jpg' }),
+            { to: '/user/checkout' },
             _react2.default.createElement(
               'h3',
               null,
               'Checkout'
-            )
+            ),
+            _react2.default.createElement('img', { src: 'https://t3.ftcdn.net/jpg/00/30/30/64/240_F_30306492_54Fq37acp3NBQHlfSkQ1WQrpBS2yyOyt.jpg' })
           )
         )
       ) : ""
