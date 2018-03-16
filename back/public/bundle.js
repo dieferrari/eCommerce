@@ -57728,15 +57728,6 @@ exports.default = function (_ref) {
     !localCarrito ? "loading" : _react2.default.createElement(
       _reactstrap.ListGroup,
       null,
-      _react2.default.createElement(
-        _reactstrap.Row,
-        null,
-        _react2.default.createElement(
-          _reactstrap.Col,
-          { sm: { size: 'auto', offset: 6 } },
-          'Price'
-        )
-      ),
       localCarrito.map(function (product, index) {
         return _react2.default.createElement(
           _reactstrap.ListGroupItem,
@@ -57842,6 +57833,17 @@ exports.default = function (_ref) {
           )
         );
       })
+    ),
+    _react2.default.createElement('br', null),
+    _react2.default.createElement('br', null),
+    _react2.default.createElement(
+      _reactRouterDom.Link,
+      { to: '/user/checkout' },
+      _react2.default.createElement(
+        'button',
+        { className: "col-1 btn btn-success" },
+        'Go to checkout!'
+      )
     )
   );
 };

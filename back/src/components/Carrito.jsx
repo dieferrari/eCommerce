@@ -18,9 +18,7 @@ export default ({localCarrito, handleChange, handleClick, alertMessage}) => (
       {!localCarrito ? "loading" : 
        
         <ListGroup>
-        <Row>
-          <Col sm={{ size: 'auto', offset: 6 }}>Price</Col>        
-        </Row>
+       
           {localCarrito.map((product, index) => (
             <ListGroupItem key={product.id}>
             {console.log(product)}
@@ -72,10 +70,14 @@ export default ({localCarrito, handleChange, handleClick, alertMessage}) => (
                   </div>
                 </Col>
               </Row>
+              
             </ListGroupItem>
           ))
           }
         </ListGroup>
       }
+      <br/>
+      <br/>
+      <Link to={`/user/checkout`}><button className={"col-1 btn btn-success"} >Go to checkout!</button></Link>
     </div>
   );
