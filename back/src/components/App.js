@@ -5,10 +5,8 @@ import LoginContainer from '../containers/login-container';
 import ProductsContainer from '../containers/ProductsContainer';
 import SingleProductContainer from '../containers/SingleProductContainer';
 import CategoryContainer from '../containers/CategoryContainer';
-import UserOrderContainer from '../containers/UserOrderContainer';
 import CarritosContainer from '../containers/CarritoContainer';
 import SingleCategoryContainer from '../containers/SingleCategoryContainer';
-import UserCheckoutContainer from '../containers/UserCheckoutContainer'
 import AdminApp from './AdminApp';
 import HeaderContainer from '../containers/HeaderContainer';
 import UserApp from './UserApp';
