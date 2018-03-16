@@ -21,9 +21,9 @@ export default ({products, handleChange, handleCantidad, handleSubmit, flagCanti
             <input style={{maxWidth: '35rem'}} type="text" className="form-control" id="formGroupExampleInput" onChange={(e)=>handleChange(e)} placeholder="Nombre del producto"/>      
         </div>
         <div className="container-fluid">
-            <div className="card-group">
+            <div className="row">
             {products.map((product, index) => (
-                <div key={product.id} className="card" style={{ minWidth: '30', maxWidth: '30rem',margin: '30px' }}>
+                <div key={product.id} className="col-md-3" style={{ minWidth: '30', maxWidth: '30rem',margin: '30px' }}>
                   <Link to ={`/products/${product.id}`}>
                   <img style={{padding:"30px"}} className="responsive card-img-top" src={product.imgURL} alt="Card image cap"/>
                   </Link>
