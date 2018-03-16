@@ -59,7 +59,7 @@ router.post('/login',passport.authenticate('local'),function (req, res) {
         }]
     })
     .then((user) => {
-       res.send(user)
+       res.send(true)
     })
     .catch(err => {
         res.send(err)
