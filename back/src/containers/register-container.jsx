@@ -1,38 +1,43 @@
 import React from 'react';
 import Register from '../components/register';
 import { createUser,facebookUser } from '../redux/actions/user';
-import store from '../redux/store';
+import {Route,Link,Switch,Redirect} from 'react-router-dom';
+import { connect } from 'react-redux';
 
-export default class RegisterContainer extends React.Component{
-    constructor(){
-    super();
-        this.state = store.getState()
-        this.handleSubmit=this.handleSubmit.bind(this)
+class RegisterContainer extends React.Component{
+    constructor(props){
+    super(props);    
+    this.handleSubmit=this.handleSubmit.bind(this)
     }
-    componentDidMount(){
-        this.unsubscribe = store.subscribe(() => {
-            this.setState(store.getState()
-            );
-          });
-    }
-    componentWillUnmount(){
-        this.unsubscribe()
-    }
+
     handleSubmit(event) {
         event.preventDefault()
-        store.dispatch(createUser({
+        this.props.createUser({
             firstName:event.target[0].value,
             lastName:event.target[1].value,
             email:event.target[2].value,
             password:event.target[3].value
-        }))
+        })
     }
     render () {
+        const {user, location}=this.props
+        console.log(location)
+        const { from } = location.state || { from: '/'}
         return (
             <Register 
-            user={this.state.user.user} 
+            user={user} 
             handleSubmit={this.handleSubmit}
+            from={from}
             />
         )
     }
 }
+const mapStateToProps=(state,ownProps)=>({
+    user:state.user.user,
+    location: ownProps.location
+})
+const mapDispatchToProps=(dispatch)=>({
+    createUser:(body)=>dispatch(createUser(body))
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(RegisterContainer)

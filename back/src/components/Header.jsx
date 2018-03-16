@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 
-export default ({categories,user,carrito,handleDeslogSubmit}) => (
+export default ({categories,user,carrito,handleDeslogSubmit, location}) => (
 	<div>
 		<nav  className="navbar navbar-light bg-light justify-content-between">
 			<a className="navbar-brand">e-Commerce</a>
@@ -36,7 +36,7 @@ export default ({categories,user,carrito,handleDeslogSubmit}) => (
 				<Link onClick={(e)=>handleDeslogSubmit(e)} to='#'>
 				Cerrar Sesion
 				</Link>
-			):(<Link to={`/login`}>
+			):(<Link to={{pathname: '/login', state: { from: location }}}>
 					Login
 			</Link>)}
 		</nav>

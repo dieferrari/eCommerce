@@ -12,6 +12,9 @@ import RouteHook from 'react-route-hook';
 class SingleUserContainer extends React.Component {
     constructor(props){
         super(props)
+        this.state={
+            flag:false
+        }
         this.handleSubmit=this.handleSubmit.bind(this)
         this.checkoutHandleSubmit=this.checkoutHandleSubmit.bind(this)
     }
@@ -34,6 +37,7 @@ class SingleUserContainer extends React.Component {
              })}
              console.log(body)
              this.props.postOrders(body)
+             this.setState({flag:true})
          }
 	render () {
         
@@ -49,7 +53,7 @@ class SingleUserContainer extends React.Component {
 				handleSubmit={this.handleSubmit}
                 user={user}/>
                   }/>
-            <RouteHook 
+            <RouteHook onEnter={this.props.fetchUserOrders}
             path={`${match.path}/orders`}
             render={
                 ()=><UserOrders
@@ -57,7 +61,7 @@ class SingleUserContainer extends React.Component {
             <RouteHook
             path={`${match.path}/checkout`}
             render={
-                 ()=><UserCheckout user={user}
+                 ()=><UserCheckout user={user} flag={this.state.flag}
                     carrito={carrito} 
                     handleSubmit={this.checkoutHandleSubmit}/>}
         />
