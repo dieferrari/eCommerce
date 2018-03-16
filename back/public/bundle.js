@@ -52813,11 +52813,11 @@ exports.default = function (_ref) {
                 { className: 'container-fluid' },
                 _react2.default.createElement(
                     'div',
-                    { className: 'card-group' },
+                    { className: 'row' },
                     products.map(function (product, index) {
                         return _react2.default.createElement(
                             'div',
-                            { key: product.id, className: 'card', style: { minWidth: '30', maxWidth: '30rem', margin: '30px' } },
+                            { key: product.id, className: 'col-md-3', style: { minWidth: '30', maxWidth: '30rem', margin: '30px' } },
                             _react2.default.createElement(
                                 _reactRouterDom.Link,
                                 { to: '/products/' + product.id },
@@ -58002,37 +58002,45 @@ exports.default = function (_ref) {
     ),
     _react2.default.createElement(
       'div',
-      null,
-      category.products.map(function (product) {
-        return _react2.default.createElement(
-          'div',
-          { key: product.id },
-          _react2.default.createElement('img', { src: product.imgURL }),
-          _react2.default.createElement(
-            'h1',
-            null,
-            product.name
-          ),
-          _react2.default.createElement(
-            'h3',
-            null,
-            'Price: $',
-            product.price
-          ),
-          _react2.default.createElement(
-            'h4',
-            null,
-            'Stock: ',
-            product.stock
-          ),
-          _react2.default.createElement(
-            'p',
-            null,
-            'Description: ',
-            product.description
-          )
-        );
-      })
+      { className: 'container-fluid' },
+      _react2.default.createElement(
+        'div',
+        { className: 'row' },
+        category.products.map(function (product) {
+          return _react2.default.createElement(
+            'div',
+            { key: product.id, className: 'col-md-3', style: { minWidth: '30', maxWidth: '30rem', margin: '30px' } },
+            _react2.default.createElement('img', { style: { padding: "30px" }, className: 'responsive card-img-top', src: product.imgURL }),
+            _react2.default.createElement(
+              'div',
+              { className: 'card-body' },
+              _react2.default.createElement(
+                'h3',
+                { className: 'card-title' },
+                product.name
+              ),
+              _react2.default.createElement(
+                'h5',
+                { className: 'card-text' },
+                'Price: $',
+                product.price
+              ),
+              _react2.default.createElement(
+                'h4',
+                null,
+                'Stock: ',
+                product.stock
+              ),
+              _react2.default.createElement(
+                'p',
+                null,
+                'Description: ',
+                product.description
+              )
+            )
+          );
+        })
+      )
     )
   );
 };
