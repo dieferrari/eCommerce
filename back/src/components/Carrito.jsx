@@ -74,15 +74,14 @@ export default ({localCarrito, handleChange, handleClick, alertMessage}) => (
                   </div>
                 </Col>
               </Row>
+              
             </ListGroupItem>
           ))
         }
         </ListGroup>
       }
-        <Row>
-          <Col sm={{ size: 'auto', offset: 6 }}> <h4> Total: {formatter.format(total)} </h4></Col>        
-        </Row>
-        <br/>
-      <Link to={`/user/checkout`}><button className={"col-1 btn btn-success"} >Comprar!</button></Link>
+      <br/>
+      <br/>
+      <Link to={`/user/checkout`}><button className={"col-1 btn btn-success"} >Go to checkout!</button></Link>
     </div>
   );

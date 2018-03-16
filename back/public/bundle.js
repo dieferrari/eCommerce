@@ -58002,6 +58002,30 @@ var _reactRouterDom = __webpack_require__(3);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (_ref) {
+<<<<<<< HEAD
+  var localCarrito = _ref.localCarrito,
+      handleChange = _ref.handleChange,
+      handleClick = _ref.handleClick,
+      alertMessage = _ref.alertMessage;
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'h1',
+      null,
+      'Carrito'
+    ),
+    !localCarrito ? "loading" : _react2.default.createElement(
+      _reactstrap.ListGroup,
+      null,
+      localCarrito.map(function (product, index) {
+        return _react2.default.createElement(
+          _reactstrap.ListGroupItem,
+          { key: product.id },
+          console.log(product),
+          _react2.default.createElement(
+            _reactstrap.Row,
+=======
     var orders = _ref.orders,
         handleChange = _ref.handleChange;
     return _react2.default.createElement(
@@ -58037,6 +58061,7 @@ exports.default = function (_ref) {
         _react2.default.createElement('br', null),
         _react2.default.createElement(
             'table',
+>>>>>>> 775edd1b6aac3cfd7cadbe53c57c21e5f316467e
             null,
             _react2.default.createElement(
                 'tbody',
@@ -58106,8 +58131,27 @@ exports.default = function (_ref) {
                     );
                 })
             )
+<<<<<<< HEAD
+          )
+        );
+      })
+    ),
+    _react2.default.createElement('br', null),
+    _react2.default.createElement('br', null),
+    _react2.default.createElement(
+      _reactRouterDom.Link,
+      { to: '/user/checkout' },
+      _react2.default.createElement(
+        'button',
+        { className: "col-1 btn btn-success" },
+        'Go to checkout!'
+      )
+    )
+  );
+=======
         )
     );
+>>>>>>> 775edd1b6aac3cfd7cadbe53c57c21e5f316467e
 };
 
 /***/ }),
