@@ -5,10 +5,8 @@ import LoginContainer from '../containers/login-container';
 import ProductsContainer from '../containers/ProductsContainer';
 import SingleProductContainer from '../containers/SingleProductContainer';
 import CategoryContainer from '../containers/CategoryContainer';
-import UserOrderContainer from '../containers/UserOrderContainer';
 import CarritosContainer from '../containers/CarritoContainer';
 import SingleCategoryContainer from '../containers/SingleCategoryContainer';
-import UserCheckoutContainer from '../containers/UserCheckoutContainer'
 import AdminApp from './AdminApp';
 import HeaderContainer from '../containers/HeaderContainer';
 import UserApp from './UserApp';
@@ -21,7 +19,7 @@ class App extends React.Component{
   render(){
     return (
       <div>
-        <HeaderContainer/>
+        <HeaderContainer location={this.props.location}/>
         <Switch>
           <RouteHook onEnter={this.props.Userlogged}
             exact
@@ -72,7 +70,8 @@ class App extends React.Component{
 }
 const mapStateToProps = (state,ownProps) => ({
   match:ownProps.match,
-  user:state.user.user
+  user:state.user.user,
+  location: ownProps.location
 })
 
 const mapDispatchToProps = dispatch => {

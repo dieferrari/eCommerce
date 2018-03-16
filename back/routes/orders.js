@@ -4,19 +4,21 @@ const passport = require('passport');
 const {User, Orders, Product, OrdersProducts} = require('../models');
 const enviar = require('../utils')
 
+const PopulateOrders={    
+    include: [{
+        model: Product,
+        attributes:['id','name', 'price', 'imgURL'],
+        through: {
+            attributes:['cantidad'],
+        }
+    },{model:User,
+    as:'Owner',
+   attributes:['id','fullName','firstName','lastName', 'email']
+}]
+}
+
 router.get('/', function (req, res, next) {
-    Orders.findAll({    
-        include: [{
-            model: Product,
-            attributes:['id','name', 'price', 'imgURL'],
-            through: {
-                attributes:['cantidad'],
-            }
-        },{model:User,
-        as:'Owner',
-       attributes:['id','fullName','firstName','lastName', 'email']
-    }]
-    }).then(orders => {
+    Orders.findAll(PopulateOrders).then(orders => {
         res.send(orders)
     })
 })
@@ -40,28 +42,29 @@ router.post('/', function (req, res, next) {
         OwnerMail:userMail})
     .then((orden)=>{
         orderId=orden.id
+        
+        //promesas de orden a productos
        const productos=products.map(producto=>{
         return orden.addProduct(producto.id,{
              through: { cantidad: producto.cantidad }})})
+
+        //promesas de reducir stock
+        const cambiarstock=products.map(producto=>{
+            return Product.findById(producto.id)
+            .then(prod=>{
+                const newStock=prod.stock-producto.cantidad
+                return prod.update({stock:newStock})
+            })})
+        //cuando las promesas se cumplan
         return Promise.all(productos)
+        .then(()=>Promise.all(cambiarstock))
     })
     .then(()=>User.findById(userId))
     .then(usuario=>usuario.setProducts([]))
     .then(()=>{
         enviar.enviarCheckoutEmail(userMail,orderId)
     })
-    .then(()=>Orders.findAll({    
-        include: [{
-            model: Product,
-            attributes:['id','name', 'price', 'imgURL'],
-            through: {
-                attributes:['cantidad'],
-            }
-        },{model:User,
-        as:'Owner',
-       attributes:['id','fullName','firstName','lastName', 'email']
-    }]
-    }))
+    .then(()=>Orders.findAll(PopulateOrders))
     .then(orders => {
         res.send(orders)
     }).catch(err=>res.send(err))
@@ -80,18 +83,7 @@ router.put('/:id',function(req,res,next){
             enviar.enviarCompletoEmail(orden.OwnerMail,orden.id)
         }
     })
-    .then(()=>Orders.findAll({    
-        include: [{
-            model: Product,
-            attributes:['id','name', 'price', 'imgURL'],
-            through: {
-                attributes:['cantidad'],
-            }
-        },{model:User,
-        as:'Owner',
-       attributes:['id','fullName','firstName','lastName', 'email']
-    }]
-    }))
+    .then(()=>Orders.findAll(PopulateOrders))
     .then(orders => {
         res.send(orders)
     }).catch(err=>res.send(err))

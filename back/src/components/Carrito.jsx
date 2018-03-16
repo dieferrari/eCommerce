@@ -11,6 +11,7 @@ var formatter = new Intl.NumberFormat('en-US', {
   // and is usually already 2 Copy Paste For The Win
 });
 
+var total = 0
 
 export default ({localCarrito, handleChange, handleClick, alertMessage}) => (
     <div>
@@ -18,10 +19,13 @@ export default ({localCarrito, handleChange, handleClick, alertMessage}) => (
       {!localCarrito ? "loading" : 
        
         <ListGroup>
-       
+        <Row>
+          <Col sm={{ size: 'auto', offset: 6 }}></Col>        
+        </Row>
           {localCarrito.map((product, index) => (
+            
             <ListGroupItem key={product.id}>
-            {console.log(product)}
+            {total = total + product.price}
               <Row>
                   <div className="d-inline-flex p-2">
                     <img src={product.imgURL} style={{width:"100px", height:"100px"}} alt=""/>
@@ -73,7 +77,7 @@ export default ({localCarrito, handleChange, handleClick, alertMessage}) => (
               
             </ListGroupItem>
           ))
-          }
+        }
         </ListGroup>
       }
       <br/>

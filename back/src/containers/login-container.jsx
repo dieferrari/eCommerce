@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
     super();
     this.handleSubmit=this.handleSubmit.bind(this)
     }
-    
+
     handleSubmit(event) {
         event.preventDefault()
         this.props.loggedUser({
@@ -19,17 +19,18 @@ import { connect } from 'react-redux';
         })
     }
     render () {
-        const {user}=this.props
-        // if(user.id){
-        //   return  <Redirect to='/'/>
-        // }
+        const {user, location}=this.props
+        console.log(location)
+        const { from } = location.state || { from: '/'}
+        
         return (
-            <Login user={user} handleSubmit={this.handleSubmit}/>
+            <Login user={user} handleSubmit={this.handleSubmit} from={from} location={location}/>
         )
     }
 }
-const mapStateToProps=(state)=>({
+const mapStateToProps=(state, ownProps)=>({
     user:state.user.user,
+    location: ownProps.location
 
 })
 const mapDispatchToProps=(dispatch)=>({

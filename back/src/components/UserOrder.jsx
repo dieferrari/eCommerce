@@ -1,10 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link,Redirect } from 'react-router-dom';
 import OrdersByUser from './OrdersByUser';
 
 export default ({ userOrders }) => {
-  return(<div>
-    {console.log('fffffff',userOrders)}
+  return (<div>
     <h1>Tus Ordenes</h1>
     {!userOrders ? "Loading" :
     <div>

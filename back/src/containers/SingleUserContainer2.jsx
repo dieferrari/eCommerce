@@ -12,12 +12,14 @@ import RouteHook from 'react-route-hook';
 class SingleUserContainer extends React.Component {
     constructor(props){
         super(props)
+        this.state={
+            flag:false
+        }
         this.handleSubmit=this.handleSubmit.bind(this)
         this.checkoutHandleSubmit=this.checkoutHandleSubmit.bind(this)
     }
 	componentDidMount() {
-    //va a volar
-    this.props.fetchUserOrders()
+        this.props.fetchUserOrders()
 	}
 	handleSubmit(e){
 		e.preventDefault()
@@ -32,14 +34,12 @@ class SingleUserContainer extends React.Component {
              products:this.props.carrito.map(prod=>{
                  return{id:prod.id,cantidad:prod.carrito.cantidad}
              })}
-             console.log(body)
              this.props.postOrders(body)
+             this.setState({flag:true})
          }
 	render () {
         
         const {match,user,userOrders,carrito}=this.props
-        console.log('Entrooooo')
-        console.log('eeeeeeee',user)
 		return (
             <Switch>
                 <RouteHook exact
@@ -49,7 +49,7 @@ class SingleUserContainer extends React.Component {
 				handleSubmit={this.handleSubmit}
                 user={user}/>
                   }/>
-            <RouteHook 
+            <RouteHook onEnter={this.props.fetchUserOrders}
             path={`${match.path}/orders`}
             render={
                 ()=><UserOrders
@@ -57,7 +57,7 @@ class SingleUserContainer extends React.Component {
             <RouteHook
             path={`${match.path}/checkout`}
             render={
-                 ()=><UserCheckout user={user}
+                 ()=><UserCheckout user={user} flag={this.state.flag}
                     carrito={carrito} 
                     handleSubmit={this.checkoutHandleSubmit}/>}
         />
