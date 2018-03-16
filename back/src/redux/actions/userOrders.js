@@ -6,8 +6,8 @@ const receiveUserOrders = (userOrders) => ({
   userOrders,
 });
 
-export const fetchUserOrders = userId => dispatch =>
-  axios.get(`/api/users/${userId}/orders`)
+export const fetchUserOrders = () => dispatch =>
+  axios.get(`/api/users/orders`)
     .then(res => res.data)
     .then(userOrders => {
       console.log('YYYYYYYYYYY',userOrders)

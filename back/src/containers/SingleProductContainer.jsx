@@ -41,7 +41,7 @@ class SingleProductContainer extends React.Component {
 				handleChange={this.handleChange}
 				cantidad={this.state.cantidad}
 				handleSubmit={this.handleSubmit}
-				user={this.props.user.id}
+				user={this.props.user}
 				addProductReview={this.props.addProductReview}
 			/>
 		)
