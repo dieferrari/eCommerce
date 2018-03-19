@@ -1,11 +1,11 @@
-//import {ADD_LOCAL_CARRITO, EDIT_LOCAL_CARRITO} from '../constants.js';
+import {ADD_LOCAL_CARRITO,RECEIVE_USER} from '../constants.js';
+import axios from 'axios';
 
 // const setCarrito = (products) => ({
 //     type: ADD_LOCAL_CARRITO,
 //     products,
 // });
-import axios from 'axios';
-import { RECEIVE_USER } from '../constants';
+
 
 const receiveUser = (user,carrito) => ({
     type: RECEIVE_USER,
@@ -47,6 +47,7 @@ export const addCarrito = (product, value) => dispatch => {
     // dispatch(setCarrito(cart));
 }
 
+//==============LOCAL STORAGE
 export const editCarrito = (value, index) => dispatch => {
     var stringFromStorage = localStorage.getItem('localCarrito');
     var cartFromStorage = JSON.parse(stringFromStorage);
@@ -62,11 +63,12 @@ export const removeCarrito = (index) => dispatch => {
     cartFromStorage.splice(index,1);
     localStorage.setItem('localCarrito', JSON.stringify(cartFromStorage))
 }
+//============================
+//============================BASE DE DATOS
 //Lc=[{prod-0},{prod-1}]
 export const mergeCarritos = (Lc) => dispatch => {
-    axios.post(`/api/carrito`, Lc)
-    .then(res => {
-        return res.data})
+    return axios.post(`/api/carrito`, Lc)
+    .then(res => res.data)
     .then(user => {
         dispatch(receiveUser({id:user.id,
         firstName:user.firstName, 
@@ -101,7 +103,7 @@ export const removeUserCarrito = (id) => dispatch => {
         email:user.email},user.products))
     })
 }
-
+//============================
 
 //Nico, soy el niño de cobre, ya te queda en el local storage lo que compras, ahora hay que comprobar que lo que pida no
 // supere el stock disponible..... Y hacer que cuando el loco/a(#niUnaMenos) se logee, le agregue ese cart a su State.

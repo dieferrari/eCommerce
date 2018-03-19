@@ -1,7 +1,8 @@
 import React from 'react';
 import Login from '../components/login';
 import { loggedUser } from '../redux/actions/user';
-import {Route,Link,Switch,Redirect} from 'react-router-dom';
+import { mergeCarritos } from '../redux/actions/carrito';
+import { Route,Link,Switch,Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
@@ -9,6 +10,7 @@ import { connect } from 'react-redux';
     constructor(){
     super();
     this.handleSubmit=this.handleSubmit.bind(this)
+    this.handleSubmitLocal = this.handleSubmitLocal.bind(this)
     }
 
     handleSubmit(event) {
@@ -18,14 +20,34 @@ import { connect } from 'react-redux';
             password:event.target[1].value,
         })
     }
-    render () {
-        const {user, location}=this.props
-        console.log(location)
-        const { from } = location.state || { from: '/'}
+    handleSubmitLocal(event) {
         
-        return (
-            <Login user={user} handleSubmit={this.handleSubmit} from={from} location={location}/>
-        )
+        event.preventDefault()
+        this.props.loggedUser({
+            email:event.target[0].value,
+            password:event.target[1].value,
+        })
+        .then(() => this.props.mergeCarritos(JSON.parse(localStorage.getItem('localCarrito')))
+        .then(()=> localStorage.removeItem('localCarrito'))
+    )
+    }
+    render () {
+        const {user,location}=this.props
+        const { from } = location.state || { from: '/'}
+        if (JSON.parse(localStorage.getItem('localCarrito')).length > 0){
+            return (
+                <div>
+                    <Login user={user} handleSubmit={this.handleSubmitLocal} from={from} location={location}/>
+                </div>
+            )
+        }else{ 
+            return (
+                <div>
+                    <Login user={user} handleSubmit={this.handleSubmit} from={from} location={location}/>
+                </div>
+            )
+        }
+        
     }
 }
 const mapStateToProps=(state, ownProps)=>({
@@ -34,7 +56,8 @@ const mapStateToProps=(state, ownProps)=>({
 
 })
 const mapDispatchToProps=(dispatch)=>({
-    loggedUser:(credentials)=>dispatch(loggedUser(credentials))
+    loggedUser:(credentials) =>dispatch(loggedUser(credentials)),
+    mergeCarritos: (Lc) => dispatch(mergeCarritos(Lc))
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(LoginContainer)

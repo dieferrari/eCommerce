@@ -45,7 +45,7 @@ class CarritoContainer extends React.Component{
   handleUserChange(stock, value,index,id){    
     console.log("HANDLE USER, stock: "+stock+" value: "+value+" index: "+index+" id: "+id)
     if(value <= stock && value > 0){
-      //this.props.editUserCarrito({id:id,cantidad:value});
+      this.props.editUserCarrito({id:id,cantidad:value});
       console.log('EL VALOR ESTA BIEN')
     } else if (value > 0) {
         this.setState({ alertMessage: index })
@@ -54,7 +54,7 @@ class CarritoContainer extends React.Component{
   }
   
   handleUserClick(index,id){
-   //this.props.removeUserCarrito(id)
+   this.props.removeUserCarrito(id)
    console.log('USER HANDLE CLICK',id)
   }
   //========================================================
